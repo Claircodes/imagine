@@ -14,6 +14,7 @@ public class DBConnExam {
 		DBConnExam dbc = new DBConnExam();
 		try {
 			int a = dbc.getInt();
+			System.out.println(a);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
