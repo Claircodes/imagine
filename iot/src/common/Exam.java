@@ -18,9 +18,12 @@ public class Exam {
 			Connection con = DBConn.getCon(); // 디비에게 전화
 			String sql = "SELECT id,pwd,name,age FROM USER ";
 			if (!name.equals("")) {
-				sql += "WHERE name= '" + name + "'";
+				sql += "WHERE name= ?";
 			}
 			PreparedStatement prestmt = con.prepareStatement(sql);
+			if (!name.equals("")) {
+				prestmt.setString(1, name);
+			}
 			ResultSet rs = prestmt.executeQuery();
 			while (rs.next()) {
 				userlist.add(
@@ -55,9 +58,12 @@ public class Exam {
 	public boolean insertUser(HashMap<String, String> a) {
 		try {
 			Connection con = DBConn.getCon();
-			String sql = "INSERT INTO USER (id , pwd, name, age) VALUES ('" + a.get("id") + "','" + a.get("pwd") + "','"
-					+ a.get("name") + "', '" + Integer.parseInt(a.get("age")) + "')";
+			String sql = "INSERT INTO USER (id , pwd, name, age) VALUES (?,?,?,?)";
 			PreparedStatement prestmt = con.prepareStatement(sql);
+			prestmt.setString(1, a.get("id"));
+			prestmt.setString(2, a.get("pwd"));
+			prestmt.setString(3, a.get("name"));
+			prestmt.setString(4, a.get("age"));  // 물음표와 숫자가 같아야 함. 			
 			int result = prestmt.executeUpdate();
 			DBConn.closeCon();
 			if (result == 1) {
