@@ -20,6 +20,7 @@ public class Exam {
 			if (!name.equals("")) {
 				sql += "WHERE name= ?";
 			}
+			
 			PreparedStatement prestmt = con.prepareStatement(sql);
 			if (!name.equals("")) {
 				prestmt.setString(1, name);
