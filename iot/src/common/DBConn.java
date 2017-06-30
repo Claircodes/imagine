@@ -15,7 +15,7 @@ public class DBConn {
 		return con;
 	}
 
-	public static void closeCon() throws SQLException {
+	public static void closeCon() throws Exception {
 		if (con != null) {
 			con.close();
 			con = null;

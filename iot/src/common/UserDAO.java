@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,42 +42,30 @@ public class UserDAO {
 		return null;
 	}
 
-	public boolean doInsert(HashMap<String, String> hm, String sql) {
+	public boolean doInsert(String sql, HashMap<String, String> hm) {
 		try {
-			String s = "";
-			s += "(";
-			for (int i = 1; i <= hm.size(); i++) {
-				s += "?";
-				if (i != hm.size()) {
-					s+= ",";
-				}
-			}
-			s += ")";
-
-			sql += s + " values " + s;
-
-			List<String> list = new ArrayList<String>();
-			Iterator it = hm.keySet().iterator();
-			while (it.hasNext()) {
-				String key = (String) it.next();
-				list.add(key);
-			}
-
 			Connection con = DBConn.getCon();
+			String[] keys = hm.keySet().toArray(new String[hm.size()]);
+			for(int i=0;i<keys.length;i++){
+				sql += keys[i] + ",";
+			}
+			sql = sql.substring(0, sql.length()-1);
+			sql += ") values(";
+
+			for(int i=0;i<keys.length;i++){
+				sql += "?,";
+			}
+			sql = sql.substring(0, sql.length()-1);
+			sql += ")";
 			PreparedStatement prestmt = con.prepareStatement(sql);
-			for (int i = 1; i < hm.size(); i++) {
-				list.add(hm.get(list.get(i)));
+			for(int i=0;i<keys.length;i++){
+				prestmt.setString(i+1, hm.get(keys[i]));
 			}
-			for (int i = 1; i < list.size(); i++) {
-				prestmt.setString(i, list.get(i));
-			}
-
-
-			prestmt.executeUpdate();
+			int result = prestmt.executeUpdate();
 			DBConn.closeCon();
-
-			return true;
-
+			if (result == 1) {
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,7 +85,7 @@ public class UserDAO {
 		hm.put("age", "30");
 		hm.put("class_num", "3");
 
-		ud.doInsert(hm, sql);
+		ud.doInsert(sql, hm);
 
 		// sql = "select num, id, pwd,name, age from user_info";
 		// userList = ud.doSelect(sql);
