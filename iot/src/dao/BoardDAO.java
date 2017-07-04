@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -94,35 +95,42 @@ public class BoardDAO {
 		return false;
 	}
 
-	public List<Map> selectBoard() {
-		List<Map> list = new ArrayList<Map>();
-		try {
-			String sql = "select num, title, content, writer, reg_date from board";
-			st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			while (rs.next()) {
-				Map hm = new HashMap<>();
-				hm.put("num", rs.getString("num"));
-				hm.put("title", rs.getString("title"));
-				hm.put("content", rs.getString("content"));
-				hm.put("writer", rs.getString("writer"));
-				hm.put("reg_date", rs.getString("reg_date"));
-				list.add(hm);
-			}
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
+	public List<Map> selectBoard() throws SQLException {
+		String sql = "select num, title, content,writer from board";
+		PreparedStatement ps = con.prepareStatement(sql);
+
+		ResultSet rs = ps.executeQuery();
+		ArrayList boardList = new ArrayList();
+		while (rs.next()) {
+			HashMap hm = new HashMap();
+			hm.put("num", rs.getString("num"));
+			hm.put("title", rs.getString("title"));
+			hm.put("content", rs.getString("content"));
+			hm.put("writer", rs.getString("writer"));
+			boardList.add(hm);
 		}
-		return null;
+		rs.close();
+		rs = null;
+		ps.close();
+		ps = null;
+		return boardList;
 	}
 
 	public static void main(String[] args) {
 		BoardDAO bdao = new BoardDAO();
-		bdao.setConnection();
-
-		bdao.insertBoard();
-		bdao.updateBoard();
-		bdao.deleteBoard();
-		bdao.selectBoard();
+		try {
+			bdao.setConnection();
+			List<Map> boardList = bdao.selectBoard();
+			CommentDAO dao = new CommentDAO();
+			for(Map m : boardList){
+				System.out.println(m);
+				List<Map> commentList = dao.getCommentList(Integer.parseInt((String)m.get("num")));
+				for(Map m2 : commentList){
+					System.out.println(m2);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
