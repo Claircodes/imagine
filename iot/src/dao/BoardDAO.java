@@ -14,9 +14,8 @@ import common.DBConn;
 
 public class BoardDAO {
 	Connection con;
-	Statement st;
 
-	public void setConnection() {
+	public void setConnection()  {
 		try {
 			con = DBConn.getCon();
 		} catch (Exception e) {
@@ -27,7 +26,7 @@ public class BoardDAO {
 	public boolean insertBoard() {
 		String sql = "INSERT INTO board (title, content, writer, reg_Date) VALUES ('게시판제목3','게시판 제목3',4, NOW())";
 		try {
-			st = con.createStatement();
+			Statement st = con.createStatement();
 			int result = st.executeUpdate(sql);
 			if (result == 1) {
 				con.commit();
@@ -50,7 +49,7 @@ public class BoardDAO {
 	public boolean updateBoard() {
 		try {
 			String sql = "UPDATE board SET title = '바뀌지롱' WHERE num ='2'";
-			st = con.createStatement();
+			Statement st = con.createStatement();
 			int result;
 			result = st.executeUpdate(sql);
 			if (result == 1) {
@@ -74,7 +73,7 @@ public class BoardDAO {
 	public boolean deleteBoard() {
 		try {
 			String sql = "delete from board1 where num='9'";
-			st = con.createStatement();
+			Statement st = con.createStatement();
 			int result = st.executeUpdate(sql);
 			if (result == 1) {
 				con.commit();
