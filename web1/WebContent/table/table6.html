@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function clickbtn() {
+		var n1 = parseInt(document.getElementById("num1").value);
+		var n2 = parseInt(document.getElementById("num2").value);
+		var tableStr = "<table border='1'>";
+		for (var i = 0; i < n1; i++) {
+			tableStr += "<tr>";
+			for (var j = 0; j < n2; j++) {
+				tableStr += "<td> [" + i + "," + j + "] </td>";
+			}
+			tableStr += "</tr>";
+		}
+		tableStr += "</table>";
+		document.write(tableStr);
+	}
+</script>
+<body>
+	<table border='1'>
+		<tr>
+			<td>행 :<input type="text" name="num1" id="num1" /></td>
+			<td>X</td>
+			<td>열 :<input type="text" name="num2" id="num2" /></td>
+			<td><input type="button" value="계산하기" onclick="clickbtn()" /></td>
+		</tr>
+	</table>
+</body>
+</html>

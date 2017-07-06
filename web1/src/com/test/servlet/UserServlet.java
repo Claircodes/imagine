@@ -46,9 +46,7 @@ public class UserServlet extends HttpServlet {
 			} else {
 				doProcess(resq, "값 입력해야지 회원가입하지 짜식아");
 			}
-		}
-
-		if (command.equals("DELETE")) {
+		} else if (command.equals("DELETE")) {
 			String deleteNum = req.getParameter("user_num");
 			System.out.println(deleteNum + "번 삭제한다잉");
 			// us.deleteUser(deleteNum);
@@ -62,9 +60,7 @@ public class UserServlet extends HttpServlet {
 			} else {
 				doProcess(resq, "값 입력해야지 삭제하지 짜식아");
 			}
-		}
-
-		if (command.equals("UPDATE")) {
+		} else if (command.equals("UPDATE")) {
 			String name = req.getParameter("name");
 			String class_num = req.getParameter("class_num");
 			String age = req.getParameter("age");
@@ -84,8 +80,7 @@ public class UserServlet extends HttpServlet {
 			} else {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
-		}
-		if (command.equals("SELECT")) {
+		} else if (command.equals("SELECT")) {
 			String searchNum = req.getParameter("name");
 			System.out.println(searchNum + " 검색한다잉");
 
@@ -96,6 +91,7 @@ public class UserServlet extends HttpServlet {
 			}
 			List<Map> selectList = us.searchUser(hm);
 			doProcess(resq, selectList + "");
+		
 		}
 	}
 
