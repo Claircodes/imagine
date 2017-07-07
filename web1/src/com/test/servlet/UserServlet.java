@@ -22,10 +22,20 @@ public class UserServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		UserService us = new UserService();
 
+//		String name1 = req.getParameter("name");
+//		String pwd1 = req.getParameter("pass");
+//		System.out.println("input html에서 너님이 던진값 =>"+ name1+pwd1);
+		String op1= req.getParameter("op");
+		System.out.println("select.html 에서 너님이 던진값 =>"+ op1);		
+		
 		String command = req.getParameter("command");
 		HashMap hm = new HashMap();
 		List<Map> list = new ArrayList<Map>();
 
+		if (command==null){
+			return ;
+		}
+		
 		if (command.equals("SIGNIN")) {
 
 			String id = req.getParameter("id");

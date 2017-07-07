@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+
+	function makeSureForm() {
+		var str = "";
+		var wm="";
+		var nameObj = document.getElementById("name");
+		var passObj = document.getElementById("pass");
+		if (document.getElementById("woman").checked) {
+			var wm = "여자";
+		} else if (document.getElementById("man").checked) {
+			var wm = "남자";
+		}
+		var dateObj = document.getElementById("i_date");
+		var emailObj = document.getElementById("i_email");
+		var colorObj = document.getElementById("i_color");
+		
+		if (nameObj.value != "") {
+			str += "이름은 " + nameObj.value + "\n";
+		}
+		if (passObj.value != "") {
+		str += "비밀번호는 " + passObj.value + "\n";
+		}
+		if (wm != "") {
+		str += wm + "이다\n";
+		}
+		if (dateObj.value != "") {
+		str += "생일은 " + dateObj.value + "\n";
+		}
+		if (emailObj.value != "") {
+		str += "이메일은 " + emailObj.value + "\n";
+		}
+		alert(str);
+	}
+</script>
+<body>
+	<form id="test_form" method="get" action="/test.user">
+		이름 : <input type="text" id="name" name="name" /> <br /> 
+		비밀번호 : <input type="password" id="pass" name="pass" /> <br /> 
+		성별 :<input	type="radio" id="woman" name="wm" value="여자" />여
+		<input type="radio" id="man" name="wm" value="남자" />남<br /> 
+		좋아
+		내 생일: <input type="date" id="i_date" name="i_date" /> <br /> 
+		이메일: <input type="email" id="i_email" name="i_email" /> <br /> 
+		좋아하는 색: <input type="color" id="i_color" name="i_color" /> <br /> 
+		<input type="button" value="확인"	onclick="makeSureForm()" /> 
+		<input type="submit" value="전송" />
+	</form>
+</body>
+</html>
