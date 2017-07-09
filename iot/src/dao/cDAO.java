@@ -166,7 +166,6 @@ public class cDAO {
 //			cdao.updateComment();
 //			cdao.selectComment();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

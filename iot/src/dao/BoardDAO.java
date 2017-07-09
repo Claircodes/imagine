@@ -86,7 +86,6 @@ public class BoardDAO {
 				System.out.println("deleteBoard(): 이상한거 넣었지 롤백해~");
 				con.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
