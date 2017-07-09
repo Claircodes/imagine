@@ -14,7 +14,7 @@ height:50px;
 <body>
 	<table >
 		<tr>
-			<td colspan="3"><input type="number" name="num" id="num"	disabled="disabled" /></td>
+			<td colspan="3"><input type="text" name="num" id="num" value=""disabled="disabled"/></td>
 			<td><input type="button" name="n9" id="n9" onclick="btnclick(this.value)"  value="=" /></td>
 		</tr>
 		<tr align="center">
@@ -43,12 +43,28 @@ height:50px;
 
 	</table>
 	
-	<script >
-	var result=""; 
+	<script > 
+	var n1 = 0;
+	var n2 = 0;
+	var plusNum =0;
+	var fa ="";
 	function btnclick(number) {
-		result += number;
-		alert(result);
+		document.getElementById("num").value += number;
+		n1+=number;
+		if (fa=="+"||fa=="-"||fa=="*"||fa=="/"){
+			document.getElementById("num").value += number;
+			n2+=number;
 		
+		}	if(nuber=="+"||number=="-"||number=="*"||number=="/"){
+			if (fa=="+"||fa=="-"||fa=="*"||fa=="/"){
+				fa =number;
+			}else if (number=="="){
+				alert(parseInt(n1)+fa+parseInt(n2));
+				fa="";
+				n1=0;
+				n2=0;
+			}
+
 	}
 	</script>
 </body>
