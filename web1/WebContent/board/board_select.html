@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 입력</title>
+</head>
+<script>
+	function checkValue() {
+
+		var boardNumObj = document.getElementById("board_num");
+		var boardNum = parseInt(boardNumObj.value);
+		if (isNaN(boardNum)&&!boardNumObj.value=="") {
+			alert("숫자 입력하라고!");
+			return false;
+		}
+
+		return true;
+	}
+</script>
+<body>
+	<form method="get" action="dsjffkjasldf.board"	onsubmit="return checkValue()">
+		게시물 번호 : <input type="text" name="board_num" id="board_num" /> <br /> 
+		<input	type="submit" value="검색" id="command" name="command" /> <br />
+	</form>
+</body>
+</html>

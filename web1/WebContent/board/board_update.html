@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 입력</title>
+</head>
+<script>
+	function checkValue() {
+		var titleObj = document.getElementById("board_title");
+		if (titleObj.value.trim() == "") {
+			alert("제목 입력 안하니!!");
+			return false;
+		}
+
+		var contentObj = document.getElementById("board_content");
+		if (contentObj.value.trim() == "") {
+			alert("내용 입력 안하니!!");
+			return false;
+		}
+		var boardNumObj = document.getElementById("board_num");
+		if (boardNumObj.value.trim() == "") {
+			alert("게시물번호 입력 안하니!!");
+			return false;
+		}
+		return true;
+	}
+</script>
+<body>
+	<form method="get" action="update.board" onsubmit="return checkValue()">
+		제목 :  <input type="text" name="board_title" id="board_title" />
+		내용 :  <input type="text" name="board_content" id="board_content" />
+		게시물번호 : <input type="text" name="board_num" id="board_num" />
+		<input	type="submit" value="업데이트" id="command" name="command"/> <br />
+	</form>
+</body>
+</html>

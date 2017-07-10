@@ -10,22 +10,20 @@ import java.util.Map;
 
 import com.test.common.DBConn;
 
-public class UserService {
+public class CommentService {
 
-	public boolean insertUser(HashMap<String, String> hm) {
+	public boolean insertComment(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "insert into user_info(id, pwd, name,class_num,age) ";
-			sql += "values (?,?,?,?,?)";
+			String sql = "insert into comment_info(b_num, ui_num, content, reg_date)";
+			sql += " values (?,?,?,now())";
 			ps = con.prepareStatement(sql);
+			ps.setString(1, hm.get("comBoardNum"));
+			ps.setString(2, hm.get("comUserNum"));
+			ps.setString(3, hm.get("comContent"));
 
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("class_num"));
-			ps.setString(5, hm.get("age"));
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
@@ -44,13 +42,13 @@ public class UserService {
 		return false;
 	}
 
-	public boolean deleteUser(HashMap<String, String> hm) {
+	public boolean deleteComment(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
 			con = DBConn.getCon();
-			String sql = "delete from user_info where num= ?";
+			String sql = "delete from comment_info where Num= ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, hm.get("deleteComNum"));
 			int result = ps.executeUpdate();
@@ -71,19 +69,17 @@ public class UserService {
 		return false;
 	}
 
-	public boolean updateUser(HashMap<String, String> hm) {
+	public boolean updateComment(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
 			con = DBConn.getCon();
-			String sql = "update user_info set name=?, class_num=?, age=? where num= ?";
+			String sql = "update comment_info set content=? where Num= ?";
 			ps = con.prepareStatement(sql);
-
-			ps.setString(1, hm.get("name"));
-			ps.setString(2, hm.get("class_num"));
-			ps.setString(3, hm.get("age"));
-			ps.setString(4, hm.get("num"));
+			
+			ps.setString(1, hm.get("comContent"));
+			ps.setString(2, hm.get("comNum"));
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -103,28 +99,27 @@ public class UserService {
 		return false;
 	}
 
-	public List<Map> searchUser(HashMap<String, String> hm) {
+	public List<Map> searchComment(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "select id, pwd, name,class_num,age from user_info";
-			if (!hm.get("name").equals("")) {
-				sql += " WHERE name like ?";
+			String sql = "select ui_num, b_num, content, reg_date from comment_info ";
+			if (!hm.get("searchNum").equals("")) {
+				sql += " WHERE Num = ?";
 			}
 			ps = con.prepareStatement(sql);
-			if (!hm.get("name").equals("")) {
-				ps.setString(1, hm.get("name"));
+			if (!hm.get("searchNum").equals("")) {
+				ps.setString(1, hm.get("searchNum"));
 			}
 			ResultSet rs = ps.executeQuery();
-			ArrayList list = new ArrayList();
+			List<Map> list = new ArrayList<Map>();
 			while (rs.next()) {
 				HashMap hm1 = new HashMap();
-				hm1.put("id", rs.getString("id"));
-				hm1.put("pwd", rs.getString("pwd"));
-				hm1.put("name", rs.getString("name"));
-				hm1.put("class_num", rs.getString("class_num"));
-				hm1.put("age", rs.getString("age"));
+				hm1.put("ui_num", rs.getString("ui_num"));
+				hm1.put("b_num", rs.getString("b_num"));
+				hm1.put("content", rs.getString("content"));
+				hm1.put("reg_date", rs.getString("reg_date"));		
 				list.add(hm1);
 			}
 			return list;

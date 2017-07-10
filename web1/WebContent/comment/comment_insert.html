@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function checkValue() {
+		var BoardNumObj = document.getElementById("com_BoardNum");
+		if (BoardNumObj.value.trim() == "") {
+			alert("BoardNum 입력 안하니!!");
+			return false;
+		}
+		var userNumObj = document.getElementById("com_UserNum");
+		if (userNumObj.value.trim() == "") {
+			alert("userNum 입력 안하니!!");
+			return false;
+		}
+		var comContentObj = document.getElementById("com_Content");
+		if (comContentObj.value.trim() == "") {
+			alert("conment 내용 입력 안하니!!");
+			return false;
+		}
+		return true;
+	}
+</script>
+<form method="get" action="1231341.comment" onsubmit="return checkValue()">
+	<input type="submit" value="입력" id="command" name="command" /><br />
+	board Num : <input type="text" id="com_BoardNum" name="com_BoardNum" /><br />	
+	userNum : <input type="text" id="com_UserNum" name="com_UserNum" /> <br />	
+	comment content : <br />	<textarea id="com_Content" name="com_Content"></textarea>
+
+</form>
+</body>
+</html>

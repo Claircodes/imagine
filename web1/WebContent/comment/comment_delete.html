@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function checkValue() {
+		var comNumObj = document.getElementById("com_Num");
+		if (comNumObj.value.trim()==""){
+			alert("comment num 입력안하니?");
+			return false;
+		}
+		return true;
+	}
+</script>
+
+<body>
+	<form method="get" action="comment_select.comment" onsubmit="return checkValue()">
+		Comment Num : <input type="text" id="com_Num" name="com_Num" />
+		<input type="submit" value="삭제" id="command" name="command" />
+
+	</form>
+	</body>
+</html>
