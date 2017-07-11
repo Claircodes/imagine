@@ -28,9 +28,9 @@ public class CommentServlet extends HttpServlet {
 		if (command.equals("입력")) {
 
 			HashMap hm = new HashMap();
-			String comBoardNum = req.getParameter("com_BoardNum");
-			String comUserNum = req.getParameter("com_UserNum");
-			String comContent = req.getParameter("com_Content");
+			String comBoardNum = req.getParameter("com_boardnum");
+			String comUserNum = req.getParameter("com_usernum");
+			String comContent = req.getParameter("com_content");
 
 			System.out.println(comBoardNum + "," + comUserNum + "," + comContent + "comment insert");
 			hm.put("comBoardNum", comBoardNum);
@@ -45,7 +45,7 @@ public class CommentServlet extends HttpServlet {
 		} else if (command.equals("삭제")) {
 
 			HashMap hm = new HashMap();
-			String deleteComNum = req.getParameter("com_Num");
+			String deleteComNum = req.getParameter("com_num");
 			System.out.println(deleteComNum + "번 삭제한다잉");
 			// us.deleteUser(deleteNum);
 			hm.put("deleteComNum", deleteComNum);
@@ -61,8 +61,8 @@ public class CommentServlet extends HttpServlet {
 			}
 		} else if (command.equals("업데이트")) {
 			HashMap hm = new HashMap();
-			String comNum = req.getParameter("com_Num");
-			String comContent = req.getParameter("com_Content");
+			String comNum = req.getParameter("com_num");
+			String comContent = req.getParameter("com_content");
 			System.out.println(comNum + "업데이트");
 			// us.deleteUser(deleteNum);
 
@@ -79,7 +79,7 @@ public class CommentServlet extends HttpServlet {
 			}
 		} else if (command.equals("검색")) {
 			HashMap hm = new HashMap();
-			String searchComNum = req.getParameter("com_Num");
+			String searchComNum = req.getParameter("com_num");
 			System.out.println(searchComNum  + "searchComNum");
 
 				if (!searchComNum.equals("")) {
