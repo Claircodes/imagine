@@ -6,12 +6,18 @@
 </head>
 <script >
 function checkValue(){
-	
+	val classNameObj = document.getElementById("classname_insert");
+	if (classNameObj.value.trim()==""){
+		alert("클래스 이름 안적니");
+		return false;
+	}
+	return true;
 }
 </script>
 <body>
-<form action="insert.class">
-
+<form action="insert.class" onsubmit="return checkValue()">
+Class Name : <input type="text" id="classname_insert" name="classname_insert" /><br/>
+<input type="submit" value="입력" id ="command" name="command" />
 </form>
 </body>
 </html>
