@@ -37,4 +37,12 @@
     <servlet-name>ClassinfoServlet</servlet-name>
     <url-pattern>*.classinfo</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>CalServlet</servlet-name>
+    <servlet-class>com.test.servlet.CalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CalServlet</servlet-name>
+    <url-pattern>*.cal</url-pattern>
+  </servlet-mapping>
 </web-app>
