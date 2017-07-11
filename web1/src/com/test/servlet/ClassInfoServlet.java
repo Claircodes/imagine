@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.service.ClassInfoService;
 import com.test.service.CommentService;
 import com.test.service.UserService;
 
@@ -21,7 +22,7 @@ public class ClassInfoServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
-		CommentService cs = new CommentService();
+		ClassInfoService cs = new ClassInfoService();
 
 		String command = req.getParameter("command");
 		List<Map> list;

@@ -54,12 +54,14 @@ public class BoardServlet extends HttpServlet {
 			System.out.println(boardNum  + "select board");
 
 				hm.put("boardNum", boardNum);
-				List<Map> selectList = bs.searchBoard(hm);
-				String result = "";
-				for(Map m : selectList){
-					result += m.toString();
+				
+				if (!boardNum.equals("")) {
+					hm.put("boardNum", "%" + boardNum + "%");
+				} else {
+					hm.put("boardNum", boardNum);
 				}
-				doProcess(resq, result);
+				List<Map> selectList = bs.searchBoard(hm);
+				doProcess(resq, selectList + "");
 				
 		} else if (command.equals("업데이트")) {
 			String boardTitle = req.getParameter("board_title");

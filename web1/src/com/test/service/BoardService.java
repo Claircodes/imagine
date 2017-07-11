@@ -107,7 +107,7 @@ public class BoardService {
 			con = DBConn.getCon();
 			String sql = "SELECT NUM,TITLE, CONTENT, WRITER, REG_DATE FROM board";
 			if (!hm.get("boardNum").equals("")) {
-				sql += " WHERE NUM = ?";
+				sql += " WHERE NUM like ?";
 			}
 			ps = con.prepareStatement(sql);
 			if (!hm.get("boardNum").equals("")) {

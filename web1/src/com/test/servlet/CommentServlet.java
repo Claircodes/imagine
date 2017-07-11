@@ -78,18 +78,17 @@ public class CommentServlet extends HttpServlet {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
 		} else if (command.equals("검색")) {
-			String searchNum = req.getParameter("com_Num");
 			HashMap hm = new HashMap();
-			System.out.println(searchNum + "select board");
+			String searchComNum = req.getParameter("com_Num");
+			System.out.println(searchComNum  + "searchComNum");
 
-			hm.put("searchNum", searchNum);
-			List<Map> selectList = cs.searchComment(hm);
-			String result = "";
-			for (Map m : selectList) {
-				result += m.toString();
-			}
-			doProcess(resq, result);
-
+				if (!searchComNum.equals("")) {
+					hm.put("searchComNum", "%" + searchComNum + "%");
+				} else {
+					hm.put("searchComNum", searchComNum);
+				}
+				List<Map> selectList = cs.searchComment(hm);
+				doProcess(resq, selectList + "");
 		}
 	}
 

@@ -105,12 +105,12 @@ public class CommentService {
 		try {
 			con = DBConn.getCon();
 			String sql = "select ui_num, b_num, content, reg_date from comment_info ";
-			if (!hm.get("searchNum").equals("")) {
-				sql += " WHERE Num = ?";
+			if (!hm.get("searchComNum").equals("")) {
+				sql += " WHERE Num like ?";
 			}
 			ps = con.prepareStatement(sql);
-			if (!hm.get("searchNum").equals("")) {
-				ps.setString(1, hm.get("searchNum"));
+			if (!hm.get("searchComNum").equals("")) {
+				ps.setString(1, hm.get("searchComNum"));
 			}
 			ResultSet rs = ps.executeQuery();
 			List<Map> list = new ArrayList<Map>();
