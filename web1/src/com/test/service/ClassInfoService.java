@@ -103,7 +103,7 @@ public class ClassInfoService {
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "select ui_num, b_num, content, reg_date from class_info ";
+			String sql = "select content from class_info ";
 			if (!hm.get("searchNum").equals("")) {
 				sql += " WHERE class_num = ?";
 			}
@@ -117,8 +117,6 @@ public class ClassInfoService {
 				HashMap hm1 = new HashMap();
 				hm1.put("ui_num", rs.getString("ui_num"));
 				hm1.put("b_num", rs.getString("b_num"));
-				hm1.put("content", rs.getString("content"));
-				hm1.put("reg_date", rs.getString("reg_date"));		
 				list.add(hm1);
 			}
 			return list;

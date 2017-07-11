@@ -29,4 +29,12 @@
     <servlet-name>CommentServlet</servlet-name>
     <url-pattern>*.comment</url-pattern>
   </servlet-mapping>
+      <servlet>
+    <servlet-name>ClassServlet</servlet-name>
+    <servlet-class>com.test.servlet.ClassServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClassServlet</servlet-name>
+    <url-pattern>*.class</url-pattern>
+  </servlet-mapping>
 </web-app>
