@@ -10,15 +10,15 @@ import java.util.Map;
 
 import com.test.common.DBConn;
 
-public class ClassService {
+public class ClassinfoService {
 
 	public boolean insertClass(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "insert into class_info(class_name)";
-			sql += " values (?)";
+			String sql = "INSERT INTO class_info(class_name) ";
+			sql += "VALUES (?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, hm.get("classNameInsert"));
 

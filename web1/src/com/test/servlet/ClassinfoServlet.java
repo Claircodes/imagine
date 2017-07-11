@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.test.service.ClassService;
+import com.test.service.ClassinfoService;
 import com.test.service.CommentService;
 import com.test.service.UserService;
 
-public class ClassServlet extends HttpServlet {
+public class ClassinfoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
-		ClassService cs = new ClassService();
+		ClassinfoService cs = new ClassinfoService();
 
 		String command = req.getParameter("command");
 		List<Map> list;
