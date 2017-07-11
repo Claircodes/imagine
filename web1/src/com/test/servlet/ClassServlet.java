@@ -12,33 +12,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.test.service.ClassInfoService;
+import com.test.service.ClassService;
 import com.test.service.CommentService;
 import com.test.service.UserService;
 
-public class ClassInfoServlet extends HttpServlet {
+public class ClassServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
-		ClassInfoService cs = new ClassInfoService();
+		ClassService cs = new ClassService();
 
 		String command = req.getParameter("command");
 		List<Map> list;
+		
 		if (command.equals("입력")) {
 
 			HashMap hm = new HashMap();
-			String comBoardNum = req.getParameter("com_BoardNum");
-			String comUserNum = req.getParameter("com_UserNum");
-			String comContent = req.getParameter("com_Content");
+			String classNameInsert = req.getParameter("classname_insert");
+			System.out.println(classNameInsert + "class info insert");
+			hm.put("classNameInsert", classNameInsert);
 
-			System.out.println(comBoardNum + "," + comUserNum + "," + comContent + "comment insert");
-			hm.put("comBoardNum", comBoardNum);
-			hm.put("comUserNum", comUserNum);
-			hm.put("comContent", comContent);
-
-			if (cs.insertComment(hm)) {
+			if (cs.insertClass(hm)) {
 				doProcess(resq, "저장이 잘 되었구나");
 			} else {
 				doProcess(resq, "값 입력해야지 짜식아");

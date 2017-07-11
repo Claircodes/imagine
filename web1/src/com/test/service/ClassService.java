@@ -10,18 +10,17 @@ import java.util.Map;
 
 import com.test.common.DBConn;
 
-public class ClassInfoService {
+public class ClassService {
 
-	public boolean insertComment(HashMap<String, String> hm) {
+	public boolean insertClass(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "insert into class_info(class_num, class_name)";
-			sql += " values (?,?)";
+			String sql = "insert into class_info(class_name)";
+			sql += " values (?)";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("class_num"));
-			ps.setString(2, hm.get("class_name"));
+			ps.setString(1, hm.get("classNameInsert"));
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
