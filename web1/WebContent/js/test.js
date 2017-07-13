@@ -12,13 +12,17 @@ function checkValue(fObj){
 		}
 		if (i%2==1&&fObj.elements[i].value!="" ){
 			var checknum = new Number(fObj.elements[i].value);
-				
-			if (isNaN(checknum)){
-				alert("숫자 입력하라고!");
-				fObj.elements[i].value="";
-				fObj.elements[i].focus();
-			return false;
-			}				
+			try {	
+				if (isNaN(checknum)){
+					alert("숫자 입력하라고!");
+					fObj.elements[i].value="";
+					fObj.elements[i].focus();
+					return false;
+				}
+			}catch(e){
+				alert(e);
+				throw e;
+			}
 		}
 		
 		if(i==fObj.elements.length-1){
