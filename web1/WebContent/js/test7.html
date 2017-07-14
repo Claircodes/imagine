@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function makeInput() {
+		var mcObj = document.getElementById("makeCnt");
+		var divObj = document.getElementById("gDiv");
+		var checkNum = new Number(mcObj.value);
+		var inputStr = "";
+		if (isNaN(checkNum)) {
+			alert("숫자라고");
+			mcObj.value = "";
+			mcObj.focus();
+			return false;
+		}
+		for (var i = 1; i <= checkNum; i++) {
+			inputStr += "<input type='text' name='txt'/>";
+		}
+		divObj.innerHTML = inputStr;
+	}
+
+	function searchInput() {
+		var txtObj = document.getElementsByName("txt");
+		var svObj = document.getElementById("searchValue");
+		var t = "";
+
+		for (var i = 0; i < txtObj.length; i++) {
+			t = txtObj[i].value;
+			if (t.indexOf(svObj.value) != -1) {
+
+				for (var j = 0; j < txtObj.length; j++) {
+					tj = txtObj[j].value;
+					if (tj.indexOf(svObj.value) != -1) {
+						txtObj[j].value = "찾았다";
+					}
+				}
+				txtObj[i].focus();
+				return;
+			}
+		}
+
+	}
+</script>
+<body>
+	생성 갯수 :
+	<input type="text" id="makeCnt" name="makeCnt" />
+	<input type="button" value="생성" onclick="makeInput()" />
+	<div id="gDiv"></div>
+	<input type="text" id="searchValue" name="searchValue" />
+	<input type="button" value="값찾기" onclick="searchInput()" />
+</body>
+</html>
