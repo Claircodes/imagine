@@ -4,26 +4,79 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 </head>
-<body>
-<form action="/web1/sign.user">
-수정할 유저 번호 : <input type="text" name="user_num" id="user_num"/>
-<table>
+<script>
+	function getHttpXmlObj() {
+		if (window.XMLHttpRequest) {
+			return new XMLHttpReauest();
+		} else if (window.ActiveXObject) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		alert("해당 브라우저가 Ajax를 지원하지 않습니다.");
+	}
 
-<tr>
-	<td>name</td>
-	<td><input type="text" name="name" id="name"/></td>
-</tr>
-<tr>
-	<td>class num</td>
-	<td><input type="text" name="class_num" id="class_num"/></td>
-</tr>
-<tr>
-	<td>age</td>
-	<td><input type="text" name="age" id="age"/></td>
-</tr>
-</table>
-<input type="submit" value="수정"/>
-<input type="hidden" name="command" id="command" value="UPDATE"/>
-</form>
+	function doUpdate() {
+		var idStr = "usernum,userpwd,username,age,hp1,hp2,hp3,adress,command";
+		var params = "?";
+		var ids = idStr.split(",");
+		for (var i = 0; i < ids.length; i++) {
+			var elObj = document.getElementById(ids[i]);
+			if (document.getElementById("usernum").value == "") {
+				alert("user num 값 입력안했어");
+				elObj.focus();
+				return;
+			}
+			params += ids[i] + "=" + document.getElementById(ids[i]).value+ "&";
+
+		}
+	}
+
+	var xhr = getHttpXmlObj();
+	var method = "get";
+	var url = "update.user"
+	var aSync = true;
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				var result = decodeURIComponent(xhr.responseText);
+				document.getElementById("bd_div").innerHTML += xhr.responseText;
+			} else {
+				document.getElementById("bd_div").innerHTML += xhr.responseText;
+			}
+		}
+	}
+</script>
+<body>
+	수정할 유저 번호 :
+	<input type="text" name="usernum" id="usernum" size="10" />
+	<table>
+
+		<tr>
+			<td>pwd</td>
+			<td><input type="text" name="userpwd" id="userpwd" /></td>
+		</tr>
+		<tr>
+			<td>name</td>
+			<td><input type="text" name="username" id="username" /></td>
+		</tr>
+		<tr>
+			<td>age</td>
+			<td><input type="text" name="age" id="age" /></td>
+		</tr>
+
+		<tr>
+			<td>phone</td>
+			<td><input type="text" name="hp1" id="hp1" size="4"
+				maxlength="4" />-<input type="text" name="hp2" id="hp2" size="4"
+				maxlength="4" />-<input type="text" name="hp3" id="hp3" size="4"
+				maxlength="4" /></td>
+		</tr>
+		<tr>
+			<td>address</td>
+			<td><input type="text" name="address" id="address" /></td>
+		</tr>
+	</table>
+	<input type="button" value="수정" onclick="" />
+	<input type="hidden" name="command" id="command" value="UPDATE" />
+
 </body>
 </html>

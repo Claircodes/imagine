@@ -22,33 +22,33 @@ public class UserServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		UserService us = new UserService();
 
-//		String name1 = req.getParameter("name");
-//		String pwd1 = req.getParameter("pass");
-//		System.out.println("input html에서 너님이 던진값 =>"+ name1+pwd1);
-		String op1= req.getParameter("op");
-		System.out.println("select.html 에서 너님이 던진값 =>"+ op1);		
-		
 		String command = req.getParameter("command");
 		HashMap hm = new HashMap();
 		List<Map> list = new ArrayList<Map>();
 
-		if (command==null){
-			return ;
+		if (command == null) {
+			return;
 		}
-		
+
 		if (command.equals("SIGNIN")) {
 
-			String id = req.getParameter("id");
-			String pwd = req.getParameter("pwd");
-			String name = req.getParameter("name");
-			String class_num = req.getParameter("class_num");
+			String userid = req.getParameter("userid");
+			String userpwd = req.getParameter("userpwd");
+			String username = req.getParameter("username");
+			String address = req.getParameter("address");
+			String hp1 = req.getParameter("hp1");
+			String hp2 = req.getParameter("hp2");
+			String hp3 = req.getParameter("hp3");
 			String age = req.getParameter("age");
 
-			System.out.println(id + "," + pwd + "," + name + "," + class_num + ", " + age + "회원가입");
-			hm.put("id", id);
-			hm.put("pwd", pwd);
-			hm.put("name", name);
-			hm.put("class_num", class_num);
+			System.out.println(userid + "," + userpwd + "," + username + "," + address + ", " + age + "," + "회원가입");
+			hm.put("userid", userid);
+			hm.put("userpwd", userpwd);
+			hm.put("username", username);
+			hm.put("address", address);
+			hm.put("hp1", hp1);
+			hm.put("hp2", hp2);
+			hm.put("hp3", hp3);
 			hm.put("age", age);
 			// us.insertUser(hm);
 			if (us.insertUser(hm)) {
@@ -57,15 +57,15 @@ public class UserServlet extends HttpServlet {
 				doProcess(resq, "값 입력해야지 회원가입하지 짜식아");
 			}
 		} else if (command.equals("DELETE")) {
-			String deleteNum = req.getParameter("user_num");
+			String deleteNum = req.getParameter("usernum");
 			System.out.println(deleteNum + "번 삭제한다잉");
 			// us.deleteUser(deleteNum);
-			hm.put("num", deleteNum);
+			hm.put("deleteNum", deleteNum);
 			if (us.deleteUser(hm)) {
 				// doProcess(resq, "삭제했다");
 				list.add(hm);
 				// for (Map m : list) {
-				doProcess(resq, list + "");
+				doProcess(resq, "user의 num "+deleteNum + "번 삭제 하엿습니다.");
 				// }
 			} else {
 				doProcess(resq, "값 입력해야지 삭제하지 짜식아");
@@ -101,7 +101,16 @@ public class UserServlet extends HttpServlet {
 			}
 			List<Map> selectList = us.searchUser(hm);
 			doProcess(resq, selectList + "");
-		
+
+		} else if (command.equals("LOGIN")) {
+			String loginId = req.getParameter("userid");
+			String loginPwd = req.getParameter("userpwd");
+			System.out.println(loginId + "," + loginPwd + " 검색한다.");
+
+			hm.put("loginId", loginId);
+			hm.put("loginPwd", loginPwd);
+
+			doProcess(resq, us.loginUser(hm));
 		}
 	}
 
@@ -112,7 +121,7 @@ public class UserServlet extends HttpServlet {
 	public void doProcess(HttpServletResponse resq, String writeStr) throws IOException {
 		resq.setContentType("text/html; charset = UTF-8");
 		PrintWriter out = resq.getWriter();
-		out.print(writeStr);
+		out.println(writeStr);
 
 	}
 }

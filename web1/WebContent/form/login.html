@@ -5,34 +5,65 @@
 <title>Insert title here</title>
 </head>
 <script>
-function checkLogin() {
-	var idObj = document.getElementById("id");
-	var pwdObj = document.getElementById("pwd");
-	
-	if (idObj.value==""){
-		if (pwdObj.value==""){
-			alert("id,pwd 값 안입력했어");
-		}else{
-			alert("id 값 안입력했어");
+	function getHttpXmlObj() {
+		if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		idObj.focus();
-		return false;
-	}	
-	
-	if (pwdObj.value==""){
-		alert("pwd 값 안입력했어");
-		pwdObj.focus();
-		return false;
+		alert("해당 브라우저가 Ajax를 지원하지 않습니다.");
 	}
-	
-	return true;
-}
+
+	function doLogin() {
+		var idStr = "userid,userpwd,command";
+		var params = "?";
+		var ids = idStr.split(",");
+		for (var i = 0; i < ids.length; i++) {
+			var elObj = document.getElementById(ids[i]);
+
+			if (document.getElementById("userid").value == "") {
+				alert("id값 안입력했어");
+				elObj.focus();
+				return;
+			}
+			if (document.getElementById("userpwd").value == "") {
+				alert("pwd 값 안입력했어");
+				elObj.focus();
+				return;
+			}
+			params += ids[i] + "=" + document.getElementById(ids[i]).value+ "&";
+		}
+		var xhr = getHttpXmlObj();
+		var method = "get";
+		var url = "login.user"
+		var aSync = true;
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					var result = decodeURIComponent(xhr.responseText);
+					document.getElementById("bd_div").innerHTML += xhr.responseText;
+				} else {
+					document.getElementById("bd_div").innerHTML += xhr.responseText;
+				}
+			}
+		}
+		xhr.open(method, url + params, aSync);
+		if (method == "post") {
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		}
+		xhr.send();
+	}
 </script>
 <body>
-	<form method="get" action="test.user" onsubmit="return checkLogin()">
-		아이디: <input type="text" name="id" id="id" /> 
-		비밀번호: <input type="password" name="pwd" id="pwd" />
-		<input type="submit" value="로그인" />
-	</form>
+
+	아이디:
+	<input type="text" name="userid" id="userid" /> 
+	비밀번호:
+	<input type="password" name="userpwd" id="userpwd" />
+	<input type="button" value="로그인" onclick="doLogin()" />
+    <br/>
+	<div id="bd_div"></div>
+	<br/>
+	<input type="hidden" name="command" id="command" value="LOGIN" />
 </body>
 </html>

@@ -4,11 +4,56 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 </head>
+<script>
+function getHttpXmlObj() {
+	if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else if (window.ActiveXObject) {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	alert("해당 브라우저가 Ajax를 지원하지 않습니다.");
+}
+
+function doDelete() {
+	var idStr = "usernum,command";
+	var params = "?";
+	var ids = idStr.split(",");
+	for (var i = 0; i < ids.length; i++) {
+		var elObj = document.getElementById(ids[i]);
+
+		if (document.getElementById("usernum").value == "") {
+			alert("user num값 안입력했어");
+			elObj.focus();
+			return;
+		}
+		params += ids[i] + "=" + document.getElementById(ids[i]).value+"&";
+	}
+	var xhr = getHttpXmlObj();
+	var method = "get";
+	var url = "delete.user"
+	var aSync = true;
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				var result = decodeURIComponent(xhr.responseText);
+				alert(result);
+			} else {
+				document.getElementById("bd_div").innerHTML += xhr.responseText;
+			}
+		}
+	}
+	xhr.open(method, url + params, aSync);
+	if (method == "post") {
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	}
+	xhr.send();
+}
+</script>
 <body>
-<form action="/web1/sign.user">
-지울 유저 번호 : <input type="text" name="user_num" id="user_num"/>
-<input type="submit" value="삭제"/>
+지울 유저 번호 : <input type="text" name="usernum" id="usernum"/>
+<input type="button" value="삭제" onclick="doDelete()"/>
+<div  id="bd_div">
 <input type="hidden" name="command" id="command" value="DELETE"/>
-</form>
+
 </body>
 </html>
