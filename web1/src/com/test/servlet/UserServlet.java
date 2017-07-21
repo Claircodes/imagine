@@ -62,20 +62,21 @@ public class UserServlet extends HttpServlet {
 			
 			
 		} else if (command.equals("DELETE")) {
-			System.out.println(userNum + " 번 ★삭제 완료★ ");
-
-			if (us.deleteUser(ui)) {
-				doProcess(resq, "usernum " + userNum + " 번 삭제 하였습니다.");
-			} else {
-				doProcess(resq, " 삭제할 수 없구나. ");
+			boolean isDelete = us.deleteUser(ui);
+			String result = "";
+			if(isDelete){
+				result = " ★삭제 완료★ ";
+			}else{
+				result = " 삭제할 수 없구나. ";
 			}
+			doProcess(resq, result);
 
 			
 		} else if (command.equals("UPDATE")) {
-			System.out.println(userNum + " 번 ★수정 완료★ ");
+			System.out.println(userNum + " 번 =UPDATE= ");
 
 			if (us.updateUser(ui)) {
-				doProcess(resq, userNum + ", " + userId);
+				doProcess(resq, userNum + ", " + userId+" ★수정 완료★ ");
 			} else {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
@@ -89,8 +90,8 @@ public class UserServlet extends HttpServlet {
 			List<UserInfo> userList = us.selectUser(ui);
 			String result = "번호{/}이름{/}아이디{/}나이{+}";
 			result += "dis{/}en{/}en{/}en{+}";
-			for (int i = 0; i < userList.size(); i++) {
-				result += userList.get(i).getUserNum() + "{/}" + userList.get(i).getUserName() + "{/}"	+ userList.get(i).getUserId() + "{/}" + userList.get(i).getAge() + "{+}";
+			for(UserInfo ui2 : userList){
+				result += ui2.getUserNum() + "{/}" + ui2.getUserName() + "{/}" + ui2.getUserId() + "{/}" + ui2.getAge()+ "{+}"; 
 			}
 			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
@@ -100,7 +101,6 @@ public class UserServlet extends HttpServlet {
 			System.out.println("id= " + userId + ", pwd= " + userPwd + " ★로그인 완료★ ");
 			doProcess(resq, us.loginUser(ui));
 		}
-		
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse reqs) throws IOException {

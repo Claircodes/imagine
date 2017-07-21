@@ -186,24 +186,23 @@ public class UserService {
 		PreparedStatement ps = null;
 		try {
 			String sql = "select usernum,userid,username,userpwd,age,address,hp1,hp2,hp3 from user_info";
-			if (ui.getUserName() != null) {
+			if (ui.getUserName() != null && !ui.getUserName().equals("")){
 				sql += " where username like ?";
 			}
 			con = DBConn.getCon();
 			ps = con.prepareStatement(sql);
-			if (ui.getUserName() != null) {
+			if (ui.getUserName() != null && !ui.getUserName().equals("")){
 				ps.setString(1, ui.getUserName());
 			}
 			ResultSet rs = ps.executeQuery();
 			List<UserInfo> userList = new ArrayList<UserInfo>();
 			while (rs.next()) {
 				UserInfo ui1 = new UserInfo();
-				ui1.setUserNum(Integer.parseInt(rs.getString("usernum")));
-				System.out.println(Integer.parseInt(rs.getString("usernum")));
+				ui1.setUserNum(rs.getInt("usernum"));
 				ui1.setUserId(rs.getString("userid"));
 				ui1.setUserName(rs.getString("username"));
 				ui1.setUserPwd(rs.getString("userpwd"));
-				ui1.setAge(Integer.parseInt(rs.getString("age")));
+				ui1.setAge(rs.getInt("age"));
 				ui1.setAddress(rs.getString("address"));
 				ui1.setHp1(rs.getString("hp1"));
 				ui1.setHp2(rs.getString("hp2"));
