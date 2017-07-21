@@ -2,16 +2,14 @@ package com.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.dto.UserInfo;
 import com.test.service.UserService;
 
 public class UserServlet extends HttpServlet {
@@ -21,101 +19,80 @@ public class UserServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 		UserService us = new UserService();
+		UserInfo ui = new UserInfo();
+
+		String userNum = req.getParameter("usernum");
+		String userId = req.getParameter("userid");
+		String userPwd = req.getParameter("userpwd");
+		String userName = req.getParameter("username");
+		String address = req.getParameter("address");
+
+		String age = req.getParameter("age");
+		String hp1 = req.getParameter("hp1");
+		String hp2 = req.getParameter("hp2");
+		String hp3 = req.getParameter("hp3");
+
+		if (userNum != null) {
+			ui.setUserNum(Integer.parseInt(userNum));
+		}
+		ui.setUserId(userId);
+		ui.setUserPwd(userPwd);
+		ui.setUserName(userName);
+		ui.setAddress(address);
+		if (age != null) {
+			ui.setAge(Integer.parseInt(age));
+		}
+		ui.setHp1(hp1);
+		ui.setHp2(hp2);
+		ui.setHp3(hp3);
 
 		String command = req.getParameter("command");
-		HashMap hm = new HashMap();
-		List<Map> list = new ArrayList<Map>();
 
 		if (command == null) {
 			return;
 		}
 
 		if (command.equals("SIGNIN")) {
-
-			String userid = req.getParameter("userid");
-			String userpwd = req.getParameter("userpwd");
-			String username = req.getParameter("username");
-			String address = req.getParameter("address");
-			String hp1 = req.getParameter("hp1");
-			String hp2 = req.getParameter("hp2");
-			String hp3 = req.getParameter("hp3");
-			String age = req.getParameter("age");
-
-			System.out.println(userid + "," + userpwd + "," + username + "," + address + ", " + age + "," + "회원가입");
-			hm.put("userid", userid);
-			hm.put("userpwd", userpwd);
-			hm.put("username", username);
-			hm.put("address", address);
-			hm.put("hp1", hp1);
-			hm.put("hp2", hp2);
-			hm.put("hp3", hp3);
-			hm.put("age", age);
-			// us.insertUser(hm);
-			if (us.insertUser(hm)) {
-				doProcess(resq, "저장이 잘 되었구나");
+			System.out.println("id= " + userId + "pwd= " + userPwd + "name= " + userName + "address= " + address + "age= " + age + "hp= " + hp1 + "-" + hp2 + "-" + hp3 + " ★회원가입★ ");
+			if (us.insertUser(ui)) {
+				doProcess(resq, " 회원가입이 되었구나! ");
 			} else {
-				doProcess(resq, "값 입력해야지 회원가입하지 짜식아");
+				doProcess(resq, " 너를 받아줄 수 없구나. ");
 			}
 		} else if (command.equals("삭제")) {
-			String deleteNum = req.getParameter("usernum");
-			System.out.println(deleteNum + "번 삭제한다잉");
-			// us.deleteUser(deleteNum);
-			hm.put("deleteNum", deleteNum);
-			if (us.deleteUser(hm)) {
-				// doProcess(resq, "삭제했다");
-				list.add(hm);
-				// for (Map m : list) {
-				doProcess(resq, "user의 num "+deleteNum + "번 삭제 하엿습니다.");
-				// }
+			System.out.println(userNum + " 번 ★삭제★ ");
+
+			if (us.deleteUser(ui)) {
+				doProcess(resq, "usernum " + userNum + " 번 삭제 하였습니다.");
 			} else {
-				doProcess(resq, "값 입력해야지 삭제하지 짜식아");
+				doProcess(resq, " 삭제할 수 없구나. ");
 			}
+
 		} else if (command.equals("수정")) {
-			String username = req.getParameter("username");
-			String userid = req.getParameter("userid");
-			String age = req.getParameter("age");
-			String usernum = req.getParameter("usernum");
-			System.out.println(usernum + "업데이트");
-			// us.deleteUser(deleteNum);
-			
-			hm.put("username", username);
-			hm.put("userid", userid);
-			hm.put("age", age);
-			hm.put("usernum", usernum);
-			
-			if (us.updateUser(hm)) {
-				list.add(hm);
-				// for (Map m : list) {
-				doProcess(resq, list + "");
-				// }
+			System.out.println(userNum + " 번 ★업데이트★ ");
+
+			if (us.updateUser(ui)) {
+				doProcess(resq, userNum + ", " + userId);
 			} else {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
-		}  else if (command.equals("SELECT")) {
-			String name = req.getParameter("username");
-			System.out.println("이름 : " + name);
-			hm = new HashMap();
-			if (name != null && !name.equals("")) {
-				hm.put("name", "%" + name + "%");
+		} else if (command.equals("SELECT")) {
+			System.out.println("이름 : " + userName);
+			if (userName != null && !userName.equals("")) {
+				ui.setUserName("%" + userName + "%");
 			}
-			List<Map> userList  = us.selectUser(hm);
-			String result="번호{/}이름{/}아이디{/}나이{+}";
-			result+="dis{/}en{/}en{/}en{+}";
-			for(Map m : userList){
-				result += m.get("usernum") + "{/}" + m.get("username") + "{/}" + m.get("userid") + "{/}" + m.get("age") + "{+}"; 
+			List<UserInfo> userList = us.selectUser(ui);
+			String result = "번호{/}이름{/}아이디{/}나이{+}";
+			result += "dis{/}en{/}en{/}en{+}";
+			for (int i = 0; i < userList.size(); i++) {
+				result += userList.get(i).getUserNum() + "{/}" + userList.get(i).getUserName() + "{/}"	+ userList.get(i).getUserId() + "{/}" + userList.get(i).getAge() + "{+}";
 			}
-			result = result.substring(0, result.length()-3);
+			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
-			
+
 		} else if (command.equals("LOGIN")) {
-			String loginId = req.getParameter("userid");
-			String loginPwd = req.getParameter("userpwd");
-			System.out.println(loginId + "," + loginPwd + " 검색한다.");
-
-			hm.put("loginId", loginId);
-			hm.put("loginPwd", loginPwd);
-
-			doProcess(resq, us.loginUser(hm));
+			System.out.println("id= " + userId + ", pwd= " + userPwd + " 검색한다.");
+			doProcess(resq, us.loginUser(ui));
 		}
 	}
 

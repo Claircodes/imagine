@@ -23,7 +23,7 @@
 			return;
 		}else{
 			params += "usernum="+ userNum +"&";
-			params +="command="+document.getElementById("command1").value+"&";
+			params +="command=삭제&";
 		}
 
 		var xhr = getHttpXmlObj();
@@ -48,36 +48,13 @@
 	}
 	function doSujung(userNum){
 		var idStr = "username"+userNum+",userid"+userNum+",age"+userNum+",command";
-		var tidStr = "username,userid,age,command";	
-		var lengthStr = "30,100,100,100";
-		var typeStr = "s,s,s,s"
 		var params="?";
 		var ids = idStr.split(",");
-		var tids = tidStr.split(",");
-		var lengths = lengthStr.split(",");
-		var types = typeStr.split(",")
+		var tids = idStr.split(userNum+",");
+		
 		for(var i=0;i<ids.length;i++){
-			var maxLength = new Number(lengths[i]);
-			var typeVali = types[i];
-			var elObj =  document.getElementById(ids[i]);
-			if(!isNaN(maxLength)){
-				if(elObj.value.length>maxLength){
-					alert("제한길이를 넘었습니다. 확인해주세요");
-					elObj.value="";
-					elObj.focus();
-					return;
-				}
-			}
-			if(typeVali=="n"){
-				if(isNaN(new Number(elObj.value))){
-					alert("숫자만 입력해주세요.");
-					elObj.value="";
-					elObj.focus();
-					return;
-				}
-			}
 			params +="usernum="+userNum+"&";
-			params += tids[i]+"="+ elObj.value +"&";
+			params += tids[i]+"="+ document.getElementById(ids[i]).value +"&";
 			params +="command=수정&";
 		}
 		var xhr = getHttpXmlObj();
@@ -157,13 +134,13 @@
 		   						tableStr += "<td>" + columns[j] + "</td>"
 		   					}else{
 		   						if(tdEnables[j]=="en"){
-		   							tableStr += "<td><input type='text' ";
+		   							tableStr += "<td><input type='text'";
 		   							if (j==1){
 		   								tableStr += " id='username"+userNum+"' ";
 		   							}else if(j==2){
-		   								tableStr += " id='userid"+userNum+"'";
+		   								tableStr += " id='userid"+userNum+"' ";
 		   							}else if(j==3){
-		   								tableStr += " id='age"+userNum+"'";
+		   								tableStr += " id='age"+userNum+"' ";
 		   							}
 		   							tableStr += " value='" + columns[j] + "' /></td>"
 		   						}else{
@@ -175,8 +152,8 @@
 	   						tableStr += "<td>삭제</td>";
 	   						tableStr += "<td>수정</td>";
 	   					}else{
-	   						tableStr += "<td><input type='button' id='command1' name='command1' value='삭제' onclick='doDelete(" + userNum + ")'/></td>";
-	   						tableStr += "<td><input type='button' id='command2' name='command2' value='수정' onclick='doSujung("+userNum+")'/></td>";
+	   						tableStr += "<td><input type='button'  value='삭제' onclick='doDelete(" + userNum + ")'/></td>";
+	   						tableStr += "<td><input type='button' value='수정' onclick='doSujung("+userNum+")'/></td>";
 	   					}
 		   				tableStr += "</tr>";
 		   			}
@@ -184,9 +161,9 @@
 		   				tableStr += "<tr><td colspan='3'>니가 검색한거 없어 임마</td></tr>"
 		   			}
 		   			tableStr+="</table>";
-		   			document.getElementById("bd_div").innerHTML += tableStr;
+		   			document.getElementById("bd_div").innerHTML = tableStr;
 	   			}else{
-	   				document.getElementById("bd_div").innerHTML += xhr.responseText;
+	   				document.getElementById("bd_div").innerHTML = xhr.responseText;
 	   			}
 	        }
 	    }
