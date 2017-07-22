@@ -26,6 +26,7 @@ public class UserService {
 			ps.setString(3, ui.getUserName());
 			ps.setInt(4, ui.getAge());
 			ps.setString(5, ui.getAddress());
+			
 			ps.setString(6, ui.getHp1());
 			ps.setString(7, ui.getHp2());
 			ps.setString(8, ui.getHp3());

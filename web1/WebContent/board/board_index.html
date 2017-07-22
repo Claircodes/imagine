@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 처음 화면</title>
+</head>
+<script src="/js/AjaxBoard.js"></script>
+<script>
+	function getHttpXmlObj() {
+		if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		alert("해당 브라우져가  Ajax를 지원하지 않습니다.");
+	}
+
+	function doDelete(boardNum) {
+	    var userpwd = prompt("비밀번호를 입력해주세요", "");
+		var params = "?";
+		var userid= document.getElementById("boardUI"+boardNum).value;
+		
+		params += "binum="+boardNum+"&creusr="+userid+"&bipwd="+userpwd+"&command=DELETE&";
+		var au = new AjaxUtil(params);
+		au.changeCallBack(function(){
+			if (au.xhr.readyState == 4) {
+				if (au.xhr.status == 200) {
+					var result = decodeURIComponent(au.xhr.responseText);
+					doSelect()
+					alert(result);
+					} else {
+						document.getElementById("bd_div").innerHTML += au.xhr.responseText;
+						}
+				}
+			});
+		au.send();
+	}
+	function doUpdate(boardNum) {
+	    var userpwd = prompt("비밀번호를 입력해주세요", "");
+		var params = "?";
+		params += "binum="+boardNum+"&";
+		params += "bititle=" +document.getElementById("boardTitle"+boardNum).value+"&";
+		params += "bicontent="+ document.getElementById("boardContent"+boardNum).value+"&";
+		params += "creusr="+ document.getElementById("boardUI"+boardNum).value+"&";
+		params += "bipwd="+userpwd+"&command=UPDATE&";
+		var au = new AjaxUtil(params);
+		au.changeCallBack(function(){
+			if (au.xhr.readyState == 4) {
+				if (au.xhr.status == 200) {
+					var result = decodeURIComponent(au.xhr.responseText);
+					doSelect()
+					alert(result);
+					} else {
+						document.getElementById("bd_div").innerHTML += au.xhr.responseText;
+						}
+				}
+			});
+		au.send();
+	}
+	function doSelect() {
+		var params = "?";
+		params += "command=MAIN&";
+
+		var au = new AjaxUtil(params);
+		au.changeCallBack(function() {
+					if (au.xhr.readyState == 4) {
+						if (au.xhr.status == 200) {
+							var result = decodeURIComponent(au.xhr.responseText);
+							var rows = result.split("{+}");
+							var tdEnables = rows[1].split("{/}");
+							var tableStr = "<table border='1'>";
+							for (var i = 0; i < rows.length; i++) {
+								if (i == 1) {
+									continue;
+								}
+								tableStr += "<tr>";
+								var columns = rows[i].split("{/}");
+								var boardNum;
+								for (var j = 0; j < columns.length; j++) {
+									if (j == 0) {
+										boardNum = columns[j];
+									}
+									if (i == 0) {
+										tableStr += "<td>" + columns[j]+ "</td>";
+									} else {
+										if (tdEnables[j] == "en") {
+											tableStr += "<td><input type='text'";
+											if (j == 1) {
+												tableStr += " id='boardTitle"	+ boardNum + "' ";
+											} else if (j == 2) {
+												tableStr += " id='boardContent"+ boardNum + "' ";
+											} else if (j == 3) {
+												tableStr += " id='boardUI"+ boardNum + "' ";
+											}else if (j == 4) {
+												tableStr += " id='boardDate"+ boardNum + "' ";
+											}
+											tableStr += " value='" + columns[j]+ "' /></td>"
+										} else {
+											tableStr += "<td>" + columns[j]+ "</td>";
+										}
+									}
+								}
+								if (i == 0) {
+									tableStr += "<td>삭제</td>";
+									tableStr += "<td>수정</td>";
+								} else {
+									tableStr += "<td><input type='button' value='삭제' onclick='doDelete("+boardNum+")'/></td>";
+									tableStr += "<td><input type='button' value='수정' onclick='doUpdate("+boardNum+")'/></td>";
+								}
+								tableStr += "</tr>";
+							}
+							tableStr += "</table>";
+							document.getElementById("bd_div").innerHTML = tableStr;
+						} else {
+							document.getElementById("bd_div").innerHTML = xhr.responseText;
+						}
+					}
+				});
+		au.send();
+	}
+</script>
+<body onload="doSelect()">
+
+	<div id="bd_div"></div>
+</body>
+</html>
