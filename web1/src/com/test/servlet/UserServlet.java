@@ -51,37 +51,35 @@ public class UserServlet extends HttpServlet {
 		if (command == null) {
 			return;
 		}
-		
+
 		if (command.equals("SIGNIN")) {
-			System.out.println("id= " + userId + ", pwd= " + userPwd + ", name= " + userName + ", address= " + address + ", age= " + age + ", hp= " + hp1 + "-" + hp2 + "-" + hp3 + " ★회원가입 완료★ ");
+			System.out.println("id= " + userId + ", pwd= " + userPwd + ", name= " + userName + ", address= " + address
+					+ ", age= " + age + ", hp= " + hp1 + "-" + hp2 + "-" + hp3 + " ★회원가입 완료★ ");
 			if (us.insertUser(ui)) {
 				doProcess(resq, " 회원가입이 되었구나! ");
 			} else {
 				doProcess(resq, " 너를 받아줄 수 없구나. ");
 			}
-			
-			
+
 		} else if (command.equals("DELETE")) {
 			boolean isDelete = us.deleteUser(ui);
 			String result = "";
-			if(isDelete){
+			if (isDelete) {
 				result = " ★삭제 완료★ ";
-			}else{
+			} else {
 				result = " 삭제할 수 없구나. ";
 			}
 			doProcess(resq, result);
 
-			
 		} else if (command.equals("UPDATE")) {
 			System.out.println(userNum + " 번 =UPDATE= ");
 
 			if (us.updateUser(ui)) {
-				doProcess(resq, userNum + ", " + userId+" ★수정 완료★ ");
+				doProcess(resq, userNum + ", " + userId + " ★수정 완료★ ");
 			} else {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
-			
-			
+
 		} else if (command.equals("SELECT")) {
 			System.out.println("이름 : " + userName);
 			if (userName != null && !userName.equals("")) {
@@ -90,16 +88,18 @@ public class UserServlet extends HttpServlet {
 			List<UserInfo> userList = us.selectUser(ui);
 			String result = "번호{/}이름{/}아이디{/}나이{+}";
 			result += "dis{/}en{/}en{/}en{+}";
-			for(UserInfo ui2 : userList){
-				result += ui2.getUserNum() + "{/}" + ui2.getUserName() + "{/}" + ui2.getUserId() + "{/}" + ui2.getAge()+ "{+}"; 
+			for (UserInfo ui2 : userList) {
+				result += ui2.getUserNum() + "{/}" + ui2.getUserName() + "{/}" + ui2.getUserId() + "{/}" + ui2.getAge()
+						+ "{+}";
 			}
 			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
 
-			
 		} else if (command.equals("LOGIN")) {
 			System.out.println("id= " + userId + ", pwd= " + userPwd + " ★로그인 완료★ ");
-			doProcess(resq, us.loginUser(ui));
+			if (us.loginUser(ui)) {
+				doProcess(resq, userId );
+				}
 		}
 	}
 

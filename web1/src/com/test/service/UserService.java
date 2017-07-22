@@ -147,7 +147,7 @@ public class UserService {
 	// return null;
 	// }
 
-	public String loginUser(UserInfo ui) {
+	public boolean loginUser(UserInfo ui) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -172,14 +172,14 @@ public class UserService {
 				e.printStackTrace();
 			}
 		}
-		return "아이디가 없습니다.";
+		return false;
 	}
 
-	private String checkPwd(String pwd1, String pwd2, String id) {
+	private boolean checkPwd(String pwd1, String pwd2, String id) {
 		if (pwd1.equals(pwd2)) {
-			return "아이디" + id + "님이 로그인 하셨습니다.";
+			return  true;
 		}
-		return "비밀번호 틀렸습니다.";
+		return false;
 	}
 
 	public List<UserInfo> selectUser(UserInfo ui) {
@@ -225,4 +225,5 @@ public class UserService {
 		}
 		return null;
 	}
+
 }

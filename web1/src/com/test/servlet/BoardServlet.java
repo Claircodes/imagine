@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.dto.BoardInfo;
+import com.test.dto.UserInfo;
 import com.test.service.BoardService;
+import com.test.service.UserService;
 
 public class BoardServlet extends HttpServlet {
 
@@ -20,6 +22,13 @@ public class BoardServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		BoardService bs = new BoardService();
 		BoardInfo bi = new BoardInfo();
+		UserService us = new UserService();
+		UserInfo ui = new UserInfo();
+
+		String userId = req.getParameter("userid");
+		String userPwd = req.getParameter("userpwd");
+		ui.setUserId(userId);
+		ui.setUserPwd(userPwd);
 
 		String bNum = req.getParameter("binum");
 		String bTitle = req.getParameter("bititle");
@@ -50,34 +59,51 @@ public class BoardServlet extends HttpServlet {
 			result += menu;
 			result += "dis{/}en{/}en{/}en{/}dis{+}";
 			for (BoardInfo bi1 : boardlist) {
-				result += bi1.getBinum() + "{/}"+bi1.getBititle()+ "{/}"+bi1.getBicontent()+"{/}"+ bi1.getCreusr()+ "{/}"+bi1.getDatetime()+"{+}";
+				result += bi1.getBinum() + "{/}" + bi1.getBititle() + "{/}" + bi1.getBicontent() + "{/}"
+						+ bi1.getCreusr() + "{/}" + bi1.getDatetime() + "{+}";
 			}
-			result=result.substring(0,result.length()-3);
+			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
 			System.out.println(command + "끝--->>");
-		}else if(command.equals("DELETE")) {
+		} else if (command.equals("DELETE")) {
 			System.out.println(command + "<<--시작");
-			
+
 			if (bs.isUserPwd(bi)) {
 				doProcess(resq, "비밀번호가 맞네요");
 				bs.deleteBoard(bi);
-			}else {
+			} else {
 				doProcess(resq, "비밀번호를 확인해주세요.");
 			}
-			
+
 			System.out.println(command + "끝--->>");
-		}else if(command.equals("UPDATE")) {
+		} else if (command.equals("UPDATE")) {
 			System.out.println(command + "<<--시작");
-//			bs.selectUser(bi);
+			// bs.selectUser(bi);
 			if (bs.isUserPwd(bi)) {
 				doProcess(resq, "비밀번호가 맞네요");
 				bs.updateBoard(bi);
-			}else {
+			} else {
 				doProcess(resq, "비밀번호를 확인해주세요.");
 			}
-			
+
+			System.out.println(command + "끝--->>");
+		} else if (command.equals("LOGIN")) {
+			System.out.println("id= " + userId + ", pwd= " + userPwd + " ★로그인 완료★ ");
+			if (us.loginUser(ui)) {
+				doProcess(resq, userId);
+			} else {
+				doProcess(resq, "re-login");
+			}
+		} else if (command.equals("INSERT")) {
+			System.out.println(command + "<<--시작");
+			if (bs.insertBoard(bi)) {
+				doProcess(resq, "글 작성 완료 :D");
+			} else {
+				doProcess(resq, "글 작성 실패!! D:");
+			}
 			System.out.println(command + "끝--->>");
 		}
+
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse reqs) throws IOException {

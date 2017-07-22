@@ -3,9 +3,7 @@ package com.test.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.test.common.DBConn;
@@ -13,18 +11,19 @@ import com.test.dto.BoardInfo;
 
 public class BoardService {
 
-	public boolean insertBoard(HashMap<String, String> hm) {
+	public boolean insertBoard(BoardInfo bi) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "insert into board (TITLE, CONTENT, WRITER, REG_DATE)";
-			sql += "values (?,?,?,now())";
+			String sql = "INSERT INTO board_info (bititle,bicontent,bipwd,creusr,credat) ";
+			sql += "VALUES (?,?,?,?, NOW())";
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, hm.get("title"));
-			ps.setString(2, hm.get("content"));
-			ps.setString(3, hm.get("nserNum"));
+			ps.setString(1, bi.getBititle());
+			ps.setString(2, bi.getBicontent());
+			ps.setString(3, bi.getBipwd());
+			ps.setString(4, bi.getCreusr());
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
@@ -198,4 +197,5 @@ public class BoardService {
 		}
 		return null;
 	}
+	
 }

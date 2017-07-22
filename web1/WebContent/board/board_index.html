@@ -16,59 +16,116 @@
 	}
 
 	function doDelete(boardNum) {
-	    var userpwd = prompt("비밀번호를 입력해주세요", "");
+		var userpwd = prompt("비밀번호를 입력해주세요", "");
 		var params = "?";
-		var userid= document.getElementById("boardUI"+boardNum).value;
-		
-		params += "binum="+boardNum+"&creusr="+userid+"&bipwd="+userpwd+"&command=DELETE&";
+		var userid = document.getElementById("boardUI" + boardNum).value;
+		params += "binum=" + boardNum + "&creusr=" + userid + "&bipwd="+ userpwd + "&command=DELETE&";
 		var au = new AjaxUtil(params);
-		au.changeCallBack(function(){
-			if (au.xhr.readyState == 4) {
-				if (au.xhr.status == 200) {
-					var result = decodeURIComponent(au.xhr.responseText);
-					doSelect()
-					alert(result);
-					} else {
-						document.getElementById("bd_div").innerHTML += au.xhr.responseText;
+		au.changeCallBack(function() {
+					if (au.xhr.readyState == 4) {
+						if (au.xhr.status == 200) {
+							var result = decodeURIComponent(au.xhr.responseText);
+							insertFormCancel();
+							alert(result);
+						} else {
+							document.getElementById("board_div").innerHTML += au.xhr.responseText;
 						}
-				}
-			});
+					}
+				});
 		au.send();
 	}
 	function doUpdate(boardNum) {
-	    var userpwd = prompt("비밀번호를 입력해주세요", "");
+		var userpwd = prompt("비밀번호를 입력해주세요", "");
 		var params = "?";
-		params += "binum="+boardNum+"&";
-		params += "bititle=" +document.getElementById("boardTitle"+boardNum).value+"&";
-		params += "bicontent="+ document.getElementById("boardContent"+boardNum).value+"&";
-		params += "creusr="+ document.getElementById("boardUI"+boardNum).value+"&";
-		params += "bipwd="+userpwd+"&command=UPDATE&";
+		params += "binum=" + boardNum + "&";
+		params += "bititle=" + document.getElementById("boardTitle" + boardNum).value + "&";
+		params += "bicontent=" + document.getElementById("boardContent" + boardNum).value+ "&";
+		params += "creusr="+ document.getElementById("boardUI" + boardNum).value + "&";
+		params += "bipwd=" + userpwd + "&command=UPDATE&";
 		var au = new AjaxUtil(params);
-		au.changeCallBack(function(){
-			if (au.xhr.readyState == 4) {
-				if (au.xhr.status == 200) {
-					var result = decodeURIComponent(au.xhr.responseText);
-					doSelect()
-					alert(result);
-					} else {
-						document.getElementById("bd_div").innerHTML += au.xhr.responseText;
+		au.changeCallBack(function() {
+					if (au.xhr.readyState == 4) {
+						if (au.xhr.status == 200) {
+							var result = decodeURIComponent(au.xhr.responseText);
+							doSelect()
+							alert(result);
+						} else {
+							document.getElementById("board_div").innerHTML += au.xhr.responseText;
 						}
-				}
-			});
+					}
+				});
 		au.send();
 	}
-	function doSelect() {
-		var params = "?";
-		params += "command=MAIN&";
+	
+	function insertForm(){
+		var tableStr = "<table border='0'>";
+		tableStr += "<tr><td>글쓴이 : </td><td><input type='text' name='creusr' id='creusr' /></td></tr>";
+		tableStr += "<tr><td>비밀번호 : </td><td><input type='text' name='bipwd' id='bipwd' /></td></tr>";
+		tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' /></td></tr>";
+		tableStr += "<tr><td colspan='2'>내용 : </td></tr>";
+		tableStr += "<tr><td colspan='2'><textarea name='bicontent' id='bicontent'></textarea></td></tr>";
+		tableStr += "<tr><td><input type='button' value='취소' onclick='insertFormCancel()'/></td><td><input type='button' value='확인' onclick='doInsert()'/></td></tr>";
+		tableStr += "</table>";
+		document.getElementById("board_insert_div").innerHTML = tableStr;
+	}
+	
+	function insertFormCancel(){
+		document.getElementById("board_insert_div").innerHTML = "";
+	}
+	
+	function doInsert() {		
+	var idStr = "creusr,bipwd,bititle,bicontent";
+	var lengthStr = "255,5000,100,100";
+	var typeStr = "s,s,s,s"
+	var params = "?";
+	var ids = idStr.split(",");
+	var lengths = lengthStr.split(",");
+	var types = typeStr.split(",")
+	for (var i = 0; i < ids.length; i++) {
+		var maxLength = new Number(lengths[i]);
+		var typeVali = types[i];
+		var elObj = document.getElementById(ids[i]);
+		if (!isNaN(maxLength)) {
+			if (elObj.value.length > maxLength) {
+				alert("제한길이를 넘었습니다. 확인해주세요");
+				elObj.value = "";
+				elObj.focus();
+				return;
+			}
+		}
+		params += ids[i] + "=" + elObj.value + "&";
+	}
+		params += "command=INSERT&";
 
 		var au = new AjaxUtil(params);
 		au.changeCallBack(function() {
 					if (au.xhr.readyState == 4) {
 						if (au.xhr.status == 200) {
 							var result = decodeURIComponent(au.xhr.responseText);
+							alert(result);
+							doSelect();
+						} else {
+							document.getElementById("board_insert_div").innerHTML = au.xhr.responseText;
+						}
+					}
+				});
+		au.send();
+	}
+
+	function doSelect() {
+		insertFormCancel();
+		var params = "?";
+		params += "command=MAIN&";
+
+		var au = new AjaxUtil(params);
+		au
+				.changeCallBack(function() {
+					if (au.xhr.readyState == 4) {
+						if (au.xhr.status == 200) {
+							var result = decodeURIComponent(au.xhr.responseText);
 							var rows = result.split("{+}");
 							var tdEnables = rows[1].split("{/}");
-							var tableStr = "<table border='1'>";
+							var tableStr = "<br/><table border='1'>";
 							for (var i = 0; i < rows.length; i++) {
 								if (i == 1) {
 									continue;
@@ -81,22 +138,22 @@
 										boardNum = columns[j];
 									}
 									if (i == 0) {
-										tableStr += "<td>" + columns[j]+ "</td>";
+										tableStr += "<td>" + columns[j] + "</td>";
 									} else {
 										if (tdEnables[j] == "en") {
 											tableStr += "<td><input type='text'";
 											if (j == 1) {
-												tableStr += " id='boardTitle"	+ boardNum + "' ";
+												tableStr += " id='boardTitle" + boardNum + "' ";
 											} else if (j == 2) {
-												tableStr += " id='boardContent"+ boardNum + "' ";
+												tableStr += " id='boardContent" + boardNum + "' ";
 											} else if (j == 3) {
-												tableStr += " id='boardUI"+ boardNum + "' ";
-											}else if (j == 4) {
-												tableStr += " id='boardDate"+ boardNum + "' ";
+												tableStr += " id='boardUI" + boardNum + "' ";
+											} else if (j == 4) {
+												tableStr += " id='boardDate" + boardNum + "' ";
 											}
-											tableStr += " value='" + columns[j]+ "' /></td>"
+											tableStr += " value='" + columns[j] + "' /></td>"
 										} else {
-											tableStr += "<td>" + columns[j]+ "</td>";
+											tableStr += "<td>" + columns[j] + "</td>";
 										}
 									}
 								}
@@ -104,15 +161,17 @@
 									tableStr += "<td>삭제</td>";
 									tableStr += "<td>수정</td>";
 								} else {
-									tableStr += "<td><input type='button' value='삭제' onclick='doDelete("+boardNum+")'/></td>";
-									tableStr += "<td><input type='button' value='수정' onclick='doUpdate("+boardNum+")'/></td>";
-								}
+										tableStr += "<td><input type='button' value='삭제' onclick='doDelete("	+ boardNum + ")'/></td>";
+										tableStr += "<td><input type='button' value='수정' onclick='doUpdate("+ boardNum + ")'/></td>";
+									}
+								
 								tableStr += "</tr>";
 							}
-							tableStr += "</table>";
-							document.getElementById("bd_div").innerHTML = tableStr;
+							tableStr += "</table></br><input type='button' value='글쓰기' onclick='insertForm()'/>";
+
+							document.getElementById("board_div").innerHTML =tableStr;
 						} else {
-							document.getElementById("bd_div").innerHTML = xhr.responseText;
+							document.getElementById("board_div").innerHTML = au.xhr.responseText;
 						}
 					}
 				});
@@ -120,7 +179,7 @@
 	}
 </script>
 <body onload="doSelect()">
-
-	<div id="bd_div"></div>
+	<div id="board_div"></div>
+	<div id="board_insert_div"></div>
 </body>
 </html>
