@@ -2,7 +2,6 @@ package com.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.test.dto.BoardInfo;
 import com.test.service.BoardService1;
-import com.test.service.UserService;
 
 public class BoardServlet2 extends HttpServlet {
 
