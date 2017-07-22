@@ -100,6 +100,7 @@ public class BoardService1 {
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List<Map> searchBoard(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -114,9 +115,9 @@ public class BoardService1 {
 				ps.setString(1, hm.get("boardNum"));
 			}
 			ResultSet rs = ps.executeQuery();
-			ArrayList list = new ArrayList();
+			List<Map> list = new ArrayList<Map>();
 			while (rs.next()) {
-				HashMap hm1 = new HashMap();
+				HashMap<String, String> hm1 = new HashMap<String, String>();
 				hm1.put("NUM", rs.getString("NUM"));
 				hm1.put("TITLE", rs.getString("TITLE"));
 				hm1.put("CONTENT", rs.getString("CONTENT"));

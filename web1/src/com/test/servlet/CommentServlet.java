@@ -13,21 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.service.CommentService;
-import com.test.service.UserService;
 
 public class CommentServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("rawtypes")
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 		CommentService cs = new CommentService();
 
 		String command = req.getParameter("command");
 		List<Map> list;
+		HashMap<String,String> hm = new HashMap<>();
 		if (command.equals("입력")) {
 
-			HashMap hm = new HashMap();
+
 			String comBoardNum = req.getParameter("com_boardnum");
 			String comUserNum = req.getParameter("com_usernum");
 			String comContent = req.getParameter("com_content");
@@ -44,7 +45,7 @@ public class CommentServlet extends HttpServlet {
 			}
 		} else if (command.equals("삭제")) {
 
-			HashMap hm = new HashMap();
+			hm = new HashMap<>();
 			String deleteComNum = req.getParameter("com_num");
 			System.out.println(deleteComNum + "번 삭제한다잉");
 			// us.deleteUser(deleteNum);
@@ -60,7 +61,7 @@ public class CommentServlet extends HttpServlet {
 				doProcess(resq, "값 입력해야지 삭제하지 짜식아");
 			}
 		} else if (command.equals("업데이트")) {
-			HashMap hm = new HashMap();
+			hm = new HashMap<>();
 			String comNum = req.getParameter("com_num");
 			String comContent = req.getParameter("com_content");
 			System.out.println(comNum + "업데이트");
@@ -78,7 +79,7 @@ public class CommentServlet extends HttpServlet {
 				doProcess(resq, "값 입력해야지 업데이트하지 짜식아");
 			}
 		} else if (command.equals("검색")) {
-			HashMap hm = new HashMap();
+			hm = new HashMap<>();
 			String searchComNum = req.getParameter("com_num");
 			System.out.println(searchComNum  + "searchComNum");
 

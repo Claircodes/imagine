@@ -17,10 +17,11 @@ public class BoardServlet2 extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("rawtypes")
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 		BoardService1 bs = new BoardService1();
-		HashMap hm = new HashMap<>();
+		HashMap<String,String> hm = new HashMap<String,String>();
 		
 		String command = req.getParameter("command");
 
