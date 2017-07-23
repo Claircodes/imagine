@@ -65,7 +65,14 @@ public class BoardServlet extends HttpServlet {
 			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
 			System.out.println(command + "끝--->>");
-		} else if (command.equals("DELETE")) {
+		} 
+//		else if(command.equals("SELECT")){
+//			System.out.println(command + "<<--시작");
+//			String searchname = req.getParameter("searchname");
+//			
+//			System.out.println(command + "끝--->>");
+//		}
+		else if (command.equals("DELETE")) {
 			System.out.println(command + "<<--시작");
 
 			if (bs.isUserPwd(bi)) {

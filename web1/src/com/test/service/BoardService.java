@@ -133,37 +133,80 @@ public class BoardService {
 		}
 		return false;
 	}
-
-	public BoardInfo searchUser(int boardNum) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = DBConn.getCon();
-			String sql = "SELECT bititle,bicontent,bipwd,creusr,credat FROM board_info where binum=?";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, boardNum);
-			ResultSet rs = ps.executeQuery();
-			BoardInfo bi = new BoardInfo();
-			while (rs.next()) {
-				bi.setBititle(rs.getString("bititle"));
-				bi.setBicontent(rs.getString("bicontent"));
-				bi.setBipwd(rs.getString("bipwd"));
-				bi.setCreusr(rs.getString("creusr"));
-				bi.setDatetime(rs.getDate("credat").toString());
-			}
-			return bi;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				ps.close();
-				DBConn.closeCon();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+//	public List<BoardInfo> selectUser(BoardInfo bi, String searchname) {
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		try {
+//			String sql = "SELECT bititle,bicontent,bipwd,creusr,credat FROM board_info ";
+//			if (searchname != null && !searchname.equals("")){
+//				sql += "where ? like ?";
+//			}
+//			con = DBConn.getCon();
+//			ps = con.prepareStatement(sql);
+//			if (searchname != null && !searchname.equals("")){
+//				ps.setString(1, searchname);
+//				if (searchname.equals("bititle")){
+//					ps.setString(2, "%"+bi.getBititle()+"%");
+//				}else if(searchname.equals("bicontent")) {
+//					ps.setString(2, "%"+bi.getBicontent()+"%");
+//				}else if(searchname.equals("creusr")){
+//					ps.setString(2, "%"+bi.getCreusr()+"%");
+//				}
+//			}
+//			ResultSet rs = ps.executeQuery();
+//			List<BoardInfo> boardList = new ArrayList<BoardInfo>();
+//			while (rs.next()) {
+//				BoardInfo bi1 = new BoardInfo();
+//				bi1.setUserNum(rs.getInt("usernum"));
+//				bi1.setUserId(rs.getString("userid"));
+//				bi1.setUserName(rs.getString("username"));
+//				bi1.setUserPwd(rs.getString("userpwd"));
+//				bi1.setAge(rs.getInt("age"));
+//				bi1.setAddress(rs.getString("address"));
+//				bi1.setHp1(rs.getString("hp1"));
+//				bi1.setHp2(rs.getString("hp2"));
+//				bi1.setHp3(rs.getString("hp3"));
+//				boardList.add(bi1);
+//			}
+//			return boardList;
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				ps.close();
+//				DBConn.closeCon();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return null;
+//	}
+//	function doSelect() {
+//		var sel = document.getElementById("sel");
+//		var val = sel.options[sel.selectedIndex].id;
+//		var str=document.getElementById("searchstr").value;
+//		var params = "?";
+//		if (val!="searchname"){
+//			params += "searchname="+id+"&";
+//			params += id+"="+str+"&";
+//		}
+//			params += "command=SELECT&";
+//
+//			var au = new AjaxUtil(params);
+//			au.changeCallBack(function() {
+//						if (au.xhr.readyState == 4) {
+//							if (au.xhr.status == 200) {
+//								var result = decodeURIComponent(au.xhr.responseText);
+//								alert(result);
+//							} else {
+//								document.getElementById("board_div").innerHTML = au.xhr.responseText;
+//							}
+//						}
+//					});
+//			au.send();
+//		}
 
 	public List<BoardInfo> searchBoard() {
 		Connection con = null;

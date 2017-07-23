@@ -47,7 +47,7 @@
 					if (au.xhr.readyState == 4) {
 						if (au.xhr.status == 200) {
 							var result = decodeURIComponent(au.xhr.responseText);
-							doSelect()
+							doMain()
 							alert(result);
 						} else {
 							document.getElementById("board_div").innerHTML += au.xhr.responseText;
@@ -103,7 +103,7 @@
 						if (au.xhr.status == 200) {
 							var result = decodeURIComponent(au.xhr.responseText);
 							alert(result);
-							doSelect();
+							doMain();
 						} else {
 							document.getElementById("board_insert_div").innerHTML = au.xhr.responseText;
 						}
@@ -111,15 +111,19 @@
 				});
 		au.send();
 	}
-
 	function doSelect() {
+		var sel = document.getElementById("sel");
+		var opId = sel.options[sel.selectedIndex].id;
+		var val = sel.options[sel.selectedIndex].value;
+		alert("옵션아이디: "+opId+"의 값은 "+val);
+	}
+	function doMain() {
 		insertFormCancel();
 		var params = "?";
 		params += "command=MAIN&";
 
 		var au = new AjaxUtil(params);
-		au
-				.changeCallBack(function() {
+		au.changeCallBack(function() {
 					if (au.xhr.readyState == 4) {
 						if (au.xhr.status == 200) {
 							var result = decodeURIComponent(au.xhr.responseText);
@@ -167,7 +171,15 @@
 								
 								tableStr += "</tr>";
 							}
-							tableStr += "</table></br><input type='button' value='글쓰기' onclick='insertForm()'/>";
+							tableStr += "</table>";
+							tableStr += "<select name='sel' id='sel'>";
+							tableStr +="<option id='searchname'value='[검색항목]' selected>[검색항목]</option>";
+							tableStr +="<option id='bititle' value='제목'>제목</option>";
+							tableStr +="<option id='bicontent' value='내용'>내용</option>";
+							tableStr +="<option id='creusr' value='글쓴이'>글쓴이</option>";
+							tableStr += "</select>";
+							tableStr += "<input type='text' id='searchstr' onselect='doSelect()'/><input type='button' value='검색' onclick='doSelect()'/>";
+							tableStr += "<input type='button' value='글쓰기' onclick='insertForm()'/>";
 
 							document.getElementById("board_div").innerHTML =tableStr;
 						} else {
@@ -178,7 +190,7 @@
 		au.send();
 	}
 </script>
-<body onload="doSelect()">
+<body onload="doMain()">
 	<div id="board_div"></div>
 	<div id="board_insert_div"></div>
 </body>
