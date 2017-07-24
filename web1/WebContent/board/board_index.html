@@ -59,8 +59,8 @@
 	
 	function insertForm(){
 		var tableStr = "<table border='0'>";
-		tableStr += "<tr><td>글쓴이 : </td><td><input type='text' name='creusr' id='creusr' /></td></tr>";
-		tableStr += "<tr><td>비밀번호 : </td><td><input type='text' name='bipwd' id='bipwd' /></td></tr>";
+		tableStr += "<tr><td>글쓴이 : </td><td><input type='text' name='buser' id='creusr' /></td></tr>";
+		tableStr += "<tr><td>비밀번호 : </td><td><input type='password' name='bipwd' id='bipwd' /></td></tr>";
 		tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' /></td></tr>";
 		tableStr += "<tr><td colspan='2'>내용 : </td></tr>";
 		tableStr += "<tr><td colspan='2'><textarea name='bicontent' id='bicontent'></textarea></td></tr>";
@@ -173,10 +173,10 @@
 							}
 							tableStr += "</table>";
 							tableStr += "<select name='sel' id='sel'>";
-							tableStr +="<option id='searchname'value='[검색항목]' selected>[검색항목]</option>";
-							tableStr +="<option id='bititle' value='제목'>제목</option>";
-							tableStr +="<option id='bicontent' value='내용'>내용</option>";
-							tableStr +="<option id='creusr' value='글쓴이'>글쓴이</option>";
+							tableStr +="<option id='searchname' value='[검색항목]' selected>[검색항목]</option>";
+							tableStr +="<option id='stitle' value='제목'>제목</option>";
+							tableStr +="<option id='scontent' value='내용'>내용</option>";
+							tableStr +="<option id='suser' value='글쓴이'>글쓴이</option>";
 							tableStr += "</select>";
 							tableStr += "<input type='text' id='searchstr' onselect='doSelect()'/><input type='button' value='검색' onclick='doSelect()'/>";
 							tableStr += "<input type='button' value='글쓰기' onclick='insertForm()'/>";
