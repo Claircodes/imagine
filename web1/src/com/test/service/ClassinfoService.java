@@ -97,6 +97,7 @@ public class ClassinfoService {
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List<Map> searchComment(HashMap<String, String> hm) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -113,7 +114,7 @@ public class ClassinfoService {
 			ResultSet rs = ps.executeQuery();
 			List<Map> list = new ArrayList<Map>();
 			while (rs.next()) {
-				HashMap hm1 = new HashMap();
+				HashMap<String,String> hm1 = new HashMap<String,String>();
 				hm1.put("ui_num", rs.getString("ui_num"));
 				hm1.put("b_num", rs.getString("b_num"));
 				list.add(hm1);

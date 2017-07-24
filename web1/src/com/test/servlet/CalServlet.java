@@ -2,9 +2,6 @@ package com.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +13,7 @@ public class CalServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unused")
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 
 		req.setCharacterEncoding("UTF-8");
