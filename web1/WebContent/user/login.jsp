@@ -36,7 +36,7 @@ if(userId!=null){
 	out.println("<br/>"); 
 	out.println("전화번호 : " + hp1 + hp2 + hp3);
 	out.println("<br/>"); 
-	out.println("<input type='button' value='로그아웃' onclick='dologout()'/>");
+	out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
 }else{
 	
 	%>
