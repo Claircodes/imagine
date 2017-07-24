@@ -51,7 +51,7 @@ public class BoardServlet extends HttpServlet {
 			return;
 		}
 		if (command.equals("MAIN")) {
-			System.out.println(command + "<<--시작");
+			System.out.println(command);
 
 			List<BoardInfo> boardlist = bs.searchBoard();
 			String result = "";
@@ -64,7 +64,6 @@ public class BoardServlet extends HttpServlet {
 			}
 			result = result.substring(0, result.length() - 3);
 			doProcess(resq, result);
-			System.out.println(command + "끝--->>");
 		} 
 //		else if(command.equals("SELECT")){
 //			System.out.println(command + "<<--시작");

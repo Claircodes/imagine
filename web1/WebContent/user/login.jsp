@@ -13,6 +13,9 @@
 function doLogout() {
 	location.href="/user/login_ok.jsp";
 }
+function goBoard() {
+	location.href="/board/board_main.jsp";
+}
 </script>
 <body>
 <%
@@ -25,18 +28,10 @@ if(userId!=null){
 	String hp2 =  (String) session.getAttribute("hp2");
 	String hp3 =  (String) session.getAttribute("hp3");
 	out.println(userId + "님 환영해요~");
-	out.println("<br/>");
-	out.println("==" + userId + "님 의 정보 ==");
-	out.println("<br/>");
-	out.println("성명 : " + userName);
-	out.println("<br/>");
-	out.println("나이 : " + age);
-	out.println("<br/>");
-	out.println("주소 : " + address);
-	out.println("<br/>"); 
-	out.println("전화번호 : " + hp1 + hp2 + hp3);
-	out.println("<br/>"); 
 	out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
+	out.println("<br/>");
+	out.println("<br/>");
+	out.println("<input type='button' value='게시판으로 가기' onclick='goBoard()'/>");
 }else{
 	
 	%>
