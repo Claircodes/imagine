@@ -19,7 +19,35 @@
 		out.println(userId + "님 ");
 		out.println("<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>");
 		out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"main\")'/>");
+String insert = request.getParameter("insert");
+		if(insert!=null&&insert.equals("yes")){
+			Connection con = null;
+			PreparedStatement ps = null;
+			try {
+				con = DBConn.getCon();
+				String sql = "INSERT INTO board_info (bititle,bicontent,bipwd,creusr,credat) ";
+				sql += "VALUES (?,?,?,?,NOW())";
+				ps = con.prepareStatement(sql);
 
+				ps.setString(1, request.getParameter("title"));
+				ps.setString(2, request.getParameter("content"));
+				ps.setString(3, request.getParameter("bipwd"));
+				ps.setString(4, userId);
+				int result = ps.executeUpdate();
+				if (result == 1) {
+					con.commit();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			%>
+			<script>
+			
+			</script>
+			<%
+		}
+
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -66,19 +94,22 @@
 		}
 		function insertForm() {
 			var tableStr = "<table border='0'>";
-			tableStr += "<tr><td>아이디 : </td><td><input type='text' name='buser' id='creusr' /></td></tr>";
-			tableStr += "<tr><td>비밀번호 : </td><td><input type='password' name='bipwd' id='bipwd' /></td></tr>";
-			tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' /></td></tr>";
+			tableStr += "<tr><td>제목 : </td><td><input type='text' name='title' id='title' /></td></tr>";
+			tableStr += "<tr><td>비밀번호 : </td><td><input type='text' name='bipwd' id='bipwd' /></td></tr>";
 			tableStr += "<tr><td colspan='2'>내용 : </td></tr>";
-			tableStr += "<tr><td colspan='2'><textarea name='bicontent' id='bicontent'></textarea></td></tr>";
+			tableStr += "<tr><td colspan='2'><textarea name='content' id='content'></textarea></td></tr>";
 			tableStr += "<tr><td><input type='button' value='취소' onclick='insertFormCancel()'/></td><td><input type='button' value='확인' onclick='doInsert()'/></td></tr>";
 			tableStr += "</table>";
 			document.getElementById("board_insert_div").innerHTML = tableStr;
 		}
-
+		function doInsert() {
+			var bt = document.getElementById("title").value;
+			var pwd =document.getElementById("bipwd").value;
+			var c = document.getElementById("content").value;
+			location.href = rootPath + "/board/board_main.jsp?insert=yes&title= "+ bt+"&bipwd="+pwd + "&content= "+c+"&";
+		}
 		function clickTr(binum) {
-			location.href = rootPath + "/board/board_content.jsp?binum="
-					+ binum;
+			location.href = rootPath + "/board/board_content.jsp?binum="+ binum;
 		}
 	</script>
 	<select name='sel' id='sel'>
