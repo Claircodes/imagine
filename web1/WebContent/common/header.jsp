@@ -49,7 +49,9 @@ var rootPath="<%=rootPath%>";
 			url = rootPath + "/";
 		} else if (pageId == "logout") {
 			url = rootPath + "/user/login_ok.jsp";
-		}
+		}else if(pageId=="insert"){
+			url = rootPath + "/board/board_insert.jsp";
+		}			
 		location.href = url;
 	}
 </script>
