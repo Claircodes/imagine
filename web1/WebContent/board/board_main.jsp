@@ -13,11 +13,9 @@
 	<%
 		String front = userId + "님 ";
 		String tableStr = "";
-		String searchtxt = "%"+request.getParameter("searchtxt")+"%";
+		String searchtxt = "%" + request.getParameter("searchtxt") + "%";
 
-		String radiobtn = request.getParameter("radiobtn");
-
-
+		String searchTarget = request.getParameter("searchTarget");
 
 		front += "<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>";
 		front += "<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"main\")'/>";
@@ -27,18 +25,18 @@
 		try {
 			con = DBConn.getCon();
 			String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ";
-			if (request.getParameter("command") != null&&request.getParameter("command").equals("search")) {
-				if (radiobtn.equals("title")) {
+			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
+				if (searchTarget.equals("bititle")) {
 					sql += "where bititle like ?";
-				} else if (radiobtn.equals("content")) {
+				} else if (searchTarget.equals("bicontent")) {
 					sql += "where bicontent like ?";
-				} else if (radiobtn.equals("user")) {
+				} else if (searchTarget.equals("creusr")) {
 					sql += "where creusr like ?";
 				}
-					sql += "ORDER BY binum DESC";
+				sql += "ORDER BY binum DESC";
 			}
 			ps = con.prepareStatement(sql);
-			if (request.getParameter("command") != null&&request.getParameter("command").equals("search")) {
+			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
 				ps.setString(1, searchtxt);
 			}
 
@@ -80,26 +78,20 @@
 		}
 
 		function doSearch() {
-			var obj = document.getElementsByName("search_chk");
-			var checked_index = -1;
-			var checked_value = '';
-			for( i=0; i<obj.length; i++ ) {
-				if(obj[i].checked) {
-					checked_index = i;
-					checked_value = obj[i].value;
-				}
-			}
-			alert( '선택된 항목 인덱스: '+checked_index+'\n선택된 항목 값: '+checked_value );
-			var search = document.getElementById("searchtxt").value;
+			var searchTarget = document.getElementById("searchTarget").value;
+			var searchtxt = document.getElementById("searchtxt").value;
 			location.href = rootPath
-					+ "/board/board_main.jsp?command=search&searchtxt="
-					+ search + "&radiobtn=" + checked_value + "&";
+					+ "/board/board_main.jsp?command=search&searchtxt="	+ searchtxt + "&searchTarget=" + checked_value + "&";
 		}
 	</script>
 
-	<input type="radio" name="search_chk" value="title" checked="checked" />제목
-	<input type="radio" name="search_chk" value="content" />내용
-	<input type="radio" name="search_chk" value="user" />아이디
+	<select name='searchTarget' id='searchTarget'>
+		<option value='bititle'>제목</option>
+		<option value='creusr'>작성자</option>
+		<option value='bicontent'>내용</option>
+		<option value='bicontitle'>제목 + 내용</option>
+	</select>
+
 	<input type="text" id="searchtxt" />
 	<input type="button" value="검색" onclick="doSearch()" />
 	<input type="button" value="글쓰기" onclick="doMovePage('insert')" />
