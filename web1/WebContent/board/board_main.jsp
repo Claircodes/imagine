@@ -1,3 +1,4 @@
+<%@page import="javax.swing.table.TableStringConverter"%>
 <%@ include file="/common/header.jsp"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,8 +12,12 @@
 
 	<%
 		String front = userId + "님 ";
-		String searchtxt = request.getParameter("searchtxt");
-		String selectoption = request.getParameter("selectoption");
+		String tableStr = "";
+		String searchtxt = "%"+request.getParameter("searchtxt")+"%";
+
+		String radiobtn = request.getParameter("radiobtn");
+
+
 
 		front += "<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>";
 		front += "<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"main\")'/>";
@@ -21,24 +26,25 @@
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ORDER BY binum DESC";
-			if (searchtxt != null && searchtxt.equals("")) {
-				if (selectoption.equals("stitle")) {
-					sql +="where bititle like ?";
-				} else if (selectoption.equals("scontent")) {
-					sql +="where bicontent like ?";
-				} else if (selectoption.equals("suser")) {
-					sql +="where creusr like ?";
+			String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ";
+			if (request.getParameter("command") != null&&request.getParameter("command").equals("search")) {
+				if (radiobtn.equals("title")) {
+					sql += "where bititle like ?";
+				} else if (radiobtn.equals("content")) {
+					sql += "where bicontent like ?";
+				} else if (radiobtn.equals("user")) {
+					sql += "where creusr like ?";
 				}
+					sql += "ORDER BY binum DESC";
 			}
 			ps = con.prepareStatement(sql);
-			if (searchtxt != null && searchtxt.equals("")) {
-				ps.setString(1,"%"+searchtxt+"%");
+			if (request.getParameter("command") != null&&request.getParameter("command").equals("search")) {
+				ps.setString(1, searchtxt);
 			}
-			
+
 			ResultSet rs = ps.executeQuery();
 
-			String tableStr = "<br/><table border='1'>";
+			tableStr = "<br/><table border='1'>";
 			String[] menu = {"번호", "제목", "아이디", "날짜"};
 			tableStr += "<tr>";
 			for (int i = 0; i < menu.length; i++) {
@@ -73,26 +79,28 @@
 					+ binum;
 		}
 
-		function doSelect(frm) {
-			if (frm.sel.options[frm.sel.selectedIndex].value != "searchname") {
-				var search = document.getElementById("searchtxt").value;
-				location.href = rootPath + "/board/board_main.jsp?searchtxt="
-						+ search + "&selectoption="
-						+ frm.sel.options[frm.sel.selectedIndex].value + "&";
-			} else {
-				alert("검색할 항목을 선택해주세요.");
-				document.getElementById("sel").focus();
+		function doSearch() {
+			var obj = document.getElementsByName("search_chk");
+			var checked_index = -1;
+			var checked_value = '';
+			for( i=0; i<obj.length; i++ ) {
+				if(obj[i].checked) {
+					checked_index = i;
+					checked_value = obj[i].value;
+				}
 			}
-
+			alert( '선택된 항목 인덱스: '+checked_index+'\n선택된 항목 값: '+checked_value );
+			var search = document.getElementById("searchtxt").value;
+			location.href = rootPath
+					+ "/board/board_main.jsp?command=search&searchtxt="
+					+ search + "&radiobtn=" + checked_value + "&";
 		}
 	</script>
-	<select name="sel" id="sel" onChange="doSelect(this.form);">
-		<option value="searchname" selected>[검색항목]</option>
-		<option value="stitle">제목</option>
-		<option value="scontent">내용</option>
-		<option value="suser">글쓴이</option>
-	</select>
-	<input type="text" id="searchtxt" onselect="doSelect()" />
+
+	<input type="radio" name="search_chk" value="title" checked="checked" />제목
+	<input type="radio" name="search_chk" value="content" />내용
+	<input type="radio" name="search_chk" value="user" />아이디
+	<input type="text" id="searchtxt" />
 	<input type="button" value="검색" onclick="doSearch()" />
 	<input type="button" value="글쓰기" onclick="doMovePage('insert')" />
 	<div id="board_insert_div"></div>
