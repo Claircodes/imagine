@@ -13,10 +13,12 @@
 	<%
 		String front = userId + "님 ";
 		String tableStr = "";
-		String sql ="";
+		String sql = "";
 		String searchtxt = "%" + request.getParameter("searchtxt") + "%";
-		String researchtxt = "%" + request.getParameter("researchtxt") + "%";
 		String searchTarget = request.getParameter("searchTarget");
+		
+		String researchtxt = "%" + request.getParameter("researchtxt") + "%";
+		String researchTarget = request.getParameter("researchTarget");
 		
 		front += "<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>";
 		front += "<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"main\")'/>";
@@ -25,21 +27,36 @@
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ";
+			sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info where 1=1 ";
 			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
 				if (searchTarget.equals("bititle")) {
-					sql += "where bititle like ?";
+					sql += " and bititle like ?";
 				} else if (searchTarget.equals("bicontent")) {
-					sql += "where bicontent like ?";
+					sql += " and bicontent like ?";
 				} else if (searchTarget.equals("creusr")) {
-					sql += "where creusr like ?";
+					sql += " and creusr like ?";
 				} else if (searchTarget.equals("bicontitle")) {
 					sql += " and bicontent like ? or bititle like ?";
 				}
+			}else if (request.getParameter("command1") != null && request.getParameter("command1").equals("research")) {
+				if (searchTarget.equals("rebititle")) {
+					sql += " and bititle like ?";
+				} else if (searchTarget.equals("bicontent")) {
+					sql += " and bicontent like ?";
+				} else if (searchTarget.equals("recreusr")) {
+					sql += " and creusr like ?";
+				}
 			}
 			sql += "ORDER BY binum DESC";
+
 			ps = con.prepareStatement(sql);
 			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
+				ps.setString(1, "%" + searchtxt + "%");
+				if (searchTarget.equals("bicontitle")) {
+					ps.setString(2, "%" + searchtxt + "%");
+				}
+			}
+			if (request.getParameter("command") != null && request.getParameter("command1").equals("research")) {
 				ps.setString(1, "%" + searchtxt + "%");
 				if (searchTarget.equals("bicontitle")) {
 					ps.setString(2, "%" + searchtxt + "%");
@@ -95,11 +112,13 @@
 		}
 	%>
 
-	<script>	String defaultUrl ="";
-	if (init==null&&!login){
-		defaultUrl = rootPath + "/user/login.jsp?init=1";
-		response.sendRedirect(defaultUrl);
-	}
+	<script>
+		String
+		defaultUrl = "";
+		if (init == null && !login) {
+			defaultUrl = rootPath + "/user/login.jsp?init=1";
+			response.sendRedirect(defaultUrl);
+		}
 		function clickTr(binum) {
 			location.href = rootPath + "/board/board_content.jsp?binum="
 					+ binum;
@@ -112,7 +131,10 @@
 					+ searchtxt + "&searchTarget=" + searchTarget + "&";
 		}
 		function doReSearch() {
-			alert("결과내검색");
+			var url = location.href;
+			var researchTarget = document.getElementById("researchTarget").value;
+			var researchtxt = document.getElementById("researchtxt").value;
+			location.href = url + "command1=research&researchtxt="	+ researchtxt + "&researchTarget=" + researchTarget + "&";
 		}
 	</script>
 </body>
