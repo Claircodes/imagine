@@ -86,8 +86,7 @@ function doDeleteForm() {
 		function doUpdateForm() {
 			alert("비밀번호를 입력해주세요");
 			document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><br/><input type='password' id='updatepwd'/><input type='button' value='비번확인' onclick='doUpdatePwdOk("
-					+ "<%=binum%>
-		" + ")'  />";
+					+ "<%=binum%>" + ")'  />";
 			document.getElementById("updatepwd").focus();
 		}
 		function doDeletePwdOk(bn) {
