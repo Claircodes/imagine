@@ -13,10 +13,11 @@
 	<%
 		String front = userId + "님 ";
 		String tableStr = "";
+		String sql ="";
 		String searchtxt = "%" + request.getParameter("searchtxt") + "%";
-
+		String researchtxt = "%" + request.getParameter("researchtxt") + "%";
 		String searchTarget = request.getParameter("searchTarget");
-
+		
 		front += "<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>";
 		front += "<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"main\")'/>";
 
@@ -24,7 +25,7 @@
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ";
+			sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info ";
 			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
 				if (searchTarget.equals("bititle")) {
 					sql += "where bititle like ?";
@@ -32,16 +33,19 @@
 					sql += "where bicontent like ?";
 				} else if (searchTarget.equals("creusr")) {
 					sql += "where creusr like ?";
+				} else if (searchTarget.equals("bicontitle")) {
+					sql += " and bicontent like ? or bititle like ?";
 				}
-				sql += "ORDER BY binum DESC";
 			}
+			sql += "ORDER BY binum DESC";
 			ps = con.prepareStatement(sql);
 			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
-				ps.setString(1, searchtxt);
+				ps.setString(1, "%" + searchtxt + "%");
+				if (searchTarget.equals("bicontitle")) {
+					ps.setString(2, "%" + searchtxt + "%");
+				}
 			}
-
 			ResultSet rs = ps.executeQuery();
-
 			tableStr = "<br/><table border='1'>";
 			String[] menu = {"번호", "제목", "아이디", "날짜"};
 			tableStr += "<tr>";
@@ -59,6 +63,26 @@
 				tableStr += "</tr>";
 			}
 			tableStr += "</table>";
+			tableStr += "<select name='searchTarget' id='searchTarget'>";
+			tableStr += "<option value='bititle'>제목</option>";
+			tableStr += "<option value='creusr'>작성자</option>";
+			tableStr += "<option value='bicontent'>내용</option>";
+			tableStr += "<option value='bicontitle'>제목 + 내용</option>";
+			tableStr += "</select>";
+			tableStr += "<input type='text' id='searchtxt' />";
+			tableStr += "<input type='button' value='검색' onclick='doSearch()'/>";
+			tableStr += "<input type='button' value='글쓰기' onclick='doMovePage(\"insert\")' />";
+
+			if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
+				tableStr += "<br/><br/>결과내검색 :<select name='researchTarget' id='researchTarget'>";
+				tableStr += "<option value='rebititle'>제목</option>";
+				tableStr += "<option value='recreusr'>작성자</option>";
+				tableStr += "<option value='rebicontent'>내용</option>";
+				tableStr += "<option value='rebicontitle'>제목 + 내용</option>";
+				tableStr += "</select>";
+				tableStr += "<input type='text' id='researchtxt' />";
+				tableStr += "<input type='button' value='검색' onclick='doReSearch()' />";
+			}
 			out.println(front + tableStr);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -71,30 +95,25 @@
 		}
 	%>
 
-	<script>
+	<script>	String defaultUrl ="";
+	if (init==null&&!login){
+		defaultUrl = rootPath + "/user/login.jsp?init=1";
+		response.sendRedirect(defaultUrl);
+	}
 		function clickTr(binum) {
 			location.href = rootPath + "/board/board_content.jsp?binum="
 					+ binum;
 		}
-
 		function doSearch() {
 			var searchTarget = document.getElementById("searchTarget").value;
 			var searchtxt = document.getElementById("searchtxt").value;
 			location.href = rootPath
-					+ "/board/board_main.jsp?command=search&searchtxt="	+ searchtxt + "&searchTarget=" + checked_value + "&";
+					+ "/board/board_main.jsp?command=search&searchtxt="
+					+ searchtxt + "&searchTarget=" + searchTarget + "&";
+		}
+		function doReSearch() {
+			alert("결과내검색");
 		}
 	</script>
-
-	<select name='searchTarget' id='searchTarget'>
-		<option value='bititle'>제목</option>
-		<option value='creusr'>작성자</option>
-		<option value='bicontent'>내용</option>
-		<option value='bicontitle'>제목 + 내용</option>
-	</select>
-
-	<input type="text" id="searchtxt" />
-	<input type="button" value="검색" onclick="doSearch()" />
-	<input type="button" value="글쓰기" onclick="doMovePage('insert')" />
-	<div id="board_insert_div"></div>
 </body>
 </html>

@@ -27,6 +27,7 @@
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, binum);
 			ResultSet rs = ps.executeQuery();
+			
 			while (rs.next()) {
 				bi.setBinum(rs.getInt("binum"));
 				bi.setBititle(rs.getString("bititle"));

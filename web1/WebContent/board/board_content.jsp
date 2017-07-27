@@ -14,6 +14,7 @@
 </head>
 <body>
 	<%
+	int pBinum = Integer.parseInt(request.getParameter("binum"));
 		out.println(userId + "님 ");
 		out.println("<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>");
 		out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"board\")'/>");
@@ -28,6 +29,18 @@
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, binum);
 			ResultSet rs = ps.executeQuery();
+			rs.last();
+			int rowCnt = rs.getRow();
+			if(rowCnt==0){
+	%>
+	<script>
+	alert("<%=pBinum%>번 게시물은 이미 지워졌어 자시가");
+	history.back();
+	</script>
+	<%
+	}
+			rs.beforeFirst();
+
 			while (rs.next()) {
 				bi.setBinum(rs.getInt("binum"));
 				bi.setBititle(rs.getString("bititle"));
@@ -73,8 +86,9 @@ function doDeleteForm() {
 		function doUpdateForm() {
 			alert("비밀번호를 입력해주세요");
 			document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><br/><input type='password' id='updatepwd'/><input type='button' value='비번확인' onclick='doUpdatePwdOk("
-					+ "<%=binum%>" + ")'  />";
-					document.getElementById("updatepwd").focus();
+					+ "<%=binum%>
+		" + ")'  />";
+			document.getElementById("updatepwd").focus();
 		}
 		function doDeletePwdOk(bn) {
 			location.href = rootPath
@@ -82,7 +96,8 @@ function doDeleteForm() {
 
 		}
 		function doUpdatePwdOk(bn) {
-			location.href = rootPath + "/board/board_update.jsp?binum=" + bn + "&";
+			location.href = rootPath + "/board/board_update.jsp?binum=" + bn
+					+ "&";
 		}
 	</script>
 
