@@ -9,8 +9,11 @@
 
 <body>
 
+<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
 
-	<table border="0">
+    <div class="container">
+      <div class="starter-template">
+	<table border="0"  class='table table-bordered table-hover'>
 		<tr>
 			<td>제목 :</td>
 			<td><input type="text" name="bititle" id="bititle" /></td>
@@ -30,6 +33,9 @@
 			<td><input type="button" value="확인" onclick="doInsert()" /></td>
 		</tr>
 	</table>
+	
+	</div>
+	</div>
 	<script>
 		function doInsert() {
 			var bt = document.getElementById("bititle").value;

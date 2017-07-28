@@ -13,8 +13,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-	int pBinum = Integer.parseInt(request.getParameter("binum"));
+	<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+
+	<div class="container">
+		<div class="starter-template">
+			<%
 		out.println(userId + "님 ");
 		out.println("<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>");
 		out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"board\")'/>");
@@ -33,11 +36,11 @@
 			int rowCnt = rs.getRow();
 			if(rowCnt==0){
 	%>
-	<script>
-	alert("<%=pBinum%>번 게시물은 이미 지워졌어 자시가");
+			<script>
+	alert("<%=binum%>번 게시물은 이미 지워졌어 자시가");
 	history.back();
 	</script>
-	<%
+			<%
 	}
 			rs.beforeFirst();
 
@@ -60,7 +63,7 @@
 			DBConn.closeCon();
 		}
 		
-		String tableStr = "<table border='1'>";
+		String tableStr = "<table border='1'class='table table-bordered table-hover' >";
 		tableStr += "<tr><td>No : </td><td>" + bi.getBinum() + "</td></tr>";
 		tableStr += "<tr><td>날짜: </td><td>" + bi.getDatetime() + "</td></tr>";
 		tableStr += "<tr><td>비밀번호 :</td><td>" + bi.getCreusr() + "</td></tr>";
@@ -76,23 +79,25 @@
 			out.println("<input type='button' value='수정' onclick='doUpdateForm()' />");
 		}
 	%>
+		</div>
+	</div>
 	<script>
-function doDeleteForm() {
-	alert("비밀번호를 입력해주세요");
-			document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><br/><input type='password' id='deletepwd'/><input type='button' value='비번확인' onclick='doDeletePwdOk("
-					+ "<%=binum%>"+ ")' />";
-			document.getElementById("deletepwd").focus();
+	function doDeleteForm() {
+		var bn = "<%=binum%>";
+		alert("비밀번호를 입력해주세요");
+		document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><input type='password' id='deletepwd'/><input type='button' value='비번확인' onclick='doDeletePwdOk("+ bn+ ")' />";
+		document.getElementById("deletepwd").focus();
 		}
-		function doUpdateForm() {
+	function doUpdateForm() {
+		var bn = "<%=binum%>";
 			alert("비밀번호를 입력해주세요");
-			document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><br/><input type='password' id='updatepwd'/><input type='button' value='비번확인' onclick='doUpdatePwdOk("
-					+ "<%=binum%>" + ")'  />";
+			document.getElementById("pwdform").innerHTML = "패스워드를 입력하세요-->><input type='password' id='updatepwd'/><input type='button' value='비번확인' onclick='doUpdatePwdOk("
+					+ bn + ")'  />";
 			document.getElementById("updatepwd").focus();
 		}
 		function doDeletePwdOk(bn) {
 			location.href = rootPath
 					+ "/board/board_ok.jsp?command=delete&binum=" + bn + "&";
-
 		}
 		function doUpdatePwdOk(bn) {
 			location.href = rootPath + "/board/board_update.jsp?binum=" + bn

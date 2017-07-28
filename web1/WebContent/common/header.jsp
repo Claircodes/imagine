@@ -43,11 +43,14 @@
 		response.sendRedirect(defaultUrl);
 	}
 %>
-<script src="<%=rootPath%>/js/jquery-3.2.1.js">
-</script>
+<script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
+<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/common.css"/>
 <script>
 var rootPath="<%=rootPath%>";
-
+var init="<%=init%>";
 	function doMovePage(pageId) {
 		var url = "";
 		if (pageId == "board") {
@@ -55,7 +58,7 @@ var rootPath="<%=rootPath%>";
 		} else if (pageId == "main") {
 			url = rootPath + "/";
 		} else if (pageId == "logout") {
-			url = rootPath + "/user/login_ok.jsp";
+			url = rootPath + "/user/login_ok.jsp?logout=1&";
 		}else if(pageId=="insert"){
 			url = rootPath + "/board/board_insert.jsp";
 		}			
