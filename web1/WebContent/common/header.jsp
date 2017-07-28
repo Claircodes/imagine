@@ -31,6 +31,7 @@
 		hp3 = (String) session.getAttribute("hp3");
 		login = true;
 	}
+	
 	String rootPath = request.getContextPath();
 	Date toDate = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -42,6 +43,7 @@
 		defaultUrl = rootPath + "/user/login.jsp?init=1";
 		response.sendRedirect(defaultUrl);
 	}
+
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>

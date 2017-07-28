@@ -1,0 +1,6 @@
+$("button").click(function(){			
+alert(1);
+})
+$("#btn2").click(function(){			
+alert(2);
+})

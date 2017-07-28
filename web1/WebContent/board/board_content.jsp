@@ -13,7 +13,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+	<jsp:include page="/common/top.jsp" flush="fasle">
+		<jsp:param value="<%=login%>" name="login"/>
+	</jsp:include>
 	<div class="container">
 		<div class="starter-template">
 			<%
