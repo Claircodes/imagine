@@ -9,15 +9,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="/">Project name</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active">
-            <a href= "#">게시판가기</a></li>
-            <li><a href="#about">유저정보가기</a></li>
-            <li><a href="#contact">권한정보가기</a></li>
-            <li><a href="#contact">로그아웃</a></li>
+            <a href= "/board/board_main.jsp">게시판가기</a></li>
+            <li><a href="/user/user_info">유저정보가기</a></li>
+            <li><a href="/role/role_select.jsp">권한정보가기</a></li>
+            <li><a href="/user/logout_ok.jsp">로그아웃</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

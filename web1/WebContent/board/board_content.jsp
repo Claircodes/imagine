@@ -64,8 +64,7 @@
 				tableStr += "<tr><td>날짜: </td><td>" + bi.getDatetime() + "</td></tr>";
 				tableStr += "<tr><td>비밀번호 :</td><td>" + bi.getCreusr() + "</td></tr>";
 				tableStr += "<tr><td>제목 : </td><td>" + bi.getBititle() + "</td></tr>";
-				tableStr += "<tr><td colspan='2'>내용 : </td></tr>";
-				tableStr += "<tr><td colspan='2'>" + bi.getBicontent() + "</td></tr>";
+				tableStr += "<tr><td>내용 : </td><td>" +  bi.getBicontent() + "</td></tr>";
 				tableStr += "</table>";
 				tableStr += "<input type='button' value='목록으로' onclick='doMovePage(\"board\")'/>";
 				out.println(tableStr);

@@ -26,7 +26,7 @@
 					<td colspan="2"><textarea name="bicontent" id="bicontent"></textarea></td>
 				</tr>
 			</table>
-			<input type="button" value="취소" />
+			<input type="button" value="취소" onclick="doMovePage('board')"/>
 			<input type="button" value="확인" onclick="doInsert()" />
 		</div>
 	</div>

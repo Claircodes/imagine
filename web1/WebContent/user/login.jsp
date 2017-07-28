@@ -1,4 +1,3 @@
-
 <%@ include file = "/common/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -7,6 +6,10 @@
 <%@ page import=" com.test.common.DBConn"%>
 <link rel="stylesheet" href="<%=rootPath%>/ui/signin.css"/>
 <body>
+	<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+	<div class="container">
+		<div class="starter-template">
+
 <%
 
 if(userId!=null){
@@ -23,7 +26,6 @@ if(userId!=null){
 	%>
 
 
-    <div class="container">
       <form class="form-signin" action="<%=rootPath%>/user/login_ok.jsp">
         <h2 class="form-signin-heading">로그인해주세요</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -37,6 +39,7 @@ if(userId!=null){
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
+      </div>
     </div>
 	<%
 	}
