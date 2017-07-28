@@ -44,7 +44,6 @@
 							ps.setString(2, "%" + searchtxt + "%");
 						}
 					}
-
 					ResultSet rs = ps.executeQuery();
 					tableStr = "<br/><table border='1' class='table table-bordered table-hover'>";
 					String[] menu = {"번호", "제목", "아이디", "날짜"};
@@ -98,7 +97,6 @@
 			%>
 		</div>
 	</div>
-
 	<script>
 		String
 		defaultUrl = "";
@@ -107,15 +105,12 @@
 			response.sendRedirect(defaultUrl);
 		}
 		function clickTr(binum) {
-			location.href = rootPath + "/board/board_content.jsp?binum="
-					+ binum;
+			location.href = rootPath + "/board/board_content.jsp?binum=" + binum;
 		}
 		function doSearch() {
 			var searchTarget = document.getElementById("searchTarget").value;
 			var searchtxt = document.getElementById("searchtxt").value;
-			location.href = rootPath
-					+ "/board/board_main.jsp?command=search&searchtxt="
-					+ searchtxt + "&searchTarget=" + searchTarget + "&";
+			location.href = rootPath + "/board/board_main.jsp?command=search&searchtxt=" + searchtxt + "&searchTarget=" + searchTarget + "&";
 		}
 	</script>
 </body>

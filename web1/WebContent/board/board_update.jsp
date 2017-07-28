@@ -45,8 +45,7 @@
 				}
 			%>
 
-		</div>
-	</div>
+
 	<script>
 		function doUpdate() {
 			var bn= "<%=binum%>";
@@ -55,7 +54,9 @@
 			location.href = rootPath + "/board/board_ok.jsp?command=update&binum=" + bn	+ "&bititle=" + bt + "&bicontent=" + bc + "&";
 		}
 	</script>
-	<input type='button' value='목록으로' onclick="doMovePage('board')" />
+	<input type='button' value='목록으로' onclick="doMovePage('board')"  />
 	<input type='button' value='확인' onclick='doUpdate()' />
+	</div>
+	</div>
 </body>
 </html>
