@@ -13,7 +13,7 @@
 
     <div class="container">
       <div class="starter-template">
-	<table border="0"  class='table table-bordered table-hover'>
+	<table border="1"  class='table table-bordered table-hover'>
 		<tr>
 			<td>제목 :</td>
 			<td><input type="text" name="bititle" id="bititle" /></td>
