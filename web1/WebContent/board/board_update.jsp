@@ -8,53 +8,54 @@
 <%@ page import="com.test.dto.BoardInfo"%>
 
 <body>
-	<%
-		out.println(userId + "님 ");
-		out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
-		out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doBackLogin()'/>");
-		BoardInfo bi = new BoardInfo();
-		int binum = Integer.parseInt(request.getParameter("binum"));
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = DBConn.getCon();
-			String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info where binum=?";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, binum);
-			ResultSet rs = ps.executeQuery();
-			String tableStr = "<table border='1'>";
-			while (rs.next()) {
-				tableStr += "<tr><td>No : </td><td>" + rs.getInt("binum") + "</td></tr>";
-				tableStr += "<tr><td>날짜 </td><td>" + rs.getDate("credat").toString() + "</td></tr>";
-				tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' value='"
-						+ rs.getString("bititle") + "'/></td></tr>";
-				tableStr += "<tr><td colspan='2'>내용 : </td></tr>";
-				tableStr += "<tr><td colspan='2'><textarea name='bicontent' id='bicontent'/> "
-						+ rs.getString("bicontent") + "</textarea></td></tr>";
-			}
-			tableStr += "</table>";
-			out.println(tableStr);
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			if (ps != null) {
-				ps.close();
-				ps = null;
-			}
-			DBConn.closeCon();
-		}
-	%>
-	<script>
+	<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+	<div class="container">
+		<div class="starter-template">
+			<%
+				out.println(userId + "님 ");
+				out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
+				out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doBackLogin()'/>");
+				BoardInfo bi = new BoardInfo();
+				int binum = Integer.parseInt(request.getParameter("binum"));
+				Connection con = null;
+				PreparedStatement ps = null;
+				try {
+					con = DBConn.getCon();
+					String sql = "SELECT binum,bititle,bicontent,bipwd,creusr,credat FROM board_info where binum=?";
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, binum);
+					ResultSet rs = ps.executeQuery();
+					String tableStr = "<table border='1' class='table table-bordered table-hover'>";
+					while (rs.next()) {
+						tableStr += "<tr><td>No : </td><td>" + rs.getInt("binum") + "</td></tr>";
+						tableStr += "<tr><td>날짜 </td><td>" + rs.getDate("credat").toString() + "</td></tr>";
+						tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' value='" + rs.getString("bititle") + "'/></td></tr>";
+						tableStr += "<tr><td>내용 : </td><td><textarea name='bicontent' id='bicontent'/>" + rs.getString("bicontent") + "</textarea></td></tr>";
+					}
+					tableStr += "</table>";
+					out.println(tableStr);
+				} catch (Exception e) {
+					System.out.println(e);
+				} finally {
+					if (ps != null) {
+						ps.close();
+						ps = null;
+					}
+					DBConn.closeCon();
+				}
+			%>
 
+		</div>
+	</div>
+	<script>
 		function doUpdate() {
 			var bn= "<%=binum%>";
 			var bt = document.getElementById("bititle").value;
 			var bc = document.getElementById("bicontent").value;
-			location.href = rootPath + "/board/board_ok.jsp?command=update&binum=" + bn+ "&bititle="+bt+"&bicontent="+bc+"&";
+			location.href = rootPath + "/board/board_ok.jsp?command=update&binum=" + bn	+ "&bititle=" + bt + "&bicontent=" + bc + "&";
 		}
 	</script>
 	<input type='button' value='목록으로' onclick="doMovePage('board')" />
 	<input type='button' value='확인' onclick='doUpdate()' />
 </body>
-
 </html>
