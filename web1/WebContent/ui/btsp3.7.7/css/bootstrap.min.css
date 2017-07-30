@@ -3728,7 +3728,10 @@ a.btn.disabled, fieldset[disabled] a.btn {
 
 .btn-block {
 	display: block;
-	width: 100%
+	width: 100%;
+	background-color: #CCEBF1;
+	 border: 0px;
+	 color: black
 }
 
 .btn-block+.btn-block {
@@ -4577,19 +4580,19 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 	.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse,
 		.navbar-static-top .navbar-collapse {
 		padding-right: 0;
-		padding-left: 0
+		padding-left: 0;
 	}
 }
 
 .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse
 	{
-	max-height: 340px
+	max-height: 340px;
 }
 
 @media ( max-device-width :480px) and (orientation:landscape) {
 	.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse
 		{
-		max-height: 200px
+		max-height: 200px;
 	}
 }
 
@@ -4622,7 +4625,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 	position: fixed;
 	right: 0;
 	left: 0;
-	z-index: 1030
+	z-index: 1030;
 }
 
 @media ( min-width :768px) {
@@ -4633,7 +4636,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 .navbar-fixed-top {
 	top: 0;
-	border-width: 0 0 1px
+	border-width: 0 0 1px;
 }
 
 .navbar-fixed-bottom {
@@ -4887,12 +4890,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .navbar-default {
-	background-color: #f8f8f8;
-	border-color: #e7e7e7
+	background-color: #c0c0c0;
+	border-bottom-color:  #ececec;
 }
 
 .navbar-default .navbar-brand {
 	color: #777
+	
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover
@@ -4906,13 +4910,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .navbar-default .navbar-nav>li>a {
-	color: #777
+	color: #777;
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
 	{
 	color: #333;
-	background-color: transparent
+	background-color: #DAF3F8
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus,
@@ -4928,7 +4932,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .navbar-default .navbar-toggle {
-	border-color: #ddd
+	border-color: #CCEBF1
 }
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
@@ -4952,12 +4956,12 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 @media ( max-width :767px) {
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
-		color: #777
+		color: #777;
 	}
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus,
 		.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
 		color: #333;
-		background-color: transparent
+		background-color: red
 	}
 	.navbar-default .navbar-nav .open .dropdown-menu>.active>a,
 		.navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus,

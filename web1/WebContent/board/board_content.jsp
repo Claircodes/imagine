@@ -19,9 +19,7 @@
 	<div class="container">
 		<div class="starter-template">
 			<%
-				out.println(userId + "님 ");
-				out.println("<input type='button' value='로그아웃' onclick='doMovePage(\"logout\")'/>");
-				out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doMovePage(\"board\")'/>");
+
 				BoardInfo bi = new BoardInfo();
 				int binum = Integer.parseInt(request.getParameter("binum"));
 
@@ -63,6 +61,7 @@
 				}
 				String tableStr = "<table border='1'class='table table-bordered table-hover' >";
 				tableStr += "<tr><td>No : </td><td>" + bi.getBinum() + "</td></tr>";
+				tableStr += "<tr><td>아이디 : </td><td>" + bi.getCreusr()+ "</td></tr>";
 				tableStr += "<tr><td>날짜: </td><td>" + bi.getDatetime() + "</td></tr>";
 				tableStr += "<tr><td>비밀번호 :</td><td>" + bi.getCreusr() + "</td></tr>";
 				tableStr += "<tr><td>제목 : </td><td>" + bi.getBititle() + "</td></tr>";

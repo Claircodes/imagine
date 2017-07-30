@@ -2,7 +2,8 @@
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #D4F4FA;
+  background-color: #EEFCFF;
+  background-image: url("/ui/hunger.jpg");
 }
 
 .form-signin {

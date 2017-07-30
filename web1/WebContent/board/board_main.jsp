@@ -11,6 +11,7 @@
 <body>
 	<jsp:include page="/common/top.jsp" flush="fasle">
 		<jsp:param value="<%=login%>" name="login"/>
+		<jsp:param value="m1" name="menu" />
 	</jsp:include>
 
 	<div class="container">

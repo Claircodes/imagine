@@ -30,6 +30,7 @@
 					String tableStr = "<table border='1' class='table table-bordered table-hover'>";
 					while (rs.next()) {
 						tableStr += "<tr><td>No : </td><td>" + rs.getInt("binum") + "</td></tr>";
+						tableStr += "<tr><td>아이디:</td><td>" + userId+ "</td></tr>";
 						tableStr += "<tr><td>날짜 </td><td>" + rs.getDate("credat").toString() + "</td></tr>";
 						tableStr += "<tr><td>제목 : </td><td><input type='text' name='bititle' id='bititle' value='" + rs.getString("bititle") + "'/></td></tr>";
 						tableStr += "<tr><td>내용 : </td><td><textarea name='bicontent' id='bicontent'/>" + rs.getString("bicontent") + "</textarea></td></tr>";

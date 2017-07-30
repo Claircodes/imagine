@@ -5,12 +5,17 @@
 <%@ page import=" com.test.dto.UserInfo"%>
 <%@ page import=" com.test.common.DBConn"%>
 <link rel="stylesheet" href="<%=rootPath%>/ui/signin.css" />
+
 <body>
+
 	<jsp:include page="/common/top.jsp" flush="fasle">
 		<jsp:param value="<%=login%>" name="login" />
 	</jsp:include>
 	<div class="container">
 		<div class="starter-template">
+					<%if (!login){ 
+
+	%>
 			<form class="form-signin" action="<%=rootPath%>/user/login_ok.jsp">
 				<h2 class="form-signin-heading">로그인해주세요</h2>
 				<label for="inputEmail" class="sr-only">Email address</label> 
@@ -22,12 +27,18 @@
 				</div>
 				<button class="btn btn-lg btn-primary btn-block" id="btn2" type="submit">Login</button>
 			</form>
+			<%
+			}else {
+				%>
+				<script>
+				location.href = "/main.jsp";
+				</script>
+				<%
+			}
+			%>
 		</div>
 	</div><!--  /container -->
 
-	<script>
-
-	</script>
 </body>
 
 </html>
