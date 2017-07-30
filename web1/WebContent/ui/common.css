@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 .mainbody{
+	  padding-top: 50px;
 		background-image: url("/ui/hunger.jpg");
 }
 body {
@@ -7,6 +8,7 @@ body {
   background-color: #EEFCFF;
 	background-size: 100%;
 }
+
 
 .starter-template {
   padding: 40px 15px;

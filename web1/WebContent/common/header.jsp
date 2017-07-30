@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>홈페이지</title>
 </head>
 <%!public void printStr(String str) {
 		System.out.println("ajlsjfdljf");
@@ -50,6 +50,7 @@
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css"/>
+
 <script>
 var rootPath="<%=rootPath%>";
 var init="<%=init%>";
