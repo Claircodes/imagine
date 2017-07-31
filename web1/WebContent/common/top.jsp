@@ -13,14 +13,17 @@
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> 
+			<span class="sr-only">Toggle navigation</span> 
+			<span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/main.jsp">HOME</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li id="m1"><a href="/board/board_main.jsp">게시판</a></li>
-				<li ><a href="#">빈페이지</a></li>
+				<li id="m2"><a href="/board/NewFile.jsp">빈페이지</a></li>
 			</ul>
 				<% 	if (login) {
 		loginStr = (String) session.getAttribute("userid"); %>
