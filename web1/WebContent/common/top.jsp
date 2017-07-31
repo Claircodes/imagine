@@ -20,7 +20,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li id="m1"><a href="/board/board_main.jsp">게시판</a></li>
-				<li id="m2"><a href="/user/user_info.jsp">유저정보</a></li>
+				<li ><a href="#">빈페이지</a></li>
 			</ul>
 				<% 	if (login) {
 		loginStr = (String) session.getAttribute("userid"); %>

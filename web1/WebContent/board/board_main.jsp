@@ -77,16 +77,6 @@
 					tableStr += "<input type='button' value='검색' onclick='doSearch()'/>";
 					tableStr += "<input type='button' value='글쓰기' onclick='doMovePage(\"insert\")' />";
 
-					if (request.getParameter("command") != null && request.getParameter("command").equals("search")) {
-						tableStr += "<br/><br/>결과내검색 :<select name='researchTarget' id='researchTarget'>";
-						tableStr += "<option value='rebititle'>제목</option>";
-						tableStr += "<option value='recreusr'>작성자</option>";
-						tableStr += "<option value='rebicontent'>내용</option>";
-						tableStr += "<option value='rebicontitle'>제목 + 내용</option>";
-						tableStr += "</select>";
-						tableStr += "<input type='text' id='researchtxt' />";
-						tableStr += "<input type='button' value='검색' onclick='doReSearch()' />";
-					}
 					out.println(tableStr);
 				} catch (Exception e) {
 					System.out.println(e);

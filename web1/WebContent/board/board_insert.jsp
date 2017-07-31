@@ -22,10 +22,7 @@
 					<td><input type="password" name="bipwd" id="bipwd" /></td>
 				</tr>
 				<tr>
-					<td colspan="2">내용 :</td>
-				</tr>
-				<tr>
-					<td colspan="2"><textarea name="bicontent" id="bicontent"></textarea></td>
+					<td>내용 :</td>	<td><textarea name="bicontent" id="bicontent"></textarea></td>
 				</tr>
 			</table>
 			<input type="button" value="취소" onclick="doMovePage('board')"/>

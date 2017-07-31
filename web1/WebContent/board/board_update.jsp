@@ -14,9 +14,7 @@
 	<div class="container">
 		<div class="starter-template">
 			<%
-				out.println(userId + "님 ");
-				out.println("<input type='button' value='로그아웃' onclick='doLogout()'/>");
-				out.println("<input type='button' value='로그인메인화면으로 돌아가기' onclick='doBackLogin()'/>");
+
 				BoardInfo bi = new BoardInfo();
 				int binum = Integer.parseInt(request.getParameter("binum"));
 				Connection con = null;

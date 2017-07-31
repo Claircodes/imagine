@@ -9,7 +9,16 @@
 	</jsp:include>
 	<div class="container">
 		<div class="starter-template">
-		유저 정보 입니다. 
+		
+
+	
+		<table border="1" class='table table-bordered table-hover'>
+			<tr><td>이름 : </td><td><%=userName %></td></tr>
+			<tr><td>나이 : </td><td><%=age%></td></tr>
+			<tr><td>주소 : </td><td><%=address %></td></tr>
+			<tr><td>핸폰번호 : </td><td><%=hp1 %>-<%=hp2 %>-<%=hp3 %></td></tr>		
+		</table>
+
 		</div>
 		</div>
 		<script>
