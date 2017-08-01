@@ -7,8 +7,6 @@
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.BoardInfo"%>
 
-<body>
-
 	<%
 		String resultStr = "";
 		String command = request.getParameter("command");
@@ -101,5 +99,3 @@
 		location.href = "/board/board_main.jsp";
 
 	</script>
-</body>
-</html>

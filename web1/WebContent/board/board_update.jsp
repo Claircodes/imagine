@@ -7,10 +7,6 @@
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.BoardInfo"%>
 
-<body>
-	<jsp:include page="/common/top.jsp" flush="fasle">
-		<jsp:param value="<%=login%>" name="login"/>
-	</jsp:include>
 	<div class="container">
 		<div class="starter-template">
 			<%
@@ -48,6 +44,7 @@
 
 
 	<script>
+	document.getElementById("m1").className = "active";
 		function doUpdate() {
 			var bn= "<%=binum%>";
 			var bt = document.getElementById("bititle").value;
@@ -59,5 +56,3 @@
 	<input type='button' value='확인' onclick='doUpdate()' />
 	</div>
 	</div>
-</body>
-</html>

@@ -6,10 +6,6 @@
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.BoardInfo"%>
 
-<body>
-	<jsp:include page="/common/top.jsp" flush="fasle">
-		<jsp:param value="<%=login%>" name="login"/>
-	</jsp:include>
 	<div class="container">
 		<div class="starter-template">
 			<table border="1" class='table table-bordered table-hover'>
@@ -30,6 +26,7 @@
 		</div>
 	</div>
 	<script>
+	document.getElementById("m1").className = "active";
 		function doInsert() {
 			var bt = document.getElementById("bititle").value;
 			var pwd = document.getElementById("bipwd").value;
@@ -37,5 +34,3 @@
 			location.href = rootPath + "/board/board_ok.jsp?command=insert&bititle= " + bt + "&bipwd=" + pwd + "&bicontent= " + c + "&";
 		}
 	</script>
-</body>
-</html>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	boolean login = Boolean.parseBoolean(request.getParameter("login"));
+	boolean login1 = Boolean.parseBoolean(request.getParameter("login1"));
 	String loginStr = "로그인";
 	String m = "";
 	if (request.getParameter("menu") != null) {
@@ -25,7 +25,7 @@
 				<li id="m1"><a href="/board/board_main.jsp">게시판</a></li>
 				<li id="m2"><a href="/board/NewFile.jsp">빈페이지</a></li>
 			</ul>
-				<% 	if (login) {
+				<% 	if (login1) {
 		loginStr = (String) session.getAttribute("userid"); %>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

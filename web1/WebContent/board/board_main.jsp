@@ -8,11 +8,7 @@
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.BoardInfo"%>
 
-<body>
-	<jsp:include page="/common/top.jsp" flush="fasle">
-		<jsp:param value="<%=login%>" name="login"/>
-		<jsp:param value="m1" name="menu" />
-	</jsp:include>
+
 
 	<div class="container">
 		<div class="starter-template">
@@ -88,11 +84,12 @@
 					DBConn.closeCon();
 				}
 			%>
+			<%@ include file="/common/bottom.jsp"%>
 		</div>
 	</div>
 	<script>
-		String
-		defaultUrl = "";
+	document.getElementById("m1").className = "active";
+		var defaultUrl = "";
 		if (init == null && !login) {
 			defaultUrl = rootPath + "/user/login.jsp?init=1";
 			response.sendRedirect(defaultUrl);
@@ -106,5 +103,3 @@
 			location.href = rootPath + "/board/board_main.jsp?command=search&searchtxt=" + searchtxt + "&searchTarget=" + searchTarget + "&";
 		}
 	</script>
-</body>
-</html>
