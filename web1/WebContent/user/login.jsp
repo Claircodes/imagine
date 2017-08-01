@@ -42,6 +42,7 @@
 					param["id"] = id;
 					param["pwd"] = pwd;
 					param = JSON.stringify(param);
+					
 					$.ajax({
 						type : "POST",
 						url : "/user/login_ok.jsp",
