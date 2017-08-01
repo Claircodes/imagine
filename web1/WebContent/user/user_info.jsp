@@ -26,4 +26,4 @@
 
 		</div>
 	</div>
-			<%@ include file="/common/bottom.jsp"%>
+	<%@ include file="/common/bottom.jsp"%>
