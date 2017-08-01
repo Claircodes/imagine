@@ -34,3 +34,4 @@
 			location.href = rootPath + "/board/board_ok.jsp?command=insert&bititle= " + bt + "&bipwd=" + pwd + "&bicontent= " + c + "&";
 		}
 	</script>
+</body>

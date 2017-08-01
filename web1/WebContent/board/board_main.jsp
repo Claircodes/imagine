@@ -9,7 +9,6 @@
 <%@ page import="com.test.dto.BoardInfo"%>
 
 
-
 	<div class="container">
 		<div class="starter-template">
 			<%
@@ -103,3 +102,4 @@
 			location.href = rootPath + "/board/board_main.jsp?command=search&searchtxt=" + searchtxt + "&searchTarget=" + searchTarget + "&";
 		}
 	</script>
+</body>

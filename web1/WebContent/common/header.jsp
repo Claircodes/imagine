@@ -71,7 +71,7 @@ var init="<%=init%>";
 	}
 
 </script>
-<body onload="loadData()">
+<body>
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -108,10 +108,6 @@ var init="<%=init%>";
 	</div>
 </nav>
 <script>
-function loadData(){
-	
 
-<%@ include file="/common/bottom.jsp"%>
-}
 
 </script>

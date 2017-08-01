@@ -91,3 +91,4 @@
 			<div id="pwdform"></div>
 		</div>
 	</div>
+</body>
