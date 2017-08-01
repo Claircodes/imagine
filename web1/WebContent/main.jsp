@@ -13,4 +13,4 @@ body {
 		<p>환영합니다</p>
 	</div>
 </div>
-</body>
+			<%@ include file="/common/bottom.jsp"%>

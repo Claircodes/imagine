@@ -83,11 +83,10 @@
 					DBConn.closeCon();
 				}
 			%>
-			<%@ include file="/common/bottom.jsp"%>
-		</div>
-	</div>
+
+	
 	<script>
-	document.getElementById("m1").className = "active";
+
 		var defaultUrl = "";
 		if (init == null && !login) {
 			defaultUrl = rootPath + "/user/login.jsp?init=1";
@@ -102,4 +101,7 @@
 			location.href = rootPath + "/board/board_main.jsp?command=search&searchtxt=" + searchtxt + "&searchTarget=" + searchTarget + "&";
 		}
 	</script>
-</body>
+
+		</div>
+	</div>
+			<%@ include file="/common/bottom.jsp"%>

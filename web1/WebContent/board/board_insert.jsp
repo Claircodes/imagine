@@ -23,8 +23,7 @@
 			</table>
 			<input type="button" value="취소" onclick="doMovePage('board')"/>
 			<input type="button" value="확인" onclick="doInsert()" />
-		</div>
-	</div>
+
 	<script>
 	document.getElementById("m1").className = "active";
 		function doInsert() {
@@ -34,4 +33,7 @@
 			location.href = rootPath + "/board/board_ok.jsp?command=insert&bititle= " + bt + "&bipwd=" + pwd + "&bicontent= " + c + "&";
 		}
 	</script>
-</body>
+
+		</div>
+	</div>
+			<%@ include file="/common/bottom.jsp"%>

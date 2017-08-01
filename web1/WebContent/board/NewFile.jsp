@@ -4,9 +4,9 @@
 
 	<div class="container">
 		<div class="starter-template">하하하ㅏ하하하하
+
+
+
 		</div>
 	</div>
-	<script>
-		document.getElementById("m2").className = "active";
-	</script>
-</body>
+			<%@ include file="/common/bottom.jsp"%>

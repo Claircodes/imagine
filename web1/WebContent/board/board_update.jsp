@@ -56,4 +56,4 @@
 	<input type='button' value='확인' onclick='doUpdate()' />
 	</div>
 	</div>
-	</body>
+			<%@ include file="/common/bottom.jsp"%>

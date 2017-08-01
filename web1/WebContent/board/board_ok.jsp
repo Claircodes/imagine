@@ -99,4 +99,3 @@
 		location.href = "/board/board_main.jsp";
 
 	</script>
-	</body>

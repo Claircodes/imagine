@@ -23,8 +23,7 @@
 					<td><%=hp1%>-<%=hp2%>-<%=hp3%></td>
 				</tr>
 			</table>
+
 		</div>
 	</div>
-
-</body>
-</html>
+			<%@ include file="/common/bottom.jsp"%>

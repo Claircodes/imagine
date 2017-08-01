@@ -89,6 +89,7 @@
 		}
 			</script>
 			<div id="pwdform"></div>
+
 		</div>
 	</div>
-</body>
+					<%@ include file="/common/bottom.jsp"%>

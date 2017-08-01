@@ -2,6 +2,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,8 +44,7 @@
 		defaultUrl = rootPath + "/user/login.jsp?init=1";
 		response.sendRedirect(defaultUrl);
 	}
-String m ="";
-
+	String nowUrl = request.getRequestURI();
 
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
@@ -56,6 +56,10 @@ String m ="";
 <script>
 var rootPath="<%=rootPath%>";
 var init="<%=init%>";
+$(document).ready(function(){
+	var nowUrl = "<%=nowUrl%>";
+	var obj = $("a[href='" + nowUrl + "']").parent().attr("class","active");
+})
 	function doMovePage(pageId) {
 		var url = "";
 		if (pageId == "board") {
@@ -95,14 +99,16 @@ var init="<%=init%>";
 					<a href="#" class="dropdown-toggle"	data-toggle="dropdown" role="button" aria-expanded="false"><%=userId%>님
 					<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/user/user_info.jsp" >유저정보</a></li>
-						<li><a href="/role/role_select.jsp" >권한정보</a></li>
+						<li ><a href="/user/user_info.jsp" >유저정보</a></li>
+						<li ><a href="/role/role_select.jsp" >권한정보</a></li>
 						<li role="presentation" class="divider"></li>
 						<li><a href="/user/logout_ok.jsp">로그아웃</a></li>
 					</ul>
 					<% 	}%>
 					</li>
 			</ul>
+			
+			
 		</div>
 		<!--/.nav-collapse -->
 	</div>

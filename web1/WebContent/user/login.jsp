@@ -34,8 +34,7 @@
 				<%
 			}
 			%>
-		</div>
-	</div><!--  /container -->
+	
 <script>
 $("button.btn").click(function(){
 	var id = $("#id").val();
@@ -67,6 +66,7 @@ $("button.btn").click(function(){
 	});
 });
 </script>
-</body>
 
-</html>
+		</div>
+	</div>
+			<%@ include file="/common/bottom.jsp"%>

@@ -3,7 +3,9 @@
 	pageEncoding="UTF-8"%>
 
 	<div class="container">
-		<div class="starter-template">권한 정보 입니다.</div>
-	</div>
+		<div class="starter-template">권한 정보 입니다.	
 
-</body>
+
+		</div>
+	</div>
+				<%@ include file="/common/bottom.jsp"%>
