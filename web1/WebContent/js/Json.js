@@ -1,6 +1,5 @@
 /**
- * 
- */
+
 var scr = document.createElement("script");
 scr.src = "/js";
 var JObj = function(params) {
@@ -39,3 +38,7 @@ var JObj = function(params) {
 			,done: function(e) {
 				}
 			};
+
+
+ * 
+ */
