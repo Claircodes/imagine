@@ -19,7 +19,7 @@ if (command.equals("car_select")){
 	try {
 		con = DBConn.getCon();
 		String sql = "SELECT vi.viname,gi.giname,gi.gidesc,gi.gicredat,gi.gicretim FROM goods_info AS gi ";
-		sql += "INNER JOIN vendor_info AS vi ON vi.vinum =gi.vinum ";
+		sql += "INNER JOIN vendor_info AS vi ON vi.vinum=gi.vinum ";
 		if (allOrOne.equals("one")) {		
 			sql +="where gi.ginum=?";
 		}else if(!opVinum.equals("선택")){

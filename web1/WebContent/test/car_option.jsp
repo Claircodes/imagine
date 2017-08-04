@@ -63,7 +63,7 @@ $(document).ready(
 		var opVinum = $("#s_vendor option:selected").val();
 		var param = {};
 		var allOrOne = "one";
-		if (ginum == "" || ginum == null || opVinum == "선택") {
+		if (ginum == "" || ginum == null ) {
 			allOrOne = "all";
 		}
 		param["ginum"] = ginum;
