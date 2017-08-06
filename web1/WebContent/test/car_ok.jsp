@@ -19,17 +19,28 @@ if (command.equals("car_select")){
 	try {
 		con = DBConn.getCon();
 		String sql = "SELECT vi.viname,gi.giname,gi.gidesc,gi.gicredat,gi.gicretim FROM goods_info AS gi ";
-		sql += "INNER JOIN vendor_info AS vi ON vi.vinum=gi.vinum ";
-		if (allOrOne.equals("one")) {		
-			sql +="where gi.ginum=?";
-		}else if(!opVinum.equals("선택")){
-			sql +="where gi.vinum=?";
+		sql += "INNER JOIN vendor_info AS vi ON vi.vinum=gi.vinum where 1=1 ";
+		
+		if(!opVinum.equals("선택")){
+			sql +="and gi.vinum=?";
+			if (allOrOne.equals("one")) {		
+				sql +="and gi.ginum=?";
+			}
+		}else {
+			if (allOrOne.equals("one")) {		
+				sql +="and gi.ginum=?";
+			}
 		}
 		ps = con.prepareStatement(sql);
-		if (allOrOne.equals("one")) {
-			ps.setInt(1, Integer.parseInt(j.get("ginum").toString()));
-		}else if(!opVinum.equals("선택")){
+		if(!opVinum.equals("선택")){
 			ps.setInt(1, Integer.parseInt(opVinum));
+			if (allOrOne.equals("one")) {
+				ps.setInt(1, Integer.parseInt(j.get("ginum").toString()));
+			}
+		}else{
+			if (allOrOne.equals("one")) {
+				ps.setInt(1, Integer.parseInt(j.get("ginum").toString()));
+			}
 		}
 		ResultSet rs = ps.executeQuery();
 		list = new ArrayList<>();
