@@ -71,8 +71,8 @@ x
 			,error: function(xhr, status, e) {
 			alert("에러 : "+e);
 			}
-			,done: function(e) {
-				}
+			,complete: function() {
+			}
 			};
 			$.ajax(a);
 			});
