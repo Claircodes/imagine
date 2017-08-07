@@ -38,7 +38,7 @@
 $(document).ready(function() {
 	var str = "";
 	var params={};
-	params["nowPage"]="100";
+	params["nowPage"]="1";
 	params = JSON.stringify(params);
 		$.ajax({
 			type : "POST",
@@ -92,7 +92,7 @@ $(document).ready(function() {
 
 $("#page").click(function(){
 
-	alert("Dd");
+	alert( $("#page").children().val());
 });
 
 
