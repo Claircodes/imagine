@@ -66,9 +66,9 @@ $(document).ready(function() {
 		    	}
 		    	for (var i=startnp; i<=endBlock; i++){
 		    		if (i==pageInfo.nowPage){
-		    			pageStr += "<li class='active'><a id='pn"+i+"' >"+i+"</a></li>";
+		    			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
 		    		}else {
-		    			pageStr += "<li ><a id='pn"+i+"'>"+i+"</a></li>";		
+		    			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
 		    		}
 		    	}
 		    	pageStr +="<li><a>▶</a></li>";
@@ -81,6 +81,7 @@ $(document).ready(function() {
 		        $('#table').bootstrapTable({
 		            data: goodsList
 		        });
+		        setEvent();
 			},
 			error : function(xhr, status, e) {
 				alert("에러 : " + e);
@@ -90,10 +91,63 @@ $(document).ready(function() {
 		});
 	});
 
-$("#page").click(function(){
-
-	alert( $("#page").children().val());
-});
+function setEvent(){
+	$("li[class!='active']>a").click(function(){
+		var params={};
+		params["nowPage"]=this.innerHTML;
+		params = JSON.stringify(params);
+		$.ajax({
+			type : "POST",
+			url : "/test/car_ok.jsp",
+			dataType : "json",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept","application/json");
+				xhr.setRequestHeader("Content-Type","application/json");
+			},
+			data : params,
+			success : function(results) {
+		    	var vendorList = results.vendorList;
+		    	var goodsList = results.goodsList;
+		    	var pageInfo = results.pageinfo;
+		    	
+		    	var pageStr ="<li><a>◀◀</a></li>";
+		    	pageStr +="<li><a>◀</a></li>";
+		    	var blockCnt = new Number(pageInfo.blockCnt);
+		    	var np = new Number(pageInfo.nowPage);    	
+		    	var startnp = (Math.floor((np-1)/blockCnt))*10 +1;
+		    	var endBlock = startnp+blockCnt-1;
+		    	var totalPageCnt = new Number(pageInfo.totalPageCnt);
+		    	if(endBlock>totalPageCnt){
+		    		endBlock = totalPageCnt;
+		    	}
+		    	for (var i=startnp; i<=endBlock; i++){
+		    		if (i==pageInfo.nowPage){
+		    			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
+		    		}else {
+		    			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
+		    		}
+		    	}
+		    	pageStr +="<li><a>▶</a></li>";
+		    	pageStr +="<li><a>▶▶</a></li>";
+		    	
+		    	$("#page").html(pageStr);
+		    	for(var i=0, max=vendorList.length;i<max;i++){
+		    		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
+		    	}  
+		    	$('#table').bootstrapTable('destroy');
+		        $('#table').bootstrapTable({
+		            data: goodsList
+		        });
+		        setEvent();
+			},
+			error : function(xhr, status, e) {
+				alert("에러 : " + e);
+			},
+			complete  : function() {
+			}
+		});
+	});  
+} 
 
 
 	$("#gbtn").click(function() {

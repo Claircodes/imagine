@@ -24,3 +24,6 @@ body {
 	text-align: center;
 	background-color: white;
 }
+li:not([class='active'])>a{
+	cursor:pointer;
+}
