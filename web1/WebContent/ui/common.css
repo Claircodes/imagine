@@ -24,6 +24,8 @@ body {
 	text-align: center;
 	background-color: white;
 }
-li:not([class='active'])>a{
+ul[class='pagination']>li>a:hover{
+	background-color: #D1B2FF;
+	color:#654693;
 	cursor:pointer;
 }

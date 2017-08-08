@@ -1,3 +1,4 @@
+<%@page import="java.util.regex.Pattern"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.*"%>
 <%@page import="com.test.common.DBConn"%>
@@ -6,17 +7,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	JSONObject j = new Gson().fromJson(request.getReader(), JSONObject.class);
-
+	Gson g = new Gson();
+	JSONObject j = g.fromJson(request.getReader(), JSONObject.class);
 	int nowPage=0;
-	if (j != null) {
-		String np = j.get("nowPage").toString();
-		nowPage = Integer.parseInt(np);
-	}
-
-
+	
 	int rowCnt = 10; //rowCnt는 내가 보여줄 데이터 수 
-
 	int blockCnt =10; //블럭 보여지는 수 
 	
 	int totalPageCnt = 0; //토탈 페이지 숫자
@@ -24,7 +19,11 @@
 	
 	int totalCnt = 0;
 	
-
+	if (j != null&&j.get("nowPage").toString()!=null) {
+		String np = j.get("nowPage").toString();
+		nowPage = Integer.parseInt(np);
+	}
+	
 	Connection con = null;
 	PreparedStatement ps = null;
 	ArrayList<Map<String, Object>> vendorList = new ArrayList<Map<String, Object>>();
@@ -63,7 +62,7 @@
 				totalBlockCnt +=1;
 			}
 		}
-
+		
 		sql = "SELECT vi.viname,gi.giname,gi.gidesc,gi.gicredat,gi.gicretim FROM goods_info AS gi ";
 		sql += "INNER JOIN vendor_info AS vi ON vi.vinum=gi.vinum where 1=1 ";
 		sql += "order by gi.ginum limit ?,? ";
@@ -102,7 +101,7 @@
 	HashMap resultHm = new HashMap();
 	resultHm.put("vendorList", vendorList);
 	resultHm.put("goodsList", goodsList);
-	resultHm.put("pageinfo", pageHm);
+	resultHm.put("pageInfo", pageHm);
 
 	String json = new Gson().toJson(resultHm);
 	System.out.println(json);

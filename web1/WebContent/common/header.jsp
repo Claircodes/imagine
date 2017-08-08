@@ -45,7 +45,7 @@
 		response.sendRedirect(defaultUrl);
 	}
 	String nowUrl = request.getRequestURI();
-	String version = "1.2";
+	String version = "1.2.5";
 	%>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
@@ -75,7 +75,49 @@ $(document).ready(function(){
 		}			
 		location.href = url;
 	}
+function goPage(pParams, pUrl, pCallBackFunc){
+	var params = JSON.stringify(pParams);
+	$.ajax({ 
+    		type     : "POST"
+	    ,   url      : pUrl
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : params
+	    ,   success : pCallBackFunc
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+		}
+	});
+}
+var firstPageStr ="<li><a>◀◀</a></li>";
+firstPageStr +="<li><a>◀</a></li>";
+var lastPageStr ="<li><a>▶</a></li>";
+lastPageStr +="<li><a>▶▶</a></li>";
 
+function makePageStr(start,end,np,nb,eb,objId) {
+	var pageStr ="";
+	
+	if (start!=1){
+		pageStr=firstPageStr;
+	}
+	for (var i=start; i<=end; i++){
+		if (i==np){
+			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
+		}else {
+			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
+		}
+	}
+	if (nb!=eb){
+		pageStr+=lastPageStr;
+	}
+	
+	$("#"+objId).html(pageStr);
+}
 </script>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">

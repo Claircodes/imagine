@@ -29,164 +29,68 @@
 		</ul>
 	</div>
 	<select id="s_vendor">
-		<option value="선택">회사선택</option>
+
 	</select>
 	<input type="text" id="gnum" />
 	<input type="button" id="gbtn" value="버튼" />
 </body>
 <script>
-$(document).ready(function() {
-	var str = "";
-	var params={};
-	params["nowPage"]="1";
-	params = JSON.stringify(params);
-		$.ajax({
-			type : "POST",
-			url : "/test/car_ok.jsp",
-			dataType : "json",
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader("Accept","application/json");
-				xhr.setRequestHeader("Content-Type","application/json");
-			},
-			data : params,
-			success : function(results) {
-		    	var vendorList = results.vendorList;
-		    	var goodsList = results.goodsList;
-		    	var pageInfo = results.pageinfo;
-		    	
-		    	var pageStr ="<li><a>◀◀</a></li>";
-		    	pageStr +="<li><a>◀</a></li>";
-		    	var blockCnt = new Number(pageInfo.blockCnt);
-		    	var np = new Number(pageInfo.nowPage);    	
-		    	var startnp = (Math.floor((np-1)/blockCnt))*10 +1;
-		    	var endBlock = startnp+blockCnt-1;
-		    	var totalPageCnt = new Number(pageInfo.totalPageCnt);
-		    	if(endBlock>totalPageCnt){
-		    		endBlock = totalPageCnt;
-		    	}
-		    	for (var i=startnp; i<=endBlock; i++){
-		    		if (i==pageInfo.nowPage){
-		    			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
-		    		}else {
-		    			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
-		    		}
-		    	}
-		    	pageStr +="<li><a>▶</a></li>";
-		    	pageStr +="<li><a>▶▶</a></li>";
-		    	
-		    	$("#page").html(pageStr);
-		    	for(var i=0, max=vendorList.length;i<max;i++){
-		    		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
-		    	}
-		        $('#table').bootstrapTable({
-		            data: goodsList
-		        });
-		        setEvent();
-			},
-			error : function(xhr, status, e) {
-				alert("에러 : " + e);
-			},
-			complete  : function() {
-			}
-		});
-	});
+var thispage=0;
+var totalPageCnt=0;
+var blockCnt=0;
+function callback(results){
+	var vendorList = results.vendorList;
+	var goodsList = results.goodsList;
+	var pageInfo = results.pageInfo;
 
+	blockCnt = new Number(pageInfo.blockCnt);
+	var np = new Number(pageInfo.nowPage);    	
+	var startnp = (Math.floor((np-1)/blockCnt))*10 +1;
+	var endnp = startnp+blockCnt-1;
+	totalPageCnt = new Number(pageInfo.totalPageCnt);
+	
+	var nowBlock = (Math.floor((np-1)/blockCnt));
+	var endBlock = (Math.floor((totalPageCnt-1)/blockCnt));
+	
+	if(endnp>totalPageCnt){
+		endnp = totalPageCnt;
+	}
+	
+	makePageStr(startnp,endnp,pageInfo.nowPage,nowBlock,endBlock,"page");
+	$("#s_vendor").html("<option value='선택'>회사선택</option>");	
+	for(var i=0, max=vendorList.length;i<max;i++){
+		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
+		}  
+	$('#table').bootstrapTable('destroy');
+    $('#table').bootstrapTable({
+        data: goodsList
+    }); 
+    thispage=np;
+    setEvent();
+}
+$(document).ready(function(){
+	var params = {};
+	params["nowPage"] = "1";
+	goPage(params, "/test/car_ok.jsp", callback);
+});
 function setEvent(){
-	$("li[class!='active']>a").click(function(){
-		var params={};
-		params["nowPage"]=this.innerHTML;
-		params = JSON.stringify(params);
-		$.ajax({
-			type : "POST",
-			url : "/test/car_ok.jsp",
-			dataType : "json",
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader("Accept","application/json");
-				xhr.setRequestHeader("Content-Type","application/json");
-			},
-			data : params,
-			success : function(results) {
-		    	var vendorList = results.vendorList;
-		    	var goodsList = results.goodsList;
-		    	var pageInfo = results.pageinfo;
-		    	
-		    	var pageStr ="<li><a>◀◀</a></li>";
-		    	pageStr +="<li><a>◀</a></li>";
-		    	var blockCnt = new Number(pageInfo.blockCnt);
-		    	var np = new Number(pageInfo.nowPage);    	
-		    	var startnp = (Math.floor((np-1)/blockCnt))*10 +1;
-		    	var endBlock = startnp+blockCnt-1;
-		    	var totalPageCnt = new Number(pageInfo.totalPageCnt);
-		    	if(endBlock>totalPageCnt){
-		    		endBlock = totalPageCnt;
-		    	}
-		    	for (var i=startnp; i<=endBlock; i++){
-		    		if (i==pageInfo.nowPage){
-		    			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
-		    		}else {
-		    			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
-		    		}
-		    	}
-		    	pageStr +="<li><a>▶</a></li>";
-		    	pageStr +="<li><a>▶▶</a></li>";
-		    	
-		    	$("#page").html(pageStr);
-		    	for(var i=0, max=vendorList.length;i<max;i++){
-		    		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
-		    	}  
-		    	$('#table').bootstrapTable('destroy');
-		        $('#table').bootstrapTable({
-		            data: goodsList
-		        });
-		        setEvent();
-			},
-			error : function(xhr, status, e) {
-				alert("에러 : " + e);
-			},
-			complete  : function() {
+	$("ul[class='pagination']>li>a").click(function(){
+		var params = {};
+		var num=this.innerHTML;
+			if (num=="◀◀"){
+				params["nowPage"]="1";
+			}else if (num=="◀"){
+				params["nowPage"]=(thispage-1)+"";
+			}else if(num=="▶"){
+				params["nowPage"]=(thispage+1)+"";
+			}else if(num=="▶▶"){
+				params["nowPage"]=totalPageCnt+"";
+			}else {
+				params["nowPage"]=num;
 			}
-		});
-	});  
-} 
+		goPage(params, "/test/car_ok.jsp", callback);
+	})
+}
 
-
-	$("#gbtn").click(function() {
-		var ginum = $("#gnum").val();
-		var opVinum = $("#s_vendor option:selected").val();
-		alert(opVinum);
-		var param = {};
-
-		if (opVinum==null){
-			opVinum="선택";
-		}
-		param["ginum"] = ginum;
-		param["opVinum"] = opVinum;
-
-		param = JSON.stringify(param);
-		var btn = {
-			type : "POST",
-			url : "/test/car_ok.jsp",
-			dataType : "json",
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			data : param,
-			success : function(results) {
-				$('#table').bootstrapTable('destroy');
-		    	var goodsList = results.goodsList;
-
-		        $('#table').bootstrapTable({
-		            data: goodsList
-		        });
-			},
-			error : function(xhr, status, e) {
-				alert("에러 : " + e);
-			},
-			complete  : function() {
-			}
-		};
-		$.ajax(btn);
-	});
 </script>
 </html>
