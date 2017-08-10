@@ -35,10 +35,13 @@ public class GoodsServlet extends HttpServlet{
 	    String command = goods.getCommand();
 	    if(command.equals("list")){
 	    	int totalCnt = gs.getTotalCount(goods);
+	    	
 	    	Page page = goods.getPage();
 	    	page.setTotalCnt(totalCnt);
+	    	
 	    	List<Goods> list = gs.selectGoodsList(goods);
 	    	HashMap resultMap = new HashMap();
+	    	
 	    	resultMap.put("page", page);
 	    	resultMap.put("list", list);
 	    	String jsonStr = g.toJson(resultMap);

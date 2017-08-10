@@ -40,7 +40,10 @@ var thisBlockCnt = 0;
 var thisNowPage = 0;
 var thisTotalPage = 0;
 function callback(results){
-	var goodsList = results;
+	var goodsList = results.list;
+	var pageInfo = results.page;
+	setPagination2(pageInfo, "page");
+	setEvent(pageInfo);
     $('#table').bootstrapTable('destroy');
     $('#table').bootstrapTable({
         data: goodsList
@@ -55,28 +58,37 @@ $(document).ready(function(){
 	
 	goPage(params, "/list.goods", callback);
 });
-function setEvent(p){
-	$("ul[class='pagination']>li>a").click(function(){
-		var params = {};
-		var page= {};
-		var num=this.innerHTML;
-			if (num=="◀◀"){
-				page["nowPage"]="1";
-			}else if (num=="◀"){
-				page["nowPage"]=(thispage-1)+"";
-			}else if(num=="▶"){
-				page["nowPage"]=(thispage+1)+"";
-			}else if(num=="▶▶"){
-				page["nowPage"]=totalPageCnt+"";
-			}else {
-				page["nowPage"]=num;
+function setEvent(pageInfo){
+	$("ul[class='pagination']>li:not([class='disabled'])>a").click(function(){
+		var thisNowPage = pageInfo.nowPage;
+		var goPageNum = new Number(this.innerHTML);
+		if(isNaN(goPageNum)){
+			if(this.innerHTML=="◀"){
+				thisNowPage -= pageInfo.blockCnt;
+			}else if(this.innerHTML=="◀◀"){
+				thisNowPage = 1;
+			}else if(this.innerHTML=="▶"){
+				thisNowPage += pageInfo.blockCnt;
+			}else if(this.innerHTML=="▶▶"){
+				thisNowPage = pageInfo.totalPageCnt;
 			}
-			params["page"] = page;
-			params["command"]= "list";
-			
+			if(thisNowPage<=0){
+				thisNowPage = 1;
+			}else if(thisNowPage>pageInfo.totalPageCnt){
+				thisNowPage = pageInfo.totalPageCnt;
+			}
+			goPageNum = thisNowPage;
+		}
+
+		var page = {};
+		page["nowPage"] = "" + goPageNum;
+		var params = {};
+		params["page"] = page;
+		params["command"] = "list";
 		goPage(params, "/list.goods", callback);
 	})
 }
+
 
 </script>
 </html>

@@ -101,32 +101,57 @@ Number.prototype.equals = function(obj){
 	}
 	return this==obj;
 }
-var firstPageStr ="<li><a>◀◀</a></li>";
-firstPageStr +="<li><a>◀</a></li>";
-var lastPageStr ="<li><a>▶</a></li>";
-lastPageStr +="<li><a>▶▶</a></li>";
-
-function makePageStr(start,end,np,nb,eb,objId) {
-	var pageStr ="";
-	
-	if (np!=1){
-		pageStr="<li><a>◀◀</a></li>";
-		pageStr +="<li><a>◀</a></li>";
+function setPagination(pageInfo, objId){
+	var sNum = pageInfo.startBlock;
+	var eNum = pageInfo.endBlock;
+	var nPage = pageInfo.nowPage
+	var nTotal = pageInfo.totalPageCnt;
+	var pageStr = "";
+	if(nPage==1){
+		pageStr += "<li class='disabled'><a >◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a >◀</a></li>";
+	}else{ 
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
 	}
-
-	for (var i=start; i<=end; i++){
-		if (i==np){
-			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
-		}else {
-			pageStr += "<li id='pn"+i+"'><a >"+i+"</a></li>";		
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
 		}
 	}
-	if (nb!=eb){
-		pageStr+="<li><a>▶</a></li>";
-		pageStr +="<li><a>▶▶</a></li>";
+	if(nPage.equals(nTotal)){
+		pageStr += "<li class='disabled'><a>▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶</a></li>";
+	}else{ 
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
 	}
-	
-	$("#"+objId).html(pageStr);
+	$("#" + objId).html(pageStr);
+}
+function setPagination2(pageInfo, objId){
+	var sNum = pageInfo.startBlock;
+	var eNum = pageInfo.endBlock;
+	var nPage = pageInfo.nowPage
+	var nTotal = pageInfo.totalPageCnt;
+	var pageStr = "";
+	if(nPage!=1){
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
+	}
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
+		}
+	}
+	if(!nPage.equals(nTotal)){
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
+	}
+	$("#" + objId).html(pageStr);
 }
 </script>
 <body>
