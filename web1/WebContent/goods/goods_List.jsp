@@ -1,3 +1,4 @@
+<%@page import="com.test.dto.Page"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
@@ -35,9 +36,9 @@
 	<input type="button" id="gbtn" value="버튼" />
 </body>
 <script>
-var thispage=0;
-var totalPageCnt=0;
-var blockCnt=0;
+var thisBlockCnt = 0;
+var thisNowPage = 0;
+var thisTotalPage = 0;
 function callback(results){
 	var goodsList = results;
     $('#table').bootstrapTable('destroy');
@@ -54,21 +55,23 @@ $(document).ready(function(){
 	
 	goPage(params, "/list.goods", callback);
 });
-function setEvent(){
+function setEvent(p){
 	$("ul[class='pagination']>li>a").click(function(){
 		var params = {};
+		var page= {};
 		var num=this.innerHTML;
 			if (num=="◀◀"){
-				params["nowPage"]="1";
+				page["nowPage"]="1";
 			}else if (num=="◀"){
-				params["nowPage"]=(thispage-1)+"";
+				page["nowPage"]=(thispage-1)+"";
 			}else if(num=="▶"){
-				params["nowPage"]=(thispage+1)+"";
+				page["nowPage"]=(thispage+1)+"";
 			}else if(num=="▶▶"){
-				params["nowPage"]=totalPageCnt+"";
+				page["nowPage"]=totalPageCnt+"";
 			}else {
-				params["nowPage"]=num;
+				page["nowPage"]=num;
 			}
+			params["page"] = page;
 			params["command"]= "list";
 			
 		goPage(params, "/list.goods", callback);
