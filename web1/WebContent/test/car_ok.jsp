@@ -63,7 +63,7 @@
 			}
 		}
 		
-		sql = "SELECT vi.viname,gi.giname,gi.gidesc,gi.gicredat,gi.gicretim FROM goods_info AS gi ";
+		sql = "SELECT gi.ginum,gi.giname,gi.gidesc,vi.vinum,vi.viname FROM goods_info AS gi ";
 		sql += "INNER JOIN vendor_info AS vi ON vi.vinum=gi.vinum where 1=1 ";
 		sql += "order by gi.ginum limit ?,? ";
 		ps = con.prepareStatement(sql);
@@ -72,11 +72,11 @@
 		rs = ps.executeQuery();
 		while (rs.next()) {
 			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("vname", rs.getString("vi.viname"));
-			hm.put("cname", rs.getString("gi.giname"));
+			hm.put("ginum", rs.getString("gi.ginum"));	
+			hm.put("gname", rs.getString("gi.giname"));
 			hm.put("desc", rs.getString("gi.gidesc"));
-			hm.put("credat", rs.getString("gi.gicredat"));
-			hm.put("cretim", rs.getString("gi.gicretim"));
+			hm.put("vnum", rs.getString("vi.vinum"));
+			hm.put("vname", rs.getString("vi.viname"));
 			goodsList.add(hm);
 		}
 		System.out.println(totalCnt);

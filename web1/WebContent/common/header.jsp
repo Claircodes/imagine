@@ -94,6 +94,13 @@ function goPage(pParams, pUrl, pCallBackFunc){
 		}
 	});
 }
+
+Number.prototype.equals = function(obj){
+	if(obj instanceof Number){
+		return this.toString() == obj.toString();
+	}
+	return this==obj;
+}
 var firstPageStr ="<li><a>◀◀</a></li>";
 firstPageStr +="<li><a>◀</a></li>";
 var lastPageStr ="<li><a>▶</a></li>";
@@ -102,9 +109,11 @@ lastPageStr +="<li><a>▶▶</a></li>";
 function makePageStr(start,end,np,nb,eb,objId) {
 	var pageStr ="";
 	
-	if (start!=1){
-		pageStr=firstPageStr;
+	if (np!=1){
+		pageStr="<li><a>◀◀</a></li>";
+		pageStr +="<li><a>◀</a></li>";
 	}
+
 	for (var i=start; i<=end; i++){
 		if (i==np){
 			pageStr += "<li id='pn"+i+"' class='active'><a >"+i+"</a></li>";
@@ -113,7 +122,8 @@ function makePageStr(start,end,np,nb,eb,objId) {
 		}
 	}
 	if (nb!=eb){
-		pageStr+=lastPageStr;
+		pageStr+="<li><a>▶</a></li>";
+		pageStr +="<li><a>▶▶</a></li>";
 	}
 	
 	$("#"+objId).html(pageStr);

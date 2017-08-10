@@ -13,11 +13,11 @@
 			class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th data-field="ginum" class="text-center">상품번호</th>
-					<th data-field="gname" class="text-center">상품이름</th>
-					<th data-field="desc" class="text-center">형태</th>
-					<th data-field="vnum" class="text-center">회사넘버</th>
-					<th data-field="vname" class="text-center">회사이름</th>
+					<th data-field="giNum" class="text-center">상품번호</th>
+					<th data-field="giName" class="text-center">상품이름</th>
+					<th data-field="giDesc" class="text-center">형태</th>
+					<th data-field="viNum" class="text-center">회사넘버</th>
+					<th data-field="viName" class="text-center">회사이름</th>
 				</tr>
 			</thead>
 			<tbody id="result_tbody">
@@ -39,39 +39,20 @@ var thispage=0;
 var totalPageCnt=0;
 var blockCnt=0;
 function callback(results){
-	var vendorList = results.vendorList;
-	var goodsList = results.goodsList;
-	var pageInfo = results.pageInfo;
-
-	blockCnt = new Number(pageInfo.blockCnt);
-	var np = new Number(pageInfo.nowPage);    	
-	var startnp = (Math.floor((np-1)/blockCnt))*10 +1;
-	var endnp = startnp+blockCnt-1;
-	totalPageCnt = new Number(pageInfo.totalPageCnt);
-	
-	var nowBlock = (Math.floor((np-1)/blockCnt));
-	var endBlock = (Math.floor((totalPageCnt-1)/blockCnt));
-	
-	if(endnp>totalPageCnt){
-		endnp = totalPageCnt;
-	}
-	
-	makePageStr(startnp,endnp,pageInfo.nowPage,nowBlock,endBlock,"page");
-	$("#s_vendor").html("<option value='선택'>회사선택</option>");	
-	for(var i=0, max=vendorList.length;i<max;i++){
-		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
-		}  
-	$('#table').bootstrapTable('destroy');
+	var goodsList = results;
+    $('#table').bootstrapTable('destroy');
     $('#table').bootstrapTable({
         data: goodsList
-    }); 
-    thispage=np;
-    setEvent();
+    });
 }
 $(document).ready(function(){
+	var page = {};
+	page["nowPage"] = "1";
 	var params = {};
-	params["nowPage"] = "1";
-	goPage(params, "/test/car_ok.jsp", callback);
+	params["page"] = page;
+	params["command"] = "list";
+	
+	goPage(params, "/list.goods", callback);
 });
 function setEvent(){
 	$("ul[class='pagination']>li>a").click(function(){
@@ -88,7 +69,9 @@ function setEvent(){
 			}else {
 				params["nowPage"]=num;
 			}
-		goPage(params, "/test/car_ok.jsp", callback);
+			params["command"]= "list";
+			
+		goPage(params, "/list.goods", callback);
 	})
 }
 
