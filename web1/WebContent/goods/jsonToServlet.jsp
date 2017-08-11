@@ -37,7 +37,7 @@ function callback(results) {
 	}
 }
 
-goPage(testParam, "/test.goods", callback);
+movePageWithAjax(testParam, "/test.goods", callback);
 </script>
 
 

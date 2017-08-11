@@ -1,94 +1,91 @@
-<%@page import="com.test.dto.Page"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>차차차차차!</title>
-</head>
-<body>
-	<div class="container">
-		<table id="table" data-height="460"
-			class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th data-field="giNum" class="text-center">상품번호</th>
-					<th data-field="giName" class="text-center">상품이름</th>
-					<th data-field="giDesc" class="text-center">형태</th>
-					<th data-field="viNum" class="text-center">회사넘버</th>
-					<th data-field="viName" class="text-center">회사이름</th>
-				</tr>
-			</thead>
-			<tbody id="result_tbody">
-			</tbody>
-		</table>
-	</div>
-	<div class="jb-center" style="text-align: center">
-		<ul class="pagination" id="page">
-		</ul>
-	</div>
-	<select id="s_vendor">
 
-	</select>
-	<input type="text" id="gnum" />
-	<input type="button" id="gbtn" value="버튼" />
-</body>
+
+<div class="container">
+	<div class="container" style="text-align: center; padding-top: 20px;padding-bottom: 20px;">
+		<select id="s_vendor" class="selectpicker">
+		</select> 
+		<label>상품이름 : </label> <input type="text" id="giName" /> 
+		<input type="button" id="searchGoods" value="검색" />
+	</div>
+	<table id="table" data-height="460"
+		class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th data-field="giNum" class="text-center">상품번호</th>
+				<th data-field="giName" class="text-center">상품이름</th>
+				<th data-field="giDesc" class="text-center">상품설명</th>
+				<th data-field="viNum" class="text-center">생산자번호</th>
+				<th data-field="viName" class="text-center">생산자이름</th>
+			</tr>
+		</thead>
+		<tbody id="result_tbody">
+		</tbody>
+	</table>
+</div>
+<div class="jb-center" style="text-align: center">
+	<ul class="pagination" id="page">
+	</ul>
+</div>
 <script>
-var thisBlockCnt = 0;
-var thisNowPage = 0;
-var thisTotalPage = 0;
-function callback(results){
-	var goodsList = results.list;
-	var pageInfo = results.page;
-	setPagination2(pageInfo, "page");
-	setEvent(pageInfo);
-    $('#table').bootstrapTable('destroy');
-    $('#table').bootstrapTable({
-        data: goodsList
-    });
-}
-$(document).ready(function(){
-	var page = {};
-	page["nowPage"] = "1";
-	var params = {};
-	params["page"] = page;
-	params["command"] = "list";
-	
-	goPage(params, "/list.goods", callback);
-});
-function setEvent(pageInfo){
-	$("ul[class='pagination']>li:not([class='disabled'])>a").click(function(){
-		var thisNowPage = pageInfo.nowPage;
-		var goPageNum = new Number(this.innerHTML);
-		if(isNaN(goPageNum)){
-			if(this.innerHTML=="◀"){
-				thisNowPage -= pageInfo.blockCnt;
-			}else if(this.innerHTML=="◀◀"){
-				thisNowPage = 1;
-			}else if(this.innerHTML=="▶"){
-				thisNowPage += pageInfo.blockCnt;
-			}else if(this.innerHTML=="▶▶"){
-				thisNowPage = pageInfo.totalPageCnt;
-			}
-			if(thisNowPage<=0){
-				thisNowPage = 1;
-			}else if(thisNowPage>pageInfo.totalPageCnt){
-				thisNowPage = pageInfo.totalPageCnt;
-			}
-			goPageNum = thisNowPage;
+	var pageInfo = {};
+	$("#searchGoods").click(function() {
+		var giName = $("#giName").val().trim();
+		var viNum = $("#s_vendor").val().trim();
+		if (giName =="" && viNum==""){
+			alert("다시 입력");	
+			return;
 		}
-
+		var params = {};
+		params["giName"] = giName;
+		params["viNum"] = viNum;
+		params["command"] = "list";
 		var page = {};
-		page["nowPage"] = "" + goPageNum;
+		page["nowPage"] = "1";
+		params["page"] = page;
+		movePageWithAjax(params, "/list.goods", callback);
+	})
+
+	function callback(results) {
+		var goodsList = results.list;
+		pageInfo = results.page;
+		var vendorList = results.vendorList;
+		var search = results.search;
+		var selStr = "<option value=''>회사선택</option>";
+		for (var i = 0, max = vendorList.length; i < max; i++) {
+			var vendor = vendorList[i];
+			var selectStr = "";
+			if(search.viNum==vendor.viNum){
+				selectStr = "selected";
+			}
+			selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName
+					+ "</option>";
+		}
+		$("#s_vendor").html(selStr);
+		var params = {};
+		if(search.viNum!=0){
+			params["viNum"] = search.viNum;
+		}
+		if(search.giName){
+			params["giName"] = search.giName;
+		}
+		makePagination(pageInfo,"page");
+		setEvent(pageInfo,params , "/list.goods");
+		$('#table').bootstrapTable('destroy');
+		$('#table').bootstrapTable({
+			data : goodsList
+		});
+	}
+	$(document).ready(function() {
+		var page = {};
+		page["nowPage"] = "1";
 		var params = {};
 		params["page"] = page;
 		params["command"] = "list";
-		goPage(params, "/list.goods", callback);
-	})
-}
-
-
+		movePageWithAjax(params, "/list.goods", callback);
+	});
 </script>
+</body>
 </html>

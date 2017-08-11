@@ -31,7 +31,7 @@
 
 	try {
 		con = DBConn.getCon();
-		String sql = "select vinum, viname from VENDOR_INFO;";
+		String sql = "select vinum, viname from VENDOR_INFO";
 		ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {

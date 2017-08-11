@@ -71,7 +71,7 @@ function callback(results){
 $(document).ready(function(){
 	var params = {};
 	params["nowPage"] = "1";
-	goPage(params, "/test/car_ok.jsp", callback);
+	movePageWithAjax(params, "/test/car_ok.jsp", callback);
 });
 function setEvent(){
 	$("ul[class='pagination']>li>a").click(function(){
@@ -88,7 +88,7 @@ function setEvent(){
 			}else {
 				params["nowPage"]=num;
 			}
-		goPage(params, "/test/car_ok.jsp", callback);
+		movePageWithAjax(params, "/test/car_ok.jsp", callback);
 	})
 }
 

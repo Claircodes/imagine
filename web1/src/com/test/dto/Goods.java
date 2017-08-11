@@ -8,6 +8,14 @@ public class Goods {
 	private int viNum;
 	private String viName;
 	private String command;
+	private String click;
+	public String getClick() {
+		return click;
+	}
+
+	public void setClick(String click) {
+		this.click = click;
+	}
 	private Page page;
 
 	public Page getPage() {

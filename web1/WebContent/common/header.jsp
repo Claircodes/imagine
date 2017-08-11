@@ -47,6 +47,10 @@
 	String nowUrl = request.getRequestURI();
 	String version = "1.2.5";
 	%>
+
+<!-- script와 link는 읽기만 하고 include는 해석해줌 -->
+<script src="<%=rootPath%>/ui/common.js?version=<%=version%>"></script>
+
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap-table.js?version=<%=version%>"></script>
@@ -75,84 +79,9 @@ $(document).ready(function(){
 		}			
 		location.href = url;
 	}
-function goPage(pParams, pUrl, pCallBackFunc){
-	var params = JSON.stringify(pParams);
-	$.ajax({ 
-    		type     : "POST"
-	    ,   url      : pUrl
-	    ,   dataType : "json" 
-	    ,   beforeSend: function(xhr) {
-	        xhr.setRequestHeader("Accept", "application/json");
-	        xhr.setRequestHeader("Content-Type", "application/json");
-	    }
-	    ,   data     : params
-	    ,   success : pCallBackFunc
-	    ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		complete  : function() {
-		}
-	});
-}
 
-Number.prototype.equals = function(obj){
-	if(obj instanceof Number){
-		return this.toString() == obj.toString();
-	}
-	return this==obj;
-}
-function setPagination(pageInfo, objId){
-	var sNum = pageInfo.startBlock;
-	var eNum = pageInfo.endBlock;
-	var nPage = pageInfo.nowPage
-	var nTotal = pageInfo.totalPageCnt;
-	var pageStr = "";
-	if(nPage==1){
-		pageStr += "<li class='disabled'><a >◀◀</a></li>";
-		pageStr += "<li class='disabled' ><a >◀</a></li>";
-	}else{ 
-		pageStr += "<li><a>◀◀</a></li>";
-		pageStr += "<li><a>◀</a></li>";
-	}
-	for(var i=sNum, max=eNum;i<=max;i++){
-		if(i==nPage){
-			pageStr += "<li class='active'><a>" + i + "</a></li>";
-		}else{
-			pageStr += "<li><a>" + i + "</a></li>";
-		}
-	}
-	if(nPage.equals(nTotal)){
-		pageStr += "<li class='disabled'><a>▶</a></li>";
-		pageStr += "<li class='disabled'><a>▶▶</a></li>";
-	}else{ 
-		pageStr += "<li><a>▶</a></li>";
-		pageStr += "<li><a>▶▶</a></li>";
-	}
-	$("#" + objId).html(pageStr);
-}
-function setPagination2(pageInfo, objId){
-	var sNum = pageInfo.startBlock;
-	var eNum = pageInfo.endBlock;
-	var nPage = pageInfo.nowPage
-	var nTotal = pageInfo.totalPageCnt;
-	var pageStr = "";
-	if(nPage!=1){
-		pageStr += "<li><a>◀◀</a></li>";
-		pageStr += "<li><a>◀</a></li>";
-	}
-	for(var i=sNum, max=eNum;i<=max;i++){
-		if(i==nPage){
-			pageStr += "<li class='active'><a>" + i + "</a></li>";
-		}else{
-			pageStr += "<li><a>" + i + "</a></li>";
-		}
-	}
-	if(!nPage.equals(nTotal)){
-		pageStr += "<li><a>▶</a></li>";
-		pageStr += "<li><a>▶▶</a></li>";
-	}
-	$("#" + objId).html(pageStr);
-}
+
+
 </script>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
