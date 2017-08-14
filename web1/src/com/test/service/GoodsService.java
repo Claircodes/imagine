@@ -46,7 +46,41 @@ public class GoodsService {
 		}
 		return null;
 	}
-
+	public Goods selectGoods(Goods pGoods) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "select gi.ginum, gi.giname, gi.gidesc, vi.vinum, vi.viname "
+					+ " from goods_info as gi, vendor_info as vi "
+					+ " where gi.vinum=vi.vinum and gi.ginum=?";
+			con = DBConn.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pGoods.getGiNum());
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				pGoods.setGiNum(rs.getInt("ginum"));
+				pGoods.setGiName(rs.getString("giname"));
+				pGoods.setGiDesc(rs.getString("gidesc"));
+				pGoods.setViNum(rs.getInt("vinum"));
+				pGoods.setViName(rs.getString("viname"));
+			}
+			System.out.println("goods==>"+pGoods.toString());
+			return pGoods;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	public List<Goods> selectGoodsList(Goods pGoods) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -58,7 +92,7 @@ public class GoodsService {
 		if ( pGoods.getViNum()>0){
 			sql += " and vi.vinum=? ";
 		}
-		sql += " order by gi.ginum limit ?,?";
+		sql += " order by gi.ginum desc limit ?,?";
 		int i =0;
 			Page page = pGoods.getPage();
 			con = DBConn.getCon();
@@ -148,5 +182,90 @@ public class GoodsService {
 		}
 		return 0;
 	}
+	public int deleteGoods(Goods pGoods){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "delete from goods_info where  ginum=?";
+			con = DBConn.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pGoods.getGiNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
 
+}
+	public int insertGoods(Goods goods) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "INSERT INTO goods_info (giname,gidesc,vinum,gicredat,gicretim) ";
+			sql+= "VALUES (?,?,?, DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s'))";
+			con = DBConn.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setString(1, goods.getGiName());
+			ps.setString(2, goods.getGiDesc());
+			ps.setInt(3, goods.getViNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	public int updateGoods(Goods goods) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "update goods_info set giname=?, gidesc=?,vinum=?, ";
+			sql+= "gicredat=DATE_FORMAT(NOW(),'%Y%m%d'), gicretim=DATE_FORMAT(NOW(),'%H%i%s') ";
+			sql+= "where ginum=? ";
+			
+			con = DBConn.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setString(1, goods.getGiName());
+			ps.setString(2, goods.getGiDesc());
+			ps.setInt(3, goods.getViNum());
+			ps.setInt(4, goods.getGiNum());
+			
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
 }
