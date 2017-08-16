@@ -96,7 +96,21 @@ public class GoodsServlet extends HttpServlet{
 	    	}
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
-	    }else if(command.equals("vendorList")){
+	    }else if(command.equals("vendorinsert")){
+	    	Vendor vendor = goods.getVendor();
+	    	int result = gs.vendorInsertGoods(vendor);
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("page", page);
+	    	resultMap.put("msg", "등록이 완료 되었습니다.");
+	    	resultMap.put("url", "/goods/goods_list.jsp");
+	    	if(result!=1){
+		    	resultMap.put("msg", "등록이 실패하였습니다.");
+		    	resultMap.put("url", "");
+	    	}
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
+	    }else if(command.equals("vendorOptionList")){
+	    	
 	    	List<Vendor> vendorList = gs.selectVendorsList();
 	    	String jsonStr = g.toJson(vendorList);
 	    	doProcess(response, jsonStr);

@@ -43,7 +43,7 @@
 
 	$(document).ready(function(){
 		var params = {};
-		params["command"] = "vendorList";
+		params["command"] = "vendorOptionList";
 		movePageWithAjax(params, "/list.goods", callBack);
 	})
 	
@@ -51,11 +51,13 @@
 		var params = {};
 		params["giName"] = $("#giName").val();
 		params["giDesc"] = $("#giDesc").val();
-		params["viNum"] = $("option:selected").val();
+		params["viNum"] = $("#s_vendor").val();
 		params["command"] = "insert";
+		
 		var page = {};
 		page["nowPage"] = "<%=nowPage%>";
 		params["page"] = page;
+		
 		movePageWithAjax(params, "/list.goods", callBackInsert);
 	});
 
@@ -71,8 +73,7 @@
 			var vendor = results[i];
 			var selectStr = "";
 
-			selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName
-					+ "</option>";
+			selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName	+ "</option>";
 		
 		$("#s_vendor").html(selStr);}
 	}

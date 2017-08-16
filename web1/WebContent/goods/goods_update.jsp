@@ -8,8 +8,8 @@
 int giNum = Integer.parseInt(request.getParameter("giNum"));
 String nowPage = request.getParameter("nowPage");
 %>
-	<div class="container-view"> 
-		<table id="table"  data-height="460"	class="table table-bordered table-hover">
+	<div class="container" style="text-align: center; padding-top:100px;padding-bottom:100px;">
+	<table id="table" data-height="400"	class="table table-bordered table-hover">
 		<thead>
 			<tr> 
 				<th colspan="2" class="text-center"><h5 class="form-signin-heading">상품상세 페이지</h5></th>
@@ -42,7 +42,7 @@ String nowPage = request.getParameter("nowPage");
 <script>
 	$(document).ready(function(){
 		var params = {};
-		params["command"] = "vendorList";
+		params["command"] = "vendorOptionList";
 		movePageWithAjax(params, "/list.goods", callBack);
 	})
 	
@@ -51,7 +51,7 @@ String nowPage = request.getParameter("nowPage");
 		params["giNum"] ="<%=giNum%>";
 		params["giName"] = $("#giName").val();
 		params["giDesc"] = $("#giDesc").val();
-		params["viNum"] = $("#viNum").val();
+		params["viNum"] = $("#s_vendor").val();
 		
 		params["command"] = "update";
 		var page = {};
@@ -59,7 +59,6 @@ String nowPage = request.getParameter("nowPage");
 		params["page"] = page;
 		movePageWithAjax(params, "/list.goods", callBackUpdate);
 	});
-
 	function callBackUpdate(result) {
 		alert(result.msg);
 		if (result.url != "") {
@@ -71,14 +70,13 @@ String nowPage = request.getParameter("nowPage");
 		for (var i = 0, max = results.length; i < max; i++) {
 			var vendor = results[i];
 			var selectStr = "";
-			if($("option:selected").val("<%=request.getParameter("viNum")%>"")){
+			if(vendor.viNum=="<%=request.getParameter("viNum")%>"){
 				selectStr = "selected";
 			}
-			<%=request.getParameter("giDesc") %> 
-			selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName
-					+ "</option>";
+			selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName	+ "</option>";
 		
-		$("#s_vendor").html(selStr);}
+		$("#s_vendor").html(selStr);
+		}
 	}
 </script>
 </body>

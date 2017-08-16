@@ -268,4 +268,33 @@ public class GoodsService {
 		}
 		return 0;
 	}
+	public int vendorInsertGoods(Vendor vendor) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "INSERT INTO vendor_info (viname, videsc, viaddress, viphone, vicredat, vicretim)";
+			sql+= "VALUES (?,?,?,?, DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s'))";
+			con = DBConn.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vendor.getViName());
+			ps.setString(2, vendor.getViDesc());
+			ps.setString(3, vendor.getViAddress());
+			ps.setString(4, vendor.getViPhone());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
 }

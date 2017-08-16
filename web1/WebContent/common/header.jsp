@@ -98,7 +98,8 @@ $(document).ready(function(){
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li id="m1" ><a href="/board/board_main.jsp">게시판</a></li>
-				<li id="m2" ><a href="/board/NewFile.jsp">빈페이지</a></li>
+				<li id="m2" ><a href="/goods/goods_list.jsp">상품게시판</a></li>
+				<li id="m3" ><a href="/goods/vendor_list.jsp">회사게시판</a></li>
 			</ul>
 				<% 	if (login) {
 					%>

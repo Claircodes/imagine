@@ -5,17 +5,17 @@
 <%@ page import="com.test.common.DBConn"%>
 <%@ page import="com.test.dto.UserInfo"%>
 <%
-String nowPage = request.getParameter("nowPage");
-String giNum = request.getParameter("giNum");
-String giName = request.getParameter("giName");
-String giDesc = request.getParameter("giDesc");
-String viNum = request.getParameter("viNum");
-String viName = request.getParameter("viName");
+	String nowPage = request.getParameter("nowPage");
+	String giNum = request.getParameter("giNum");
+	String giName = request.getParameter("giName");
+	String giDesc = request.getParameter("giDesc");
+	String viNum = request.getParameter("viNum");
+	String viName = request.getParameter("viName");
 %>
 
-
-<div class="container-view">
-	<table id="table" data-height="460"
+<div class="container"
+	style="text-align: center; padding-top: 100px; padding-bottom: 100px;">
+	<table id="table" data-height="400"
 		class="table table-bordered table-hover">
 		<thead>
 			<tr>
@@ -24,31 +24,28 @@ String viName = request.getParameter("viName");
 			</tr>
 			<tr>
 				<td class="col-md-2">상품번호</td>
-				<td class="col-md-4" colspan="2"><%=request.getParameter("giNum")%></td>
+				<td class="col-md-4" colspan="2"><%=giNum%></td>
 			<tr>
 				<td>상품이름</td>
-				<td colspan="2"><%=request.getParameter("giName")%></td>
+				<td colspan="2"><%=giName%></td>
 			</tr>
 			<tr>
 				<td>상품설명</td>
-				<td colspan="2"><%=request.getParameter("giDesc")%></td>
+				<td colspan="2"><%=giDesc%></td>
 			</tr>
 			<tr>
 				<td>회사번호</td>
-				<td colspan="2"><%=request.getParameter("viNum")%></td>
+				<td colspan="2"><%=viNum%></td>
 			</tr>
 			<tr>
 				<td>회사이름</td>
-				<td colspan="2"><%=request.getParameter("viName")%></td>
+				<td colspan="2"><%=viName%></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button id="btnUpdate" class="btn btn-lg btn-primary btn-block"
-						type="button">수정</button>
-					<button id="btnDelete" class="btn btn-lg btn-primary btn-block"
-						type="button">삭제</button>
-					<button id="btnGoList" class="btn btn-lg btn-primary btn-block"
-						type="button">리스트 이동</button>
+					<button id="btnUpdate" class="btn btn-lg btn-primary btn-block"	type="button">수정</button>
+					<button id="btnDelete" class="btn btn-lg btn-primary btn-block"	type="button">삭제</button>
+					<button id="btnGoList" class="btn btn-lg btn-primary btn-block"	type="button">리스트 이동</button>
 				</td>
 			</tr>
 	</table>
@@ -56,7 +53,7 @@ String viName = request.getParameter("viName");
 <!-- /container -->
 <script>
 $("#btnUpdate").click(function(){
-	location.href="/goods/goods_update.jsp?nowPage="+"<%=nowPage%>"+"&giNum=" + "<%=giNum%>"+ "&giName="+"<%=giName%>"+"&giDesc="+"<%=giDesc%>"+"&viNum="+"<%=viNum%>"+"&viName="+"<%=viName%>";
+	location.href="/goods/goods_update.jsp?nowPage=" + "<%=nowPage%>" + "&giNum=" + "<%=giNum%>" + "&giName=" + "<%=giName%>" + "&giDesc=" + "<%=giDesc%>" + "&viNum=" + "<%=viNum%>" + "&viName=" + "<%=viName%>";
 });
 
 $("#btnDelete").click(function(){
@@ -67,15 +64,14 @@ $("#btnDelete").click(function(){
 		params["command"] = "delete";
 		var page = {};
 		page["nowPage"] = "<%=request.getParameter("nowPage")%>";
-			params["page"] = page;
-			movePageWithAjax(params, "/list.goods", callBackView);
+		params["page"] = page;
+		movePageWithAjax(params, "/list.goods", callBackView);
 		}
 	});
 
-	$("#btnGoList").click(
-			function() {
-				location.href = "/goods/goods_list.jsp?nowPage="+<%=request.getParameter("nowPage")%>;
-			});
+	$("#btnGoList").click(function() {
+		location.href = "/goods/goods_list.jsp?nowPage=" + "<%=request.getParameter("nowPage")%>";
+		});
 
 	function callBackView(result) {
 		alert(result.msg);

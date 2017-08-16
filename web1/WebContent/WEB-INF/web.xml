@@ -56,7 +56,14 @@
 		<servlet-name>GoodsServlet</servlet-name>
 		<url-pattern>*.goods</url-pattern>
 	</servlet-mapping>
-	
+	<servlet>
+		<servlet-name>VendorServlet</servlet-name>
+		<servlet-class>com.test.servlet.VendorServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VendorServlet</servlet-name>
+		<url-pattern>*.vendor</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>Set Character Encoding</filter-name>
 		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
