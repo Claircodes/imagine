@@ -58,14 +58,39 @@ public class VendorServlet extends HttpServlet{
 	    	}
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
+	    }else if(command.equals("delete")){
+	    	int result = vs.deleteVendor(vendor);
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("page", page);
+	    	resultMap.put("msg", "삭제가 완료 되었습니다.");
+	    	resultMap.put("url", "/goods/vendor_list.jsp");
+	    	if(result!=1){
+		    	resultMap.put("msg", "삭제가 실패하였습니다.");
+		    	resultMap.put("url", "");
+	    	}
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
 	    }else if(command.equals("view")){
 	    	Vendor resultVendor = vs.selectVendor(vendor);
 	    	HashMap resultMap = new HashMap();
 	    	resultMap.put("page", page);
 	    	resultMap.put("vendor", resultVendor);
-	    	resultMap.put("url", "/goods/vendor_view.jsp");
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
+	    }else if(command.equals("update")){
+	    	int result = vs.updateVendor(vendor);
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("page", page);
+	    	resultMap.put("msg", "수정이 완료되었습니다.");
+	    	resultMap.put("url", "/goods/vendor_list.jsp");
+	    	if(result!=1){
+	    		resultMap.put("msg", "등록이 실패하였습니다.");
+	    		resultMap.put("url", "");
+	    	}
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
+	    }else if(command.equals("delete")){
+	    	
 	    }
 	}
 	

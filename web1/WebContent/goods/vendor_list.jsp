@@ -5,6 +5,16 @@
 
 <div class="container">
 	<div class="container" style="text-align: center; padding-top: 20px; padding-bottom: 20px;">
+		<select id="s_vendor" class="selectpicker">
+			<option value="all" selected="selected">[검색]</option>
+			<option value="viNum">번호</option>
+			<option value="viName">이름</option>
+			<option value="viDesc">정보</option>
+			<option value="viAddress">주소</option>
+			<option value="viPhone">전번</option>
+		</select>
+		<input type="text" id="search" /> 
+		<input type="button" id="searchBtn" value="검색" /> 
 		<table id="table" data-height="460"	class="table table-bordered table-hover">
 			<tbody id="result_tbody"></tbody>
 		</table>
@@ -64,9 +74,16 @@ function callback(results) {
 	})
 }
 function callBackView(result) {
-	var url = result.url + "?nowPage=" + result.page.nowPage + "&viNum=" + result.vendor.viNum + "&viName=" + result.vendor.viName + "&viDesc=" + result.vendor.viDesc + "&viAddress="	+ result.vendor.viAddress + "&viPhone=" + result.vendor.viPhone;
+	var url = "vendor_view.jsp?nowPage=" + result.page.nowPage + "&viNum=" + result.vendor.viNum + "&viName=" + result.vendor.viName + "&viDesc=" + result.vendor.viDesc + "&viAddress="	+ result.vendor.viAddress + "&viPhone=" + result.vendor.viPhone;
 	location.href = url;
 }
+var op = "all";
+$("#s_vendor").change(function() {
+	op= $("option:selected").val();
+});
+$("#searchBtn").click(function() {
+	location.href = "/goods/vendor_list.jsp?nowPage="+"<%="nowPage"%>"+"?searchOpj="+""+"?searchtxt="+"$";
+});
 $("#vendorInsert").click(function() {
 	location.href = "/goods/vendor_insert.jsp";
 });
@@ -74,6 +91,10 @@ $(document).ready(function() {
 	var page = {};
 	page["nowPage"] = nowPage;
 	var params = {};
+	if (<%=request.getParameter("searchOpj")%>!="all"){
+		params["searchOpj"] = page;
+		params["searchtxt"] = page;
+	}
 	params["page"] = page;
 	params["command"] = "list";
 	movePageWithAjax(params, "/list.vendor", callback);

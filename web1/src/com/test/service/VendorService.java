@@ -181,66 +181,33 @@ public class VendorService {
 		return 0;
 	}
 	
-//	public int deleteGoods(Vendor vendor){
-//		Connection con = null;
-//		PreparedStatement ps = null;
-//		try {
-//			String sql = "delete from vendor_info where vinum=?";
-//			con = DBConn.getCon(); 
-//			ps = con.prepareStatement(sql);
-//			ps.setInt(1, vendor.getViNum());
-//			int result = ps.executeUpdate();
-//			con.commit();
-//			return result;
-//		}catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				ps.close();
-//				DBConn.closeCon();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return 0;
-//
-//}
+	public int deleteVendor(Vendor vendor){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "delete from vendor_info where vinum=?";
+			con = DBConn.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vendor.getViNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
 
-//	public int updateGoods(Vendor vendor) {
-//		Connection con = null;
-//		PreparedStatement ps = null;
-//		try {
-//			String sql = "update vendor_info set giname=?, gidesc=?,vinum=?, ";
-//			sql+= "gicredat=DATE_FORMAT(NOW(),'%Y%m%d'), gicretim=DATE_FORMAT(NOW(),'%H%i%s') ";
-//			sql+= "where ginum=? ";
-//			
-//			con = DBConn.getCon(); 
-//			ps = con.prepareStatement(sql);
-//			ps.setString(1, vendor.getGiName());
-//			ps.setString(2, vendor.getGiDesc());
-//			ps.setInt(3, vendor.getViNum());
-//			ps.setInt(4, vendor.getGiNum());
-//			
-//			int result = ps.executeUpdate();
-//			con.commit();
-//			return result;
-//		}catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				ps.close();
-//				DBConn.closeCon();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return 0;
-//	}
-	
+}
+
 	public int insertVendor(Vendor vendor) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -299,4 +266,40 @@ public class VendorService {
 		}
 		return 0;
 	}
+
+	public int updateVendor(Vendor vendor) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			String sql = "UPDATE vendor_info SET viname=?, videsc=?, viaddress=?, viphone=?, ";
+			sql += "vicredat= DATE_FORMAT(NOW(),'%Y%m%d'),vicretim= DATE_FORMAT(NOW(),'%H%i%s') ";
+			sql += "WHERE VInum = ?";
+			con = DBConn.getCon();
+			ps= con.prepareStatement(sql);
+			ps.setString(1, vendor.getViName());
+			ps.setString(2, vendor.getViDesc());
+			ps.setString(3, vendor.getViAddress());
+			ps.setString(4, vendor.getViPhone());
+			ps.setInt(5, vendor.getViNum());
+
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				ps.close();
+				DBConn.closeCon();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return 0;
+	}
+
 }

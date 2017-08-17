@@ -32,7 +32,10 @@
 				<td>회사주소</td>
 				<td colspan="2"><%=request.getParameter("viAddress")%></td>
 			</tr>
-
+			<tr>
+				<td>회사번호</td>
+				<td colspan="2"><%=request.getParameter("viPhone")%></td>
+			</tr>
 			<tr>
 				<td colspan="2">
 					<button id="btnUpdate" class="btn btn-lg btn-primary btn-block"	type="button">수정</button>
@@ -45,14 +48,27 @@
 <!-- /container -->
 <script>
 $("#btnUpdate").click(function(){
-	var isUpdate = confirm("해당게시물을 수정하시겠습니까?");
-	if(isUpdate){
-		var params={};	
-	}
+	location.href="/goods/vendor_update.jsp?nowPage=" + "<%=nowPage%>"+"&viNum="+"<%=request.getParameter("viNum")%>";
 });
 $("#btnDelete").click(function(){
-	location.href = "";
-});
+	var isDelete = confirm("해당 상품을 삭제 하시겠습니까?");
+	if(isDelete){
+		var params = {};
+		params["viNum"] = "<%=request.getParameter("viNum")%>";
+		params["command"] = "delete";
+		var page = {};
+		page["nowPage"] = "<%=request.getParameter("nowPage")%>";
+		params["page"] = page;
+		movePageWithAjax(params, "/list.vendor", callBackDelete);
+		}
+	});
+function callBackDelete(result) {
+	alert(result.msg);
+	if (result.url != "") {
+		location.href = result.url + "?nowPage=" + result.page.nowPage;
+	}
+}
+
 $("#btnGoList").click(function(){
 	location.href = "/goods/vendor_list.jsp?nowPage="+"<%=nowPage%>";
 });

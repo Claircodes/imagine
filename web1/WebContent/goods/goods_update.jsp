@@ -38,7 +38,7 @@ String nowPage = request.getParameter("nowPage");
 		</table>
 	</div>
 	<!-- /container -->
-
+<input id="giName" type="text" value= />
 <script>
 	$(document).ready(function(){
 		var params = {};
