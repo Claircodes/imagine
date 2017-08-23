@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+.mainbody {
+	padding-top: 50px;
+	background-image: url("/ui/hunger.jpg");
+}
+
+body {
+	padding-top: 50px;
+	background-color: #EEFCFF;
+	background-size: 100%;
+}
+
+.starter-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+
+.mastfoot {
+	height: 30px;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	text-align: center;
+	background-color: white;
+}
+ul[class='pagination']>li>a:hover{
+	background-color: #D1B2FF;
+	color:#654693;
+	cursor:pointer;
+}
