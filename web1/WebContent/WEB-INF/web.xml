@@ -64,6 +64,14 @@
 		<servlet-name>VendorServlet</servlet-name>
 		<url-pattern>*.vendor</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>FormServlet</servlet-name>
+		<servlet-class>com.test.servlet_test.FormServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FormServlet</servlet-name>
+		<url-pattern>*.formtest</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>Set Character Encoding</filter-name>
 		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

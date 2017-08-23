@@ -24,7 +24,7 @@ public class Page{
 	}
 
 	private void calPage(){
-		totalPageCnt = (totalCnt/rowCnt)+1;
+		totalPageCnt = ((int)((totalCnt-1)/rowCnt))+1;
 		startRow = (nowPage-1) * rowCnt;
 		startBlock =((nowPage-1)/blockCnt)*blockCnt+1;
 		endBlock = getStartBlock()+blockCnt-1;

@@ -47,21 +47,14 @@
 	
 	$("#vendorInsert").click(function(){
 		var params = {};
-		params["command"] = "vendorinsert";
+		params["command"] = "insert";
 		
-		var page = {};
-		page["nowPage"] = "<%=nowPage%>";
-		
-		var vendor = {};
-		vendor["viName"] = $("#viName").val();
-		vendor["viDesc"] = $("#viDesc").val();
-		vendor["viAddress"] = $("#viAddress").val();
-		vendor["viPhone"] = $("#viPhone").val();
-		
-		params["vendor"] = vendor;
-		params["page"] = page;
-		
-		movePageWithAjax(params, "/list.goods", callBackInsert);
+		params["viName"] = $("#viName").val();
+		params["viDesc"] = $("#viDesc").val();
+		params["viAddress"] = $("#viAddress").val();
+		params["viPhone"] = $("#viPhone").val();
+
+		movePageWithAjax(params, "/list.vendor", callBackInsert);
 	});
 	$("#vendorCancle").click(function(){
 		location.href="/goods/vendor_list.jsp?nowPage=<%=nowPage%>";
@@ -69,7 +62,7 @@
 	function callBackInsert(result) {
 		alert(result.msg);
 		if (result.url != "") {
-			location.href = result.url + "?nowPage=" + result.page.nowPage;
+			location.href = result.url;
 		}
 	}
 

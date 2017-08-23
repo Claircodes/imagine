@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.test.dto.Goods;
 import com.test.dto.Page;
 import com.test.dto.Vendor;
+import com.test.service.ServiceFactory;
 import com.test.service.VendorService;
 
 public class VendorServlet extends HttpServlet{
 	
 	
 	private static final long serialVersionUID = 1L;
-	private VendorService vs = new VendorService();
+	private VendorService vs;
     Gson g = new Gson();	
     
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{	
@@ -31,6 +31,7 @@ public class VendorServlet extends HttpServlet{
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		request.setCharacterEncoding("UTF-8");
+		vs = ServiceFactory.getVendorService();
 	    Vendor vendor = g.fromJson(request.getReader(), Vendor.class);
 	    System.out.println(vendor);
 	    String command = vendor.getCommand();
@@ -59,7 +60,15 @@ public class VendorServlet extends HttpServlet{
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
 	    }else if(command.equals("delete")){
+	    	int beforePage = page.getNowPage();
 	    	int result = vs.deleteVendor(vendor);
+	    	int totalCnt = vs.getTotalCount(vendor);
+	    	page.setTotalCnt(totalCnt);
+	    	if(beforePage>page.getTotalPageCnt()){
+	    		page.setNowPage(page.getTotalPageCnt());
+	    	}else{
+	    		
+	    	}
 	    	HashMap resultMap = new HashMap();
 	    	resultMap.put("page", page);
 	    	resultMap.put("msg", "삭제가 완료 되었습니다.");

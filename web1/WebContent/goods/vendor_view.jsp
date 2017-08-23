@@ -64,11 +64,11 @@ $("#btnDelete").click(function(){
 	});
 function callBackDelete(result) {
 	alert(result.msg);
+
 	if (result.url != "") {
-		location.href = result.url + "?nowPage=" + result.page.nowPage;
+		location.href = result.url;
 	}
 }
-
 $("#btnGoList").click(function(){
 	location.href = "/goods/vendor_list.jsp?nowPage="+"<%=nowPage%>";
 });

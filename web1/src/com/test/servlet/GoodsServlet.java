@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.test.dto.Goods;
 import com.test.dto.Page;
-import com.test.dto.Test;
 import com.test.dto.Vendor;
 import com.test.service.GoodsService;
 
