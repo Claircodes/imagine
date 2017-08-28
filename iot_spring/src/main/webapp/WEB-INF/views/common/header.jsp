@@ -9,7 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <%
-String version = "1.3.2";
+String version = "1.3.5";
+String rootPath=request.getContextPath();
 %>
 <script src="<c:url value="/resources/js/jquery-3.2.1.js?version=<%=version%>"/>"></script>
 <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.js?version=<%=version%>"/>"></script>
@@ -23,3 +24,7 @@ String version = "1.3.2";
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap.min.css?version=<%=version%>"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/common.css?version=<%=version%>"/>"/>
+
+<script>
+var rootPath = "<%=rootPath%>";
+</script>

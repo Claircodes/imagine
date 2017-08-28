@@ -4,52 +4,39 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserInfo {
-	private String usernum;
-	private String userid;
-	private String userpwd;
-	private String username;
+
+	private String userId;
+	private String userPwd;
+	private String userName;
 	private String age;
 	private String address;
 	private String hp1;
-	@Override
-	public String toString() {
-		return "UserInfo [usernum=" + usernum + ", userid=" + userid + ", userpwd=" + userpwd + ", username=" + username
-				+ ", age=" + age + ", address=" + address + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3 + "]";
-	}
-
 	private String hp2;
 	private String hp3;
+	private int userNum;
 
-	public String getUsernum() {
-		return usernum;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUsernum(String usernum) {
-		this.usernum = usernum;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getUserPwd() {
+		return userPwd;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
 	}
 
-	public String getUserpwd() {
-		return userpwd;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserpwd(String userpwd) {
-		this.userpwd = userpwd;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getAge() {
@@ -90,6 +77,14 @@ public class UserInfo {
 
 	public void setHp3(String hp3) {
 		this.hp3 = hp3;
+	}
+
+	public int getUserNum() {
+		return userNum;
+	}
+
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
 	}
 
 }

@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Exam {
 
 	private static Scanner s;
-
 	public List<String> getUserIDList(String name) {
 		List<String> userlist = new ArrayList<String>();
 		try {
