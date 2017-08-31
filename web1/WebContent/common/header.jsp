@@ -122,7 +122,3 @@ $(document).ready(function(){
 		<!--/.nav-collapse -->
 	</div>
 </nav>
-<script>
-
-
-</script>
