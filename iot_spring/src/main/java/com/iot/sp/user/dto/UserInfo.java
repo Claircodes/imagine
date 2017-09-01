@@ -14,6 +14,15 @@ public class UserInfo {
 	private String hp2;
 	private String hp3;
 	private int userNum;
+	private boolean saveId;
+
+	public boolean isSaveId() {
+		return saveId;
+	}
+
+	public void setSaveId(boolean saveId) {
+		this.saveId = saveId;
+	}
 
 	public String getUserId() {
 		return userId;

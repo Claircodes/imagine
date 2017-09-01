@@ -36,7 +36,7 @@ public class HomeController {
 		
 		return "home";
 	}
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@RequestMapping(value = "/test1", method = RequestMethod.GET)
 	public String test(Locale locale, Model model) {
 		
 		String result = "여기는 테스트 jsp입니다.";

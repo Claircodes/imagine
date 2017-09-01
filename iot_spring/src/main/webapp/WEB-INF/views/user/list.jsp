@@ -34,8 +34,9 @@
 		    				resultStr += "</tr>";
 
 		    			}
+		    			
 		    			$("#result_tbody").html(resultStr);
-
+		    			name();
 		    	    }
 		    	    ,   error : function(xhr, status, e) {
 		    		    	alert("에러 : "+e);
@@ -45,49 +46,52 @@
 		    		};
 		$.ajax(a);
 	})
-	$("#search").click(function(){
-		alert("d");
-		var param = {};
-		param["userName"]=$("#txtSearch").val();
-		param = JSON.stringify(param);
-		var a = { 
-		        type     : "POST"
-		    	    ,   url      : "${pageContext.request.contextPath}/user/list"
-		    	    ,   dataType : "json" 
-		    	    ,   beforeSend: function(xhr) {
-		    	        xhr.setRequestHeader("Accept", "application/json");
-		    	        xhr.setRequestHeader("Content-Type", "application/json");
-		    	    }
-		    	    ,   data     : param
-		    	    ,   success : function(result){
-		    	    	var userList = result.userList;
-		    	        
-		    			$('#result_tbody').bootstrapTable('destroy');
-		    			var resultStr = "";
+	function name() {
+		$("#btnsearch").click(function(){
+			var param = {};
+			param["userName"]="%"+$("#txtSearch").val()+"%";
+			param = JSON.stringify(param);
+			var a = { 
+			        type     : "POST"
+			    	    ,   url      : "${pageContext.request.contextPath}/user/list"
+			    	    ,   dataType : "json" 
+			    	    ,   beforeSend: function(xhr) {
+			    	        xhr.setRequestHeader("Accept", "application/json");
+			    	        xhr.setRequestHeader("Content-Type", "application/json");
+			    	    }
+			    	    ,   data     : param
+			    	    ,   success : function(result){
+			    	    	var userList = result.userList;
+			    	        
+			    			$('#result_tbody').bootstrapTable('destroy');
+			    			var resultStr = "";
 
-		    			for (var i = 0, max = userList.length; i < max; i++) {
-		    				var user = userList[i];
+			    			for (var i = 0, max = userList.length; i < max; i++) {
+			    				var user = userList[i];
 
-		    				resultStr += "<tr data-view='"+user.giNum+"'>";
-		    				resultStr += "<td class='text-center'>" + user.userNum + "</td>";
-		    				resultStr += "<td class='text-center'>" + user.userId + "</td>";
-		    				resultStr += "<td class='text-center'>" + user.userName + "</td>";
-		    				resultStr += "<td class='text-center'>" + user.age + "</td>";
-		    				resultStr += "<td class='text-center'>" + user.address + "</td>";
-		    				resultStr += "</tr>";
+			    				resultStr += "<tr data-view='"+user.giNum+"'>";
+			    				resultStr += "<td class='text-center'>" + user.userNum + "</td>";
+			    				resultStr += "<td class='text-center'>" + user.userId + "</td>";
+			    				resultStr += "<td class='text-center'>" + user.userName + "</td>";
+			    				resultStr += "<td class='text-center'>" + user.age + "</td>";
+			    				resultStr += "<td class='text-center'>" + user.address + "</td>";
+			    				resultStr += "</tr>";
 
-		    			}
-		    			$("#result_tbody").html(resultStr);
+			    			}
+			    			
+			    			$("#result_tbody").html(resultStr);
+			    			name();
+			    	    }
+			    	    ,   error : function(xhr, status, e) {
+			    		    	alert("에러 : "+e);
+			    		},
+			    		done : function(e) {
+			    		}
+			    		};
+			$.ajax(a);
+		})
+	}
 
-		    	    }
-		    	    ,   error : function(xhr, status, e) {
-		    		    	alert("에러 : "+e);
-		    		},
-		    		done : function(e) {
-		    		}
-		    		};
-		$.ajax(a);
-	})
 </script>
 
 	<div class="container">
@@ -104,8 +108,9 @@
 			<tbody id="result_tbody">
 			</tbody>
 		</table>
-		<input type="text" id="txtSearch" >	
-		<input type="button" id="search" value="button">
+			<input type="text" id="txtSearch" >	
+		<input type="button" id="btnsearch" value="button">
 	</div>
+
 </body>
 </html>
