@@ -7,5 +7,7 @@ import com.iot1.sql.user.dto.UserInfo;
 
 public interface UserDao {
 	UserInfo selectUser(UserInfo user);
-	List<UserInfo> selectUserList(Map<String, Object> hm);
+	List<UserInfo> selectUserList(UserInfo user);
+	public int insertUserList(UserInfo[] userList);
+	public int insertUser(UserInfo user);
 }

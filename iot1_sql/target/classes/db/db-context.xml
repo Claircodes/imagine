@@ -37,7 +37,7 @@
 	</bean>
 	 
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="txAdvisePointCut" expression="execution(* com.iot.sp..service.*Service.*(..))"/>
+		<aop:pointcut id="txAdvisePointCut" expression="execution(* com.iot1.sql..service.impl.*Service.*(..))"/>
 		<aop:advisor id="transactionAdvisor" pointcut-ref="txAdvisePointCut" advice-ref="txAdvice"/>
 	</aop:config>
 	

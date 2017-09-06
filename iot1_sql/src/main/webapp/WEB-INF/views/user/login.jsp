@@ -8,9 +8,9 @@
 		<form class="form-signin" action="${pageContext.request.contextPath}/user/login_ok.jsp">
 			<h2 class="form-signin-heading">Please login</h2>
 			<label for="inputEmail" class="sr-only">ID</label> 
-			<input type="text" id="id" name="id" class="form-control" placeholder="ID" required	autofocus> 
+			<input type="text" id="userId" name="userId" class="form-control" placeholder="ID" required	autofocus> 
 			<label for="inputPassword" class="sr-only">Password</label>
-			<input type="password" name="pwd" id="pwd" class="form-control"	placeholder="Password" required>
+			<input type="password" name="userPwd" id="userPwd" class="form-control"	placeholder="Password" required>
 			<div class="checkbox">
 				<label> <input type="checkbox" value="remember-me">
 					Remember me
@@ -24,7 +24,7 @@
 	$("#btn2").click(function(){
 		var paramIds = "userId,userPwd";
 		var au = new AjaxUtil("/user/login",paramIds);
-		au.setCallbackSuccess(test);
+//		au.setCallbackSuccess(test);
 		au.send();
 	});
 </script>

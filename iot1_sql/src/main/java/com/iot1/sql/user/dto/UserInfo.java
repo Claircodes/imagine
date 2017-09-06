@@ -11,6 +11,7 @@ public class UserInfo {
 	private String userName;
 	private int age;
 	private String address;
+	private String hp;
 	private String hp1;
 	private String hp2;
 	private String hp3;
@@ -75,6 +76,12 @@ public class UserInfo {
 	public int getDepertNum() {
 		return depertNum;
 	}
+	public String getHp() {
+		return hp;
+	}
+	public void setHp(String hp) {
+		this.hp = hp;
+	}
 	public void setDepertNum(int depertNum) {
 		this.depertNum = depertNum;
 	}
@@ -90,12 +97,5 @@ public class UserInfo {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	@Override
-	public String toString() {
-		return "UserInfo [userNum=" + userNum + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", age=" + age + ", address=" + address + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3
-				+ ", depertNum=" + depertNum + ", userRoleLevel=" + userRoleLevel + ", gender=" + gender + "]";
-	}
-
 
 }
