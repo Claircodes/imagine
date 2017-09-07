@@ -10,6 +10,25 @@
 			and vinum = #{viNum}
 		</if>
 	</select>
+
+	<insert id="INSERT_GOODS" parameterType="goods">
+		INSERT INTO goods_info (giname, gidesc, vinum, gicredat, gicretim) 
+		VALUES (#{giName}, #{giDesc}, #{viNum}, DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s') )
+	</insert>
+	<update id="UPDATE_GOODS" parameterType="goods">
+		UPDATE goods_info
+		SET
+			giname = #{giName},
+			gidesc = #{giDesc},
+			vinum = #{viNum},
+			gicredat = DATE_FORMAT(NOW(),'%Y%m%d'),
+			gicretim = DATE_FORMAT(NOW(),'%H%i%s') 
+		WHERE ginum=#{giNum}
+	</update>
+	<delete id="DELETE_GOODS" parameterType="goods">
+		DELETE FROM GOODS_INFO
+		WHERE ginum = #{giNum}
+	</delete>
 </mapper>
 
 

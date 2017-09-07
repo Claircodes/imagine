@@ -8,4 +8,8 @@ public interface GoodsDAO {
 	public GoodsInfo selectGoodsInfo(GoodsInfo gi);
 
 	public List<GoodsInfo> selectGoodInfoList(GoodsInfo gi);
+
+	public int saveGoodsInfoList(GoodsInfo goodsList);
+	
+	public int updateGoodsInfoList(GoodsInfo goodsList);
 }

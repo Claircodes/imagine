@@ -9,4 +9,8 @@ public interface GoodsService {
 	public GoodsInfo getGoodsInfo(GoodsInfo gi);
 
 	public List<GoodsInfo> getGoodsInfoList(GoodsInfo gi);
+	
+	public int insertGoodsList(GoodsInfo[] goodsList);
+	
+	public int updateGoodsList(GoodsInfo[] goodsList);
 }

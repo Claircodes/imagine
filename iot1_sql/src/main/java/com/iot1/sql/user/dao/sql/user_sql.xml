@@ -61,9 +61,6 @@
 	<update id="UPDATE_USER" parameterType="user">
 		update user_info
 			set username = #{username}
-			<if test="age!=0">
-				, age =#{age}
-			</if>
 		where usernum=#{usernum}
 	</update>
 	<delete id="DELETE_USER" parameterType="user">

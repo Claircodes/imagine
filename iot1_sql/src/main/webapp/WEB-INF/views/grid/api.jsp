@@ -12,6 +12,7 @@
 <br><br><br><br><br><br><br><br>
 
 <kendo:grid title="그리드" name="grid" pageable="true" sortable="true" scrollable="false" height="450">
+
 <kendo:grid-editable mode="incell"/>
 <kendo:grid-toolbar>
 	<kendo:grid-toolbarItem name="create" text="생성"/>

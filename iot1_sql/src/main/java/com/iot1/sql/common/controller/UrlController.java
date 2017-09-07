@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class UrlController {
 
-	@RequestMapping(value="/url/{url}", method=RequestMethod.GET)
-	public String getUrl(@PathVariable(value="url") String url)	{
+	@RequestMapping(value = "/url/{url}", method = RequestMethod.GET)
+	public String getUrl(@PathVariable(value = "url") String url) {
 		url = url.replace(":", "/");
 		return url;
 	}
-	
+
 }
