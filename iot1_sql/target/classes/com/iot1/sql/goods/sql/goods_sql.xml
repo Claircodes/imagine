@@ -26,7 +26,7 @@
 		WHERE ginum=#{giNum}
 	</update>
 	<delete id="DELETE_GOODS" parameterType="goods">
-		DELETE FROM GOODS_INFO
+		DELETE FROM goods_info
 		WHERE ginum = #{giNum}
 	</delete>
 </mapper>

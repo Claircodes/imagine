@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.iot1.sql.goods.dao.GoodsDAO;
 import com.iot1.sql.goods.dto.GoodsInfo;
-import com.iot1.sql.user.dto.UserInfo;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -29,7 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
 	public int insertGoodsList(GoodsInfo[] goodsList) {
 		int rCnt = 0;
 		for (GoodsInfo gi : goodsList) {
-			rCnt += gdao.saveGoodsInfoList(gi);
+			rCnt += gdao.saveGoodsInfo(gi);
 		}
 		return rCnt;
 	}
@@ -38,9 +37,32 @@ public class GoodsServiceImpl implements GoodsService {
 	public int updateGoodsList(GoodsInfo[] goodsList) {
 		int rCnt = 0;
 		for (GoodsInfo gi : goodsList) {
-			rCnt += gdao.updateGoodsInfoList(gi);
+			rCnt += gdao.updateGoodsInfo(gi);
 		}
 		return rCnt;
 	}
 
+	@Override
+	public int deleteGoodsList(GoodsInfo[] goodsList) {
+		int rCnt = 0;
+		for (GoodsInfo gi : goodsList) {
+			rCnt += gdao.deleteGoodsInfo(gi);
+		}
+		return rCnt;
+	}
+
+	@Override
+	public int insertGoods(GoodsInfo gi) {
+		return gdao.saveGoodsInfo(gi);
+	}
+
+	@Override
+	public int updateGoods(GoodsInfo gi) {
+		return gdao.updateGoodsInfo(gi);
+	}
+
+	@Override
+	public int deleteGoods(GoodsInfo gi) {
+		return gdao.deleteGoodsInfo(gi);
+	}
 }

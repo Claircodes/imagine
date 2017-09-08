@@ -10,4 +10,8 @@ public interface VendorService {
 
 	public List<VendorInfo> getVendorList(VendorInfo vi);
 
+	List<VendorInfo> getVendorComboList();
+
+	public int insertVendorList(VendorInfo[] vendorList);
+
 }

@@ -6,7 +6,6 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.iot1.sql.goods.dto.GoodsInfo;
-import com.iot1.sql.user.dto.UserInfo;
 
 @Repository
 public class GoodsDAOImpl extends SqlSessionDaoSupport implements GoodsDAO {
@@ -22,22 +21,18 @@ public class GoodsDAOImpl extends SqlSessionDaoSupport implements GoodsDAO {
 	}
 
 	@Override
-	public int saveGoodsInfoList(GoodsInfo goodsList) {
-//		int count=0;
-//		for (GoodsInfo gi : goodsList) {
-//			count+=this.getSqlSession().insert("goods.INSERT_GOODS", gi);
-//		}
+	public int saveGoodsInfo(GoodsInfo goodsList) {
 		return this.getSqlSession().insert("goods.INSERT_GOODS", goodsList);
 	}
 
 	@Override
-	public int updateGoodsInfoList(GoodsInfo goodsList) {
-//		int count=0;
-//		for (GoodsInfo gi : goodsList) {
-//			count+=this.getSqlSession().update("goods.UPDATE_GOODS", gi);
-//		}
+	public int updateGoodsInfo(GoodsInfo goodsList) {
 		return this.getSqlSession().update("goods.UPDATE_GOODS", goodsList);
 	}
 
-	
+	@Override
+	public int deleteGoodsInfo(GoodsInfo goodsList) {
+		return this.getSqlSession().update("goods.DELETE_GOODS", goodsList);
+	}
+
 }
