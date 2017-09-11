@@ -10,7 +10,7 @@
 <body>
 	<script>
 $(document).ready(function(){
-	if(!"${vendorcombolist}"){
+	if(!"${vendors}"){
 		location.href="${vendorComboUrl}";
 	}
 })

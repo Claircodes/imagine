@@ -51,18 +51,4 @@ public class GoodsServiceImpl implements GoodsService {
 		return rCnt;
 	}
 
-	@Override
-	public int insertGoods(GoodsInfo gi) {
-		return gdao.saveGoodsInfo(gi);
-	}
-
-	@Override
-	public int updateGoods(GoodsInfo gi) {
-		return gdao.updateGoodsInfo(gi);
-	}
-
-	@Override
-	public int deleteGoods(GoodsInfo gi) {
-		return gdao.deleteGoodsInfo(gi);
-	}
 }

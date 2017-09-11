@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iot1.sql.goods.dto.GoodsInfo;
 import com.iot1.sql.vendor.dto.VendorInfo;
 import com.iot1.sql.vendor.service.VendorService;
 
@@ -25,7 +26,7 @@ public class VendorController {
 	VendorService vs;
 
 	@RequestMapping(value = "/vendor/list", method = RequestMethod.POST)
-	public @ResponseBody List<VendorInfo> getVendorInfoList(VendorInfo vi) {
+	public @ResponseBody List<VendorInfo> getVendorInfoList(@RequestBody VendorInfo vi) {
 		return vs.getVendorList(vi);
 	}
 
@@ -40,7 +41,7 @@ public class VendorController {
 			hm.put("text", v.getViName());
 			resultList.add(hm);
 		}
-		model.addAttribute("vendorcombolist", resultList);
+		model.addAttribute("vendors", resultList);
 		String url = request.getParameter("url");
 		if (url == null || url.equals("")) {
 			url = "goods/goods_list";
@@ -54,6 +55,27 @@ public class VendorController {
 		for (VendorInfo vi : vendorList) {
 			System.out.println(vi);
 		}
+		System.out.println("----------rCnt--->" + rCnt);
+		return getVendorInfoList(null);
+	}
+
+	@RequestMapping(value = "/vendor/update", method = RequestMethod.POST)
+	public @ResponseBody List<VendorInfo> updateVendorInfoList(@RequestBody VendorInfo[] vendorList) {
+		int rCnt = vs.updateVendorList(vendorList);
+		for (VendorInfo vi : vendorList) {
+			System.out.println(vi);
+		}
+		System.out.println("----------rCnt--->" + rCnt);
+		return getVendorInfoList(null);
+	}
+
+	@RequestMapping(value = "/vendor/delete", method = RequestMethod.POST)
+	public @ResponseBody List<VendorInfo> deleteVendorInfoList(@RequestBody VendorInfo[] vendorList) {
+		int rCnt = vs.deleteVendorList(vendorList);
+		for (VendorInfo vi : vendorList) {
+			System.out.println(vi);
+		}
+		System.out.println("----------rCnt--->" + rCnt);
 		return getVendorInfoList(null);
 	}
 

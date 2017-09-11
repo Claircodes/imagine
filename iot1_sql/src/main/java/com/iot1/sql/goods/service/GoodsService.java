@@ -9,16 +9,11 @@ public interface GoodsService {
 	public GoodsInfo getGoodsInfo(GoodsInfo gi);
 
 	public List<GoodsInfo> getGoodsInfoList(GoodsInfo gi);
-	
+
 	public int insertGoodsList(GoodsInfo[] goodsList);
-	
+
 	public int updateGoodsList(GoodsInfo[] goodsList);
 
 	public int deleteGoodsList(GoodsInfo[] goodsList);
 
-	public int insertGoods(GoodsInfo gi);
-
-	public int updateGoods(GoodsInfo gi);
-
-	public int deleteGoods(GoodsInfo gi);
 }

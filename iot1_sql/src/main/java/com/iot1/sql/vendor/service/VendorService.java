@@ -14,4 +14,14 @@ public interface VendorService {
 
 	public int insertVendorList(VendorInfo[] vendorList);
 
+	int updateVendorList(VendorInfo[] vendorlist);
+
+	int deleteVendorList(VendorInfo[] vendorlist);
+
+	int insertVendor(VendorInfo vi);
+
+	int updateVendor(VendorInfo vi);
+
+	int deleteVendor(VendorInfo vi);
+
 }
