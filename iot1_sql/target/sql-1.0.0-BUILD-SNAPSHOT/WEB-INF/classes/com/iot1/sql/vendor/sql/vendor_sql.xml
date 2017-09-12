@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="vendors">
+	<select id="SELECT_VENDOR" parameterType="vendors" resultType="vendors">
+		select vinum, viname, videsc, viaddress, viphone, vicredat, vicretim
+		from vendor_info
+		where 1=1
+		<if test="viNum!=0">
+			and vinum = #{viNum}
+		</if>
+	</select>
+
+	<select id="SELECT_VENDOR_COMBO" parameterType="vendors" resultType="vendors">
+		select vinum, viName
+		from vendor_info
+	</select>
+
+	<insert id="INSERT_VENDOR" parameterType="vendors">
+		insert into vendor_info
+		(viname, videsc, viaddress, viphone, vicredat, vicretim)
+		values
+		(#{viName}, #{viDesc}, #{viAddress}, #{viPhone},
+		DATE_FORMAT(NOW(),'%Y-%m-%d'), DATE_FORMAT(NOW(),'%H%i%s'))
+	</insert>
+
+	<delete id="DELETE_VENDOR" parameterType="vendors">
+		delete from vendor_info
+		where vinum = #{viNum}
+	</delete>
+
+	<update id="UPDATE_VENDOR" parameterType="vendors">
+		UPDATE vendor_info
+		SET
+		viname = #{viName},
+		videsc = #{viDesc},
+		viaddress = #{viAddress},
+		viphone = #{viPhone},
+		vicredat = DATE_FORMAT(NOW(),'%Y-%m-%d'),
+		vicretim = DATE_FORMAT(NOW(),'%H%i%s')
+		WHERE vinum=#{viNum}
+	</update>
+</mapper>
+
+
+
+
+
+
