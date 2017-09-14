@@ -1,6 +1,7 @@
 package com.iot1.sql.db.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,4 +60,16 @@ public class DbInfoController {
 		}
 		return map;
 	}
+	
+	@RequestMapping(value="/db/run/sql",method=RequestMethod.POST)
+	public @ResponseBody ModelMap getSqlResult(@RequestBody Map<String,String> pm, ModelMap map){
+		try{
+			map.put("resultMap", ds.runSql(pm));
+			map.put("key", "resultMap");
+		}catch(Exception e){
+			map.put("error", e.getMessage());
+		}
+		return map;
+	}
+	
 }

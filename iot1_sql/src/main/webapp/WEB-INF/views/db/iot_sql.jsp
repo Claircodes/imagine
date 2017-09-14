@@ -14,8 +14,53 @@
 
 	function onBound() {
 		treeview = $('#treeview').data('kendoTreeView');
+		$( "#query" ).keydown(function(e) {
+			var keyCode = e.keyCode || e.which;
+			if(keyCode==120){
+				var sql;
+				var sqls;
+				if(e.ctrlKey && keyCode==120 && e.shiftKey){
+					sql = this.value;
+					var cursor = this.selectionStart;
+					var startSql = sql.substr(0,cursor);
+					var startSap = startSql.lastIndexOf(";")
+					startSql = startSql.substr(startSap+1);
+					var endSql = sql.substr(cursor);
+					var endSap = endSql.indexOf(";");
+					if(endSap==-1) {
+						endSap=sql.length;
+					}
+					endSql = endSql.substr(0,endSap);
+					sql = startSql + endSql;
+				}else if(e.ctrlKey && keyCode==120){
+					sql = this.value.substr(this.selectionStart, this.selectionEnd - this.selectionStart);
+				}else if(keyCode==120){
+					sql = this.value;
+				}
+				if(sql){
+					sql = sql.trim();
+					sqls = sql.split(";");
+					if(sqls.length==2){
+						var au = new AjaxUtil("db/run/sql");
+						var param = {};
+						param["sql"] = sql;
+						au.param = JSON.stringify(param);
+						au.setCallbackSuccess(callbackSql);
+						au.send();
+						return;
+					}else if(sqls){
+						
+						return;
+					}
+				}
+				
+			}
+		});
 	}
-
+	function callbackSql(result){
+		var key = result.key;
+		var obj = result[key];
+	}
 	function treeSelect(e) {
 		window.selectedNode = treeview.select();
 		var data = treeview.dataItem(window.selectedNode);
@@ -81,7 +126,7 @@
 	}
 </script>
 <body>
-	<c:import url="${menuUrl}" />
+<%@ include file="/WEB-INF/views/common/top_menu.jsp" %>
 	<kendo:splitter name="vertical" orientation="vertical">
 		<kendo:splitter-panes>
 			<kendo:splitter-pane id="top-pane" collapsible="false">

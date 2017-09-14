@@ -1,6 +1,7 @@
 package com.iot1.sql.db.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class DbInfoServiceImpl implements DbInfoService {
 		DbInfo di = dDao.selectDbInfo(pDi);
 		return dDao.isConnecteDB(di);
 	}
-
+	@Override
 	public List<DataBase> getDataBaseList() throws Exception {
 		return dDao.selectDatabaseList();
 	}
@@ -40,5 +41,9 @@ public class DbInfoServiceImpl implements DbInfoService {
 	@Override
 	public List<Column> getTableInfo(Table table) throws Exception {
 		return dDao.selectTableInfo(table);
+	}
+	@Override
+	public Map<String, Object> runSql(Map<String, String> pm) throws Exception {
+		return dDao.runSql(pm);
 	}
 }

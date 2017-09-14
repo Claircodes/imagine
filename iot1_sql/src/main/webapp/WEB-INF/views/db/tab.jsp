@@ -3,16 +3,14 @@
 <%@ include file="/WEB-INF/views/common/common.jsp"%>
 <kendo:tabStrip name="tabStrip">
 	<kendo:tabStrip-animation>
-		<kendo:tabStrip-animation-open effects="fadeIn"></kendo:tabStrip-animation-open>
+		<kendo:tabStrip-animation-open effects="fadeIn" />
 	</kendo:tabStrip-animation>
 	<kendo:tabStrip-items>
 		<kendo:tabStrip-item text="테이블정보" selected="true">
 			<kendo:tabStrip-item-content>
 				<div class="weather">
-					<kendo:grid title="테이블정보" name="tableInfoGrid" sortable="true"
-					pageable="false" navigatable="true">
-						<kendo:grid-excel fileName="테이블정보.xlsx" allPages="true"
-							filterable="true" proxyURL="${eUrl}" />
+					<kendo:grid title="테이블정보" name="tableInfoGrid" sortable="true" pageable="false" navigatable="true">
+						<kendo:grid-excel fileName="테이블정보.xlsx" allPages="true" filterable="true" proxyURL="${eUrl}" />
 						<kendo:grid-columns>
 							<kendo:grid-column title="컬럼명" field="columnName" />
 							<kendo:grid-column title="데이터타입" field="dataType" />
@@ -20,36 +18,13 @@
 							<kendo:grid-column title="널허용여부" field="isNullable">
 							</kendo:grid-column>
 						</kendo:grid-columns>
-						<kendo:dataSource >
-							<kendo:dataSource-transport>
-								<kendo:dataSource-transport-read url="${rUrl}" dataType="json" type="POST" 
-								contentType="application/json" />
-								<kendo:dataSource-transport-parameterMap>
-									<script>
-					                	function parameterMap(options) { 
-					                		return JSON.stringify(options);
-					                	}
-				                	</script>
-								</kendo:dataSource-transport-parameterMap>
-							</kendo:dataSource-transport>
-							<kendo:dataSource-schema>
-								<kendo:dataSource-schema-model id="columnName">
-								</kendo:dataSource-schema-model>
-							</kendo:dataSource-schema>
-						</kendo:dataSource>
-						
 					</kendo:grid>
 				</div>
 			</kendo:tabStrip-item-content>
 		</kendo:tabStrip-item>
 		<kendo:tabStrip-item text="쿼리">
 			<kendo:tabStrip-item-content>
-				<div class="weather">
-					<h2>
-						29<span>&ordm;C</span>
-					</h2>
-					<p>Sunny weather in New York.</p>
-				</div>
+				<textarea id="query" style="width:100%; height:100%"></textarea>
 			</kendo:tabStrip-item-content>
 		</kendo:tabStrip-item>
 	</kendo:tabStrip-items>
