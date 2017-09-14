@@ -10,7 +10,6 @@ import com.iot1.sql.db.dto.Column;
 import com.iot1.sql.db.dto.DataBase;
 import com.iot1.sql.db.dto.DbInfo;
 import com.iot1.sql.db.dto.Table;
-import com.iot1.sql.goods.dto.GoodsInfo;
 
 @Service
 public class DbInfoServiceImpl implements DbInfoService {
@@ -29,7 +28,6 @@ public class DbInfoServiceImpl implements DbInfoService {
 		return dDao.isConnecteDB(di);
 	}
 
-	@Override
 	public List<DataBase> getDataBaseList() throws Exception {
 		return dDao.selectDatabaseList();
 	}
@@ -40,8 +38,7 @@ public class DbInfoServiceImpl implements DbInfoService {
 	}
 
 	@Override
-	public List<Column> getColumnList(Column c) {
-		return dDao.selectColumnList(c);
+	public List<Column> getTableInfo(Table table) throws Exception {
+		return dDao.selectTableInfo(table);
 	}
-
 }

@@ -2,58 +2,78 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <base href="http://demos.telerik.com/kendo-ui/treelist/dragdrop">
-<style>
-html {
-	font-size: 14px;
-	font-family: Arial, Helvetica, sans-serif;
-}
-</style>
-<title></title>
-<link rel="stylesheet"
-	href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common-material.min.css" />
-<link rel="stylesheet"
-	href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.min.css" />
-<link rel="stylesheet"
-	href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.mobile.min.css" />
 
-<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script>
-<script
-	src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
 </head>
 <body>
-	<div id="mariaTree"></div>
-	<script>
-		jQuery(function() {
-			jQuery("#mariaTree").kendoTreeList({
-				"columns" : [ {
-					"field" : "Database",
-					"title" : "test"
-				} ],
-				"dataSource" : {
-					"schema" : {
-						"model" : {
-							"id" : "Database"
-						}
-					},
-					"transport" : {
-						"read" : {
-							"dataType" : "json",
-							"type" : "POST",
-							"contentType" : "application/json",
-							"url" : "/sql/maria/treelist"
-						},
-						"parameterMap" : function parameterMap(options, type) {
-							if (type === "read") {
-								return JSON.stringify(options);
-							} else {
-								return JSON.stringify(options.models);
-							}
-						}
-					}
-				}
-			});
-		})
+	function onBound() { } function toolbarEvent() { } function
+	treeSelect() { }
 	</script>
+<body>
+
+	<div id="top-pane">
+		<div id="top" class="pane-content">
+			<div id="grid" title="그리드"></div>
+			<script>
+				jQuery(function() {
+					jQuery("#grid").kendoGrid(
+							{
+								"editable" : {
+									"mode" : "incell"
+								},
+								"columns" : [ {
+									"field" : "column_name",
+									"editable" : false,
+									"title" : "1"
+								}, {
+									"field" : "data_type",
+									"title" : "2"
+								}, {
+									"field" : "character_maximum_length",
+									"editable" : false,
+									"title" : "3"
+								}, {
+									"field" : "is_nullable",
+									"title" : "4"
+								} ],
+								"pageable" : true,
+								"sortable" : true,
+								"dataSource" : {
+									"schema" : {
+										"model" : {
+											"id" : "column_name"
+										}
+									},
+									"batch" : true,
+									"pageSize" : 20.0,
+									"transport" : {
+										"read" : {
+											"dataType" : "json",
+											"type" : "POST",
+											"contentType" : "application/json",
+											"url" : "/sql/db/table/info/list"
+										},
+										"parameterMap" : function parameterMap(
+												options, type) {
+											if (type === "read") {
+												return JSON.stringify(options);
+											}
+										}
+									}
+								},
+								"scrollable" : true,
+								"height" : 450.0
+							});
+				})
+			</script>
+		</div>
+	</div>
+	<div id="middle-pane">
+		<div class="pane-content">
+			<h3>Inner splitter / middle-middle pane</h3>
+		</div>
+	</div>
+
 
 </body>
+
 </html>

@@ -1,17 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<c:url var="dbRUrl" value="/db/list/tree" />
-<c:url var="rUrl" value="/db/table/info/list" />
+<%@ page session="false"%>
+<c:set var="dbTreeJsp" value="/WEB-INF/views/db/db_treeview.jsp" />
+<c:set var="tableInfoJsp" value="/WEB-INF/views/db/table_info.jsp" />
+<c:set var="tabJsp" value="/WEB-INF/views/db/tab.jsp" />
+<c:url var="tableInfoUrl" value="/db/table/info" />
+<!-- jsp:include 이게 액션태그 -->
 <title>IOT SQL</title>
 </head>
 <script>
 	var treeview;
-	var goodsGrid;
-	var database_save;
+
 	function onBound() {
 		treeview = $('#treeview').data('kendoTreeView');
 	}
+
+	function treeSelect(e) {
+		window.selectedNode = treeview.select();
+		var data = treeview.dataItem(window.selectedNode);
+		if (data.database && !data.hasChildren) {
+			var au = new AjaxUtil("db/table/list");
+			var param = {};
+			param["database"] = data.database;
+			au.param = JSON.stringify(param);
+			au.setCallbackSuccess(callbackForTreeItem2);
+			au.send();
+		} else if (data.tableName) {
+			var ki = new KendoItem(treeview, $("#tableInfoGrid"),
+					"${tableInfoUrl}", "tableName");
+			ki.send();
+		}
+	}
+	function callbackForTreeItem2(result) {
+		if (result.error) {
+			alert(result.error);
+			return;
+		}
+		for (var i = 0, max = result.tableList.length; i < max; i++) {
+			var table = result.tableList[i];
+			treeview.append({
+				tableName : table.tableName
+			}, treeview.select());
+		}
+	}
+	function callbackForTreeItem(result) {
+		if (result.error) {
+			alert(result.error);
+			return;
+		}
+		for (var i = 0, max = result.databaseList.length; i < max; i++) {
+			var database = result.databaseList[i];
+			treeview.append({
+				database : database.database
+			}, treeview.select());
+		}
+		$("#btnConnect").text("접속해제");
+	}
+
 	function toolbarEvent(e) {
 		if ($("#btnConnect").text() == "접속해제") {
 			treeview.dataSource.read();
@@ -33,142 +79,36 @@
 		}
 
 	}
-	function callbackForTreeItem2(result) {
-		if (result.error) {
-			alert(result.error);
-			return;
-		}
-		for (var i = 0, max = result.tableList.length; i < max; i++) {
-			var table = result.tableList[i];
-			treeview.append({
-				tableName : table.tableName
-			}, treeview.select());
-		}
-		$("#btnConnect").text("접속해제");
-	}
-	function callbackForTreeItem(result) {
-		if (result.error) {
-			alert(result.error);
-			return;
-		}
-		for (var i = 0, max = result.databaseList.length; i < max; i++) {
-			var database = result.databaseList[i];
-			treeview.append({
-				database : database.database
-			}, treeview.select());
-		}
-		$("#btnConnect").text("접속해제");
-	}
-
-
-	function treeSelect(e) {
-		window.selectedNode = treeview.select();
-		var data = treeview.dataItem(window.selectedNode);
-
-		if (data.database) {
-			var au = new AjaxUtil("db/table/list");
-			var param = {};
-			param["database"] = data.database;
-			au.param = JSON.stringify(param);
-			au.setCallbackSuccess(callbackForTreeItem2);
-			au.send();
-			database_save = data.database;
-		}else if (data.tableName) {
-			goodsGrid = $("#goodsGrid");
-			$("#dbName").val(data.tableName);
-			var ki = new KendoItem(this, goodsGrid, "${rUrl}", "dbName");
-			ki.send();
-		}
-	}
 </script>
 <body>
+	<c:import url="${menuUrl}" />
 	<kendo:splitter name="vertical" orientation="vertical">
 		<kendo:splitter-panes>
 			<kendo:splitter-pane id="top-pane" collapsible="false">
 				<kendo:splitter-pane-content>
-					<kendo:splitter name="horizontal"
-						style="height: 100%; width: 100%;">
+					<kendo:splitter name="horizontal" style="height: 100%; width: 100%;">
 						<kendo:splitter-panes>
-							<kendo:splitter-pane id="left-pane" collapsible="true"
-								size="220px">
+							<kendo:splitter-pane id="left-pane" collapsible="true" size="220px">
 								<kendo:splitter-pane-content>
 									<div class="pane-content">
-										<kendo:toolBar name="toolbar">
-											<kendo:toolBar-items>
-												<kendo:toolBar-item type="button" text="접속" id="btnConnect"
-													click="toolbarEvent"></kendo:toolBar-item>
-											</kendo:toolBar-items>
-										</kendo:toolBar>
-										<kendo:treeView name="treeview"	dataTextField="<%=new String[]{\"dbTitle\",\"database\",\"tableName\"}%>"
-											change="treeSelect" dataBound="onBound">
-											<kendo:dataSource>
-												<kendo:dataSource-transport>
-													<kendo:dataSource-transport-read url="${dbRUrl}" type="POST" contentType="application/json" />
-													<kendo:dataSource-transport-parameterMap>
-														<script>
-															function parameterMap(options,type) {
-																return JSON.stringify(options);
-															}
-														</script>
-													</kendo:dataSource-transport-parameterMap>
-												</kendo:dataSource-transport>
-												<kendo:dataSource-schema>
-													<kendo:dataSource-schema-hierarchical-model id="dbTitle"
-														hasChildren="hasDatabases" />
-												</kendo:dataSource-schema>
-											</kendo:dataSource>
-										</kendo:treeView>
+										<c:import url="${dbTreeJsp}" />
 									</div>
 								</kendo:splitter-pane-content>
 							</kendo:splitter-pane>
-
-
 							<kendo:splitter-pane id="center-pane" collapsible="false">
 								<kendo:splitter-pane-content>
 									<kendo:splitter name="vertical1" orientation="vertical" style="height: 100%; width: 100%;">
 										<kendo:splitter-panes>
 											<kendo:splitter-pane id="top-pane" collapsible="false">
-			                					<div id="top" class="pane-content">
-	<kendo:grid title="그리드" name="goodsGrid" pageable="true" sortable="true" scrollable="true" height="450">
-		<kendo:grid-editable mode="incell" />
-
-		<kendo:grid-columns>
-			<kendo:grid-column title="1" field="column_name" editable="false" />
-			<kendo:grid-column title="2" field="data_type" />
-			<kendo:grid-column title="3" field="character_maximum_length" editable="false" />
-			<kendo:grid-column title="4" field="is_nullable" />
-		</kendo:grid-columns>
-		<kendo:dataSource pageSize="20" batch="true">
-			<!--데이터가 왔다갔다 하는걸 정의 -->
-
-			<kendo:dataSource-transport>
-				<kendo:dataSource-transport-read url="${rUrl}" dataType="json" type="POST" contentType="application/json" />
-				<kendo:dataSource-transport-parameterMap>
-					<script>
-						function parameterMap(options, type) {
-							if (type === "read") {
-								return JSON.stringify(options);
-							} 
-						}
-					</script>
-				</kendo:dataSource-transport-parameterMap>
-			</kendo:dataSource-transport>
-			<!-- 입력받는 걸 정의 -->
-			<kendo:dataSource-schema>
-				<kendo:dataSource-schema-model id="dbName">
-					<!-- 테이블들의 기본키라고 생각 id="giNum" -->
-				</kendo:dataSource-schema-model>
-			</kendo:dataSource-schema>
-		</kendo:dataSource>
-	</kendo:grid>
-			                                	</div>
+												<div class="pane-content">
+													<c:import url="${tabJsp}" />
+												</div>
 											</kendo:splitter-pane>
 											<kendo:splitter-pane id="middle-pane" collapsible="true">
 												<div class="pane-content">
-													<h3>Inner splitter / middle-middle pane</h3>
+													<c:import url="${tableInfoJsp}" />
 												</div>
 											</kendo:splitter-pane>
-
 										</kendo:splitter-panes>
 									</kendo:splitter>
 								</kendo:splitter-pane-content>
@@ -177,8 +117,7 @@
 					</kendo:splitter>
 				</kendo:splitter-pane-content>
 			</kendo:splitter-pane>
-			<kendo:splitter-pane id="middle-pane" collapsible="false"
-				size="100px">
+			<kendo:splitter-pane id="middle-pane" collapsible="false" size="100px">
 				<kendo:splitter-pane-content>
 					<div class="pane-content">
 						<h3>Outer splitter / middle pane</h3>
@@ -186,16 +125,15 @@
 					</div>
 				</kendo:splitter-pane-content>
 			</kendo:splitter-pane>
-			<kendo:splitter-pane id="bottom-pane" collapsible="false"
-				resizable="false" size="20px" scrollable="false">
+			<kendo:splitter-pane id="bottom-pane" collapsible="false" resizable="false" size="20px" scrollable="false">
 				<kendo:splitter-pane-content>
 					<b>MySql Tool For Web</b>
 				</kendo:splitter-pane-content>
 			</kendo:splitter-pane>
 		</kendo:splitter-panes>
 	</kendo:splitter>
-
-	<style>
+</body>
+<style>
 #vertical {
 	height: 580px;
 	margin: 0 auto;
@@ -253,6 +191,14 @@
 #content .demo-section input {
 	width: 80%;
 }
+
+.k-button>.k-toolbar-first-visible>.k-toolbar-last-visible {
+	color: red;
+}
+
+a[class='k-link'], tr {
+	text-align: center;
+	color: blue;
+}
 </style>
-</body>
 </html>

@@ -16,14 +16,14 @@
 		SELECT table_name as tablename FROM INFORMATION_SCHEMA.TABLES
         where table_schema=#{database}
        <if test="tableName != null">
-       		and table_name = #{table_name}
+       		and table_name = #{tableName}
        </if>
 	</select>
 	
 	<select id="TABLE_INFO_SELECT" parameterType="Map"  resultType="Map">
-		select  column_name, data_type, character_maximum_length,is_nullable
+		select  column_name, data_type, character_maximum_length, is_nullable 
 		 from INFORMATION_SCHEMA.columns 
-		where table_name=#{dbname}
+		where table_name=#{dbName}
 		and table_schema=database()
 		 order by ordinal_position;
 	</select>

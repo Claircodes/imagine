@@ -8,10 +8,16 @@ import com.iot1.sql.db.dto.DbInfo;
 import com.iot1.sql.db.dto.Table;
 
 public interface DbInfoDao {
+	
 	public List<DbInfo> selectDbInfoList(DbInfo di);
-	public DbInfo selectDbInfo(DbInfo di) ;
+
+	public DbInfo selectDbInfo(DbInfo di);
+
 	public boolean isConnecteDB(DbInfo di) throws Exception;
+
 	public List<DataBase> selectDatabaseList() throws Exception;
+
 	public List<Table> selectTableList(DataBase di) throws Exception;
-	List<Column> selectColumnList(Column c);
+
+	public List<Column> selectTableInfo(Table table) throws Exception;
 }
