@@ -43,7 +43,7 @@ public class DbInfoServiceImpl implements DbInfoService {
 		return dDao.selectTableInfo(table);
 	}
 	@Override
-	public Map<String, Object> runSql(Map<String, String> pm) throws Exception {
+	public Map<String, Object> runSql(Map<String, Object> pm) throws Exception {
 		return dDao.runSql(pm);
 	}
 }

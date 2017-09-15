@@ -63,8 +63,11 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 		return dsf.getSqlSession().selectList("db.TABLE_INFO_SELECT", table);
 	}
 
-	public Map<String,Object> runSql(Map<String, String> pm) throws Exception{
-		String sql = pm.get("sql");
+	public Map<String,Object> runSql(Map<String, Object> pm) throws Exception{
+		String sql = (String) pm.get("sql");
+		
+		Object d =pm.get("sqls");
+		System.out.println(d);
 		sql = sql.trim();
 		Map<String,Object> map = new HashMap<String, Object>();
 		Statement statement = dsf.getSqlSession().getConnection().createStatement();
@@ -90,7 +93,7 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 			map.put("list", list);
 			map.put("columns", columns);
 		}else{
-			int result = statement.executeUpdate(sql);
+			int result=statement.executeUpdate(sql);
 			map.put("type", "save");
 			map.put("row", result);
 		}

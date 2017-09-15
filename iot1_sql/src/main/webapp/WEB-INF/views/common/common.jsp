@@ -7,5 +7,4 @@
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <c:set var="nowUrl" value="${pageContext.request.requestURI}"/>
 <c:set var="menuUrl" value="/WEB-INF/views/common/top_menu.jsp" />
-
 <!-- jsp 관련된 것 -->

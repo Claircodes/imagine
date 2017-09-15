@@ -22,5 +22,5 @@ public interface DbInfoDao {
 
 	public List<Column> selectTableInfo(Table table) throws Exception;
 
-	public Map<String,Object> runSql(Map<String, String> pm) throws Exception;
+	public Map<String,Object> runSql(Map<String, Object> pm) throws Exception;
 }

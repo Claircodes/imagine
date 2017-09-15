@@ -62,7 +62,7 @@ public class DbInfoController {
 	}
 	
 	@RequestMapping(value="/db/run/sql",method=RequestMethod.POST)
-	public @ResponseBody ModelMap getSqlResult(@RequestBody Map<String,String> pm, ModelMap map){
+	public @ResponseBody ModelMap getSqlResult(@RequestBody Map<String,Object> pm, ModelMap map){
 		try{
 			map.put("resultMap", ds.runSql(pm));
 			map.put("key", "resultMap");
@@ -71,5 +71,6 @@ public class DbInfoController {
 		}
 		return map;
 	}
+
 	
 }

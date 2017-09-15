@@ -6,33 +6,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<c:set var="pVar" value="1.3.2"/>
-<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
-<c:set var="nowUrl" value="${pageContext.request.requestURI}"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-<script src="<c:url value="/resources/js/jquery-3.2.1.js?version=${pVar}"/>"></script>
+<script src="<c:url value='/resources/js/jquery.min.js' />"></script>
 <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/js/jquery.fileupload.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/js/jquery.iframe-transport.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/ui/common.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/ui/btsp3.7.7/js/bootstrap.min.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/ui/btsp3.7.7/js/bootstrap-table.js?version=${pVar}"/>"></script>
-<script src="<c:url value="/resources/ui/btsp3.7.7/js/bootstrap-table.js?version=${pVar}"/>"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+<script src="<c:url value='/resources/js/kendo.all.min.js' />"></script>
+<script src="<c:url value='/resources/js/kendo.timezones.min.js' />"></script>
+<script src="<c:url value='/resources/shared/js/console.js'/>"></script>
+<script src="<c:url value='/resources/shared/js/prettify.js'/>"></script>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap-theme.min.css?version=${pVar}"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap.min.css?version=${pVar}"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap-table.css?version=${pVar}"/>"/>
-<link rel="stylesheet" href="<c:url value="/resources/ui/common.css?version=${pVar}"/>"/>
-
-<link href="<c:url value='/resources/test/css/web/kendo.common.min.css'/>" rel="stylesheet" />
-<link href="<c:url value='/resources/test/css/web/kendo.rtl.min.css'/>" rel="stylesheet" />
-<link href="<c:url value='/resources/test/css/web/kendo.default.min.css'/>" rel="stylesheet" />
-<link href="<c:url value='/resources/test/css/web/kendo.default.mobile.min.css'/>" rel="stylesheet" />
-<link href="<c:url value='/resources/test/css/dataviz/kendo.dataviz.min.css'/>" rel="stylesheet" />
-<link href="<c:url value='/resources/test/css/dataviz/kendo.dataviz.default.min.css'/>" rel="stylesheet" />
-<script src="<c:url value='/resources/test/js/kendo.all.min.js' />"></script>
-<script src="<c:url value='/resources/test/js/kendo.timezones.min.js' />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/ui/common.css?version=${pVar}"/>" />
+<link href="<c:url value='/resources/css/web/kendo.common.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/css/web/kendo.rtl.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/css/web/kendo.default.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/css/web/kendo.default.mobile.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/css/dataviz/kendo.dataviz.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/css/dataviz/kendo.dataviz.default.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/resources/shared/styles/examples-offline.css'/>" rel="stylesheet"/>
+<script src="<c:url value="/resources/js/console.js?version=${pVar}"/>"></script>
 <script>
+
+
 $(document).ready(function(){
 	var nowUrl = "${nowUrl}";
 	var obj = $("a[href='" + nowUrl + "']").parent().attr("class","active");
@@ -141,3 +143,7 @@ var AjaxUtil = function (url, params, type, dataType){
 	}
 }
 </script>
+<br/>
+<br/>
+<br/>
+<br/>

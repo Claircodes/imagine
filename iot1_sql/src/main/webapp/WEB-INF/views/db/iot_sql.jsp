@@ -6,19 +6,21 @@
 <c:set var="tableInfoJsp" value="/WEB-INF/views/db/table_info.jsp" />
 <c:set var="tabJsp" value="/WEB-INF/views/db/tab.jsp" />
 <c:url var="tableInfoUrl" value="/db/table/info" />
+<c:set var="sqlList" value="/WEB-INF/views/db/sql_list.jsp" />
 <!-- jsp:include 이게 액션태그 -->
 <title>IOT SQL</title>
 </head>
 <script>
 	var treeview;
 
-	function onBound() {
-		treeview = $('#treeview').data('kendoTreeView');
-		$( "#query" ).keydown(function(e) {
+	$(document).ready(function(){
+		
+		$("#query").keydown(function(e) {
 			var keyCode = e.keyCode || e.which;
 			if(keyCode==120){
 				var sql;
 				var sqls;
+
 				if(e.ctrlKey && keyCode==120 && e.shiftKey){
 					sql = this.value;
 					var cursor = this.selectionStart;
@@ -40,26 +42,73 @@
 				if(sql){
 					sql = sql.trim();
 					sqls = sql.split(";");
-					if(sqls.length==2){
+					if(sqls.length==1){
 						var au = new AjaxUtil("db/run/sql");
 						var param = {};
 						param["sql"] = sql;
+						kendoConsole.log(sql+";");
 						au.param = JSON.stringify(param);
 						au.setCallbackSuccess(callbackSql);
 						au.send();
 						return;
 					}else if(sqls){
-						
+							var au = new AjaxUtil("db/run/sql");
+							var param = {};
+							param["sqls"] = sqls;
+							kendoConsole.log(sql+";");
+							au.param = JSON.stringify(param);
+							au.setCallbackSuccess(callbackSql);
+							au.send();
 						return;
 					}
 				}
 				
 			}
 		});
+		
+	})
+	
+	function onBound() {
+		if(!treeview){
+		treeview = $('#treeview').data('kendoTreeView');
+		}
+		kendoConsole.log("onBound");
 	}
 	function callbackSql(result){
-		var key = result.key;
-		var obj = result[key];
+
+		if(!result.error){
+			var key = result.key;
+			var obj = result[key];
+			var type = obj.type;
+			var gridData="";
+			var count =0;
+			
+		if(type=="select"){
+			gridData = obj.list;
+		}else{
+			count=obj.row;
+		}
+		try{
+			$('#resultGrid').kendoGrid('destroy').empty();
+		}catch(e){
+			
+		}
+		var gridParam = {
+		  		dataSource: {
+		    	      data: gridData,
+		    	      pageSize: 5
+		    	    },
+		    	    editable: false,
+		    	    sortable: true,
+		    	    pageable:true	    
+		  	}
+	  	var grid = $("#resultGrid").kendoGrid(gridParam);
+		
+		 kendoConsole.log("/* Affected rows: " + count + " = > 찾은 행: " + gridData.length);
+		}else{
+			kendoConsole.log(result.error);
+		}
+		 
 	}
 	function treeSelect(e) {
 		window.selectedNode = treeview.select();
@@ -72,8 +121,7 @@
 			au.setCallbackSuccess(callbackForTreeItem2);
 			au.send();
 		} else if (data.tableName) {
-			var ki = new KendoItem(treeview, $("#tableInfoGrid"),
-					"${tableInfoUrl}", "tableName");
+			var ki = new KendoItem(treeview, $("#tableInfoGrid"),"${tableInfoUrl}", "tableName");
 			ki.send();
 		}
 	}
@@ -82,6 +130,7 @@
 			alert(result.error);
 			return;
 		}
+		var tablelist = "";
 		for (var i = 0, max = result.tableList.length; i < max; i++) {
 			var table = result.tableList[i];
 			treeview.append({
@@ -151,7 +200,7 @@
 											</kendo:splitter-pane>
 											<kendo:splitter-pane id="middle-pane" collapsible="true">
 												<div class="pane-content">
-													<c:import url="${tableInfoJsp}" />
+													<div id="resultGrid" style="width: 100%;"></div>
 												</div>
 											</kendo:splitter-pane>
 										</kendo:splitter-panes>
@@ -164,10 +213,7 @@
 			</kendo:splitter-pane>
 			<kendo:splitter-pane id="middle-pane" collapsible="false" size="100px">
 				<kendo:splitter-pane-content>
-					<div class="pane-content">
-						<h3>Outer splitter / middle pane</h3>
-						<p>Resizable only.</p>
-					</div>
+				       <div class="console"></div>
 				</kendo:splitter-pane-content>
 			</kendo:splitter-pane>
 			<kendo:splitter-pane id="bottom-pane" collapsible="false" resizable="false" size="20px" scrollable="false">
