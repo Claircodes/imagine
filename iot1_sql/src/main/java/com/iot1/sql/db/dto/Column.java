@@ -5,16 +5,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class Column {
 	private String dbName;
+	private String columnName;
+	private String dataType;
+	private String characterMaximumLength;
+	private String isNullable;
+	
 	public String getDbName() {
 		return dbName;
 	}
 	public void setDbName(String dbName) {
 		this.dbName = dbName;
 	}
-	private String columnName;
-	private String dataType;
-	private String characterMaximumLength;
-	private String isNullable;
+
 	public String getColumnName() {
 		return columnName;
 	}

@@ -15,15 +15,16 @@
 <script src="<c:url value="/resources/ui/common.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/ui/btsp3.7.7/js/bootstrap.min.js?version=${pVar}"/>"></script>
 <script src="<c:url value="/resources/ui/btsp3.7.7/js/bootstrap-table.js?version=${pVar}"/>"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
-<script src="<c:url value='/resources/js/kendo.all.min.js' />"></script>
-<script src="<c:url value='/resources/js/kendo.timezones.min.js' />"></script>
-<script src="<c:url value='/resources/shared/js/console.js'/>"></script>
-<script src="<c:url value='/resources/shared/js/prettify.js'/>"></script>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap-theme.min.css?version=${pVar}"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap.min.css?version=${pVar}"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/btsp3.7.7/css/bootstrap-table.css?version=${pVar}"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/ui/common.css?version=${pVar}"/>" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
+<script src="<c:url value='/resources/js/kendo.all.min.js' />"></script>
+<script src="<c:url value='/resources/js/kendo.timezones.min.js' />"></script>
+<script src="<c:url value='/resources/shared/js/console.js'/>"></script>
+<script src="<c:url value='/resources/shared/js/prettify.js'/>"></script>
 <link href="<c:url value='/resources/css/web/kendo.common.min.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/css/web/kendo.rtl.min.css'/>" rel="stylesheet" />
 <link href="<c:url value='/resources/css/web/kendo.default.min.css'/>" rel="stylesheet" />
@@ -143,7 +144,4 @@ var AjaxUtil = function (url, params, type, dataType){
 	}
 }
 </script>
-<br/>
-<br/>
-<br/>
 <br/>

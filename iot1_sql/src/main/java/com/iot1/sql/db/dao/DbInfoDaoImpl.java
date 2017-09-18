@@ -63,40 +63,58 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 		return dsf.getSqlSession().selectList("db.TABLE_INFO_SELECT", table);
 	}
 
-	public Map<String,Object> runSql(Map<String, Object> pm) throws Exception{
-		String sql = (String) pm.get("sql");
-		
-		Object d =pm.get("sqls");
-		System.out.println(d);
-		sql = sql.trim();
-		Map<String,Object> map = new HashMap<String, Object>();
-		Statement statement = dsf.getSqlSession().getConnection().createStatement();
-		if(sql.indexOf("select")==0){
-			ResultSet resultSet = statement.executeQuery(sql);
-			ResultSetMetaData metadata = resultSet.getMetaData();
-			int columnCount = metadata.getColumnCount();
-			List<String> columns = new ArrayList<String>();
-			
-			for(int i=1; i<= columnCount; i++){
-				String columnName = metadata.getColumnName(i);
-				columns.add(columnName);
-			}
-			List<Map<String,String>> list = new ArrayList<Map<String,String>>();
-			while (resultSet.next()){
-				Map<String,String> hm = new HashMap<String, String>();
-				for (String column:columns){
-					hm.put(column, resultSet.getString(column));
-				}
-				list.add(hm);
-			}
-			map.put("type", "select");
-			map.put("list", list);
-			map.put("columns", columns);
-		}else{
-			int result=statement.executeUpdate(sql);
-			map.put("type", "save");
-			map.put("row", result);
+	public Map<String, Object> runSql(Map<String, Object> pm) throws Exception {
+		int max = 0;
+		int result = 0;
+		String sqlone;
+		List<String> sql = (ArrayList<String>) pm.get("sql");
+		List<String> type = new ArrayList<String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (sql.size() == 1) {
+			max = 1;
+		} else {
+			max = sql.size() - 1;
 		}
+		// sql = sql.trim();
+		for (int j = 0; j < max; j++) {
+			sqlone = sql.get(j).trim();
+			Statement statement = dsf.getSqlSession().getConnection().createStatement();
+			if (sqlone.indexOf("select") == 0||sqlone.indexOf("SELECT") == 0) {
+				System.out.println(sqlone);
+				type.add("select");
+				System.out.println(type);
+				ResultSet resultSet = statement.executeQuery(sqlone);
+				ResultSetMetaData metadata = resultSet.getMetaData();
+				int columnCount = metadata.getColumnCount();
+				List<String> columns = new ArrayList<String>();
+
+				for (int i = 1; i <= columnCount; i++) {
+					String columnName = metadata.getColumnName(i);
+					columns.add(columnName);
+				}
+				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+				while (resultSet.next()) {
+					Map<String, String> hm = new HashMap<String, String>();
+					for (String column : columns) {
+						hm.put(column, resultSet.getString(column));
+					}
+					list.add(hm);
+				}
+
+				map.put("list", list);
+				map.put("columns", columns);
+			} else {
+				
+				type.add("save");
+				result += statement.executeUpdate(sqlone);
+				System.out.println(type);
+				map.put("row", result);
+				System.out.println(sqlone);
+			}
+		}
+		System.out.println(type);
+		map.put("type", type);
 		return map;
+
 	}
 }

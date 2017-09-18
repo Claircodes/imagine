@@ -21,5 +21,6 @@ public interface DbInfoService {
 	public List<Column> getTableInfo(Table table) throws Exception;
 
 
-	Map<String, Object> runSql(Map<String, Object> pm) throws Exception;
+	public Map<String, Object> runSql(Map<String, Object> pm) throws Exception;
 }
+

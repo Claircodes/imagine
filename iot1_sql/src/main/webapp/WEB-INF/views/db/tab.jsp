@@ -32,20 +32,17 @@
 <style>
 #tabStrip {
 	width: 100%;
-	height: 100%
+	height: 100%;
 }
-
 .sunny, .cloudy, .rainy {
 	margin: 30px auto 10px;
 	width: 100%;
 	height: 128px;
 }
-
 .weather {
-	margin: 0 auto 30px;
+	margin: 0 0 0 0;
 	text-align: center;
 }
-
 #tabstrip h2 {
 	font-weight: lighter;
 	font-size: 5em;
@@ -53,14 +50,12 @@
 	padding: 0 0 0 30px;
 	margin: 0;
 }
-
 #tabstrip h2 span {
 	background: none;
 	padding-left: 5px;
 	font-size: .3em;
 	vertical-align: top;
 }
-
 #tabstrip p {
 	margin: 0;
 	padding: 0;
