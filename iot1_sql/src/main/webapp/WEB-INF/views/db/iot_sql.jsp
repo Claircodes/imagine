@@ -115,7 +115,7 @@
 					var grid = $("#resultGrid").kendoGrid(gridParam);
 				
 			    $("#tabstrip").kendoTabStrip({
-			        dataSource:[{ data = grid}]
+			        dataSource:[ data = grid]
 			    });
 			    
 			    /**
