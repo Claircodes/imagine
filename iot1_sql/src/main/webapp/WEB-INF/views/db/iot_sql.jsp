@@ -103,25 +103,33 @@
 					save = "save";
 					count = obj.row;
 				}
+				var tabstrip = $("#tabstrip").kendoTabStrip().data(
+						"kendoTabStrip");
 				var gridParam = {
-						dataSource : {
-							data : gridData,
-							pageSize : 5
-						},
-						editable : false,
-						sortable : true,
-						pageable : true
-					}
-					var grid = $("#resultGrid").kendoGrid(gridParam);
+					dataSource : {
+						data : gridData,
+						pageSize : 5
+					},
+					editable : false,
+					sortable : true,
+					pageable : true
+				}
+				var grid = $("#resultGrid").kendoGrid(gridParam).data("kendoGrid");
+				tabstrip.one("activate", function() {
+					grid.resize();
+				});
+
+				/**	
+				$("#tabstrip").kendoTabStrip({
+				   dataSource:[ data = grid]
+				});
+				tabstrip.one("activate", function() {
+				   grid.resize();
+				 });
 				
-			    $("#tabstrip").kendoTabStrip({
-			        dataSource:[ data = grid]
-			    });
-			    
-			    /**
-			    	<div id="sqltab"></div>
-					<div id="sqltabdata"></div>
-			    **/
+				<div id="sqltab"></div>
+				<div id="sqltabdata"></div>
+				 **/
 				try {
 					$('#resultGrid').kendoGrid('destroy').empty();
 				} catch (e) {
@@ -233,8 +241,14 @@
 											<kendo:splitter-pane id="middle-pane" collapsible="true">
 												<div class="pane-content">
 													<div id="tabstrip">
-														<div id="sqltab"></div>
-														<div id="sqltabdata"></div>
+														<ul>
+															<li id="tab1">Tab 1</li>
+															<li id="tab2">Tab 2</li>
+														</ul>
+														
+															<div id="resultGrid"></div>
+														
+														<div>Content 2</div>
 													</div>
 												</div>
 											</kendo:splitter-pane>
@@ -369,46 +383,74 @@ p {
 }
 
 .k-button
+
+
 :focus
+
+
 :active
+
+
 :not
+
  
+
 (
 .k-state-disabled
+
  
+
 )
 :not
+
  
+
 (
 [
 disabled
 ]
+
  
+
 ){
 background-color
-:
- 
-#42372e
-;
 
-	
-box-shadow
+
 :
+
  
+
+#42372e
+
+
+;
+box-shadow
+
+
+:
+
+ 
+
 inset
+
  
+
 0
 0
 3
 px
+
  
+
 1
 px
+
  
+
 #3b2f2a
+
+
 ;
-
-
 }
 .k-state-selected.k-state-focused {
 	background-color: #f9b3cd;
