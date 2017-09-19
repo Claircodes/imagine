@@ -64,25 +64,34 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 	}
 
 	public Map<String, Object> runSql(Map<String, Object> pm) throws Exception {
-		int max = 0;
+
 		int result = 0;
-		String sqlone;
-		List<String> sql = (ArrayList<String>) pm.get("sql");
+		int max = 0;
+		List<List<Map<String, String>>> listlist = new ArrayList<List<Map<String,String>>>();
+		List<List<String>> columnslist = new ArrayList<List<String>>();
+		List<String> sqlname = new ArrayList<String>();
+		List<String> sql;
+		String sqlone= "";
+
+		String num =(String) pm.get("type");
+
 		List<String> type = new ArrayList<String>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (sql.size() == 1) {
+		if (num.equals("one")) {
+			sql =new ArrayList<String>();
+			sql.add((String) pm.get("sql"));
 			max = 1;
 		} else {
-			max = sql.size() - 1;
+			sql = (ArrayList<String>) pm.get("sql");
+			max = sql.size()-1;
 		}
-		// sql = sql.trim();
 		for (int j = 0; j < max; j++) {
 			sqlone = sql.get(j).trim();
 			Statement statement = dsf.getSqlSession().getConnection().createStatement();
+
 			if (sqlone.indexOf("select") == 0||sqlone.indexOf("SELECT") == 0) {
-				System.out.println(sqlone);
+				sqlname.add(sqlone);
 				type.add("select");
-				System.out.println(type);
 				ResultSet resultSet = statement.executeQuery(sqlone);
 				ResultSetMetaData metadata = resultSet.getMetaData();
 				int columnCount = metadata.getColumnCount();
@@ -91,6 +100,7 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 				for (int i = 1; i <= columnCount; i++) {
 					String columnName = metadata.getColumnName(i);
 					columns.add(columnName);
+					
 				}
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 				while (resultSet.next()) {
@@ -100,21 +110,20 @@ public class DbInfoDaoImpl extends SqlSessionDaoSupport implements DbInfoDao {
 					}
 					list.add(hm);
 				}
-
-				map.put("list", list);
-				map.put("columns", columns);
+				columnslist.add(columns);
+				listlist.add(list);
+				map.put("list", listlist);
+				map.put("columns", columnslist);
+				map.put("sqlname", sqlname);
+//				map.put("list", list);
+//				map.put("columns", columns);
 			} else {
-				
 				type.add("save");
 				result += statement.executeUpdate(sqlone);
-				System.out.println(type);
 				map.put("row", result);
-				System.out.println(sqlone);
 			}
 		}
-		System.out.println(type);
 		map.put("type", type);
 		return map;
-
 	}
 }

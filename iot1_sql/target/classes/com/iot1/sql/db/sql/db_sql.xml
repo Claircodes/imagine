@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="TABLE_INFO_SELECT" parameterType="table"  resultType="column">
-		select  column_name as columnName, data_type as dataType, 
+		select #{tableName} as tablename, column_name as columnName, data_type as dataType, 
 		  character_maximum_length as characterMaximumLength,
 		  is_nullable as isNullable
 		 from INFORMATION_SCHEMA.columns 
