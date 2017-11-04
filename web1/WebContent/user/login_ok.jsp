@@ -23,7 +23,7 @@
 		PreparedStatement ps = null;
 		try {
 			con = DBConn.getCon();
-			String sql = "select username, age, address, hp1, hp2, hp3, userpwd from user_info where userid=?";
+			String sql = "select userid,username, age, address, hp1, hp2, hp3, userpwd from user_info where userid=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, ui.getUserId());
 			ResultSet rs = ps.executeQuery();
